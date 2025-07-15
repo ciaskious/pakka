@@ -1,0 +1,22 @@
+<div class="trips-index">
+  <div class="col-md-8 mx-auto">
+    <h1>My Trips</h1>
+    <p>Manage your trips and checklist items</p>
+
+    <%= link_to "New Trip", new_trip_path, class: "btn btn-primary" %>
+
+    <% @trips.each do |trip| %>
+      <div>
+        <h3><%= trip.title %></h3>
+        <p><%= trip.destination %>, <%= trip.country %></p>
+        <p>Items: <%= trip.checklist_items.count %></p>
+
+        <%= link_to "View", trip %>
+        <%= link_to "Edit", edit_trip_path(trip) %>
+        <%= link_to "Duplicate", duplicate_trip_path(trip), method: :post %>
+        <%= link_to "Delete", trip, method: :delete, confirm: "Are you sure?" %>
+      </div>
+    <% end %>
+    <%= link_to "home page", root_path %>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="trip-show">
+  <div class="col-md-8 mx-auto">
+    <h1>Trip Details</h1>
+      <h1><%= @trip.title %></h1>
+
+      <p><%= @trip.destination %>, <%= @trip.country %></p>
+      <p><%= @trip.description %></p>
+      <p>Dates: <%= @trip.start_date %> - <%= @trip.end_date %></p>
+
+      <h3>Checklist Items</h3>
+      <% @checklist_items.each do |item| %>
+        <div>
+          <%= item.name %>
+          <%= "(✓)" if item.checked %>
+          <%= "(AI)" if item.ai_generated? %>
+          - Likes: <%= item.likes.count %>
+        </div>
+      <% end %>
+
+      <%= link_to "Edit", edit_trip_path(@trip) %>
+      <%= link_to "Duplicate", duplicate_trip_path(@trip), method: :post %>
+      <%= link_to "Delete", @trip, method: :delete, confirm: "Are you sure?" %>
+      <%= link_to "Back", trips_path %>
+  </div>
+</div>

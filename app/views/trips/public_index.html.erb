@@ -1,0 +1,16 @@
+<div class="public-trips">
+  <div class="col-md-6 mx-auto">
+    <h1>Community Trips</h1>
+      <p>Public trips shared by the community</p>
+
+      <% @trips.each do |trip| %>
+        <div>
+          <h3><%= trip.title %></h3>
+          <p><%= trip.destination %>, <%= trip.country %></p>
+          <%= link_to "View", share_trip_path(trip) %>
+        </div>
+      <% end %>
+
+      <%= link_to "Back to My Trips", trips_path %>
+  </div>
+</div>

@@ -1,11 +1,32 @@
 Rails.application.routes.draw do
+  # Auth (devise ou perso)
+  # devise_for :users
+
+  # Homepage
   root to: "pages#home"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # Trips & Checklists
+  resources :trips do
+    member do
+      post :duplicate       # /trips/:id/duplicate
+      get :share, to: "trips#public_show"  # /trips/:id/share
+    end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+    collection do
+      get :public_index, path: "community"  # /community
+    end
+
+    resources :checklist_items, path: "items", only: [:create]
+  end
+
+  resources :checklist_items, path: "items", only: [:update, :destroy]
+
+  # APIs
+  post "/geocode",  to: "locations#geocode"
+  get  "/weather",  to: "weather#forecast"
+  get  "/accommodation",   to: "lodging#accommodation_details"
+
+  # OpenAI endpoints
+  post "/ai/suggest", to: "openai#suggest_items"
+  post "/ai/summary", to: "openai#summary"
 end
