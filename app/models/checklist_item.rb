@@ -6,4 +6,3 @@ class ChecklistItem < ApplicationRecord
   validates :checked, inclusion: { in: [true, false] }
   validates :generated_by_ai, inclusion: { in: [true, false] }
 end
-end
