@@ -53,7 +53,6 @@ class TripsController < ApplicationController
         @new_trip.checklist_items.create(
           name: item.name,
           checked: false,
-          ai_data: item.ai_data,
           item: item.item
         )
       end
@@ -85,6 +84,6 @@ class TripsController < ApplicationController
   end
 
   def trip_params
-    params.require(:trip).permit(:title, :description, :destination, :country, :start_date, :end_date)
+    params.require(:trip).permit(:title, :destination, :country, :start_date, :end_date)
   end
 end
