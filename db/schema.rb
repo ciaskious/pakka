@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_15_172156) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_18_174911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,7 +19,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_172156) do
     t.bigint "item_id", null: false
     t.string "name"
     t.boolean "checked"
-    t.jsonb "ai_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_checklist_items_on_item_id"
@@ -28,10 +27,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_172156) do
 
   create_table "items", force: :cascade do |t|
     t.string "name"
-    t.string "category"
-    t.boolean "default"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -53,8 +53,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_172156) do
     t.date "start_date"
     t.date "end_date"
     t.boolean "public"
-    t.jsonb "weather_data"
-    t.jsonb "accommodation_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_trips_on_user_id"
@@ -70,6 +68,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_172156) do
 
   add_foreign_key "checklist_items", "items"
   add_foreign_key "checklist_items", "trips"
+  add_foreign_key "items", "users"
   add_foreign_key "likes", "checklist_items"
   add_foreign_key "likes", "users"
   add_foreign_key "trips", "users"
