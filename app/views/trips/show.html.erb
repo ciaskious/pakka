@@ -11,7 +11,6 @@
         <div>
           <%= item.name %>
           <%= "(✓)" if item.checked %>
-          <%= "(AI)" if item.ai_generated? %>
           - Likes: <%= item.likes.count %>
         </div>
       <% end %>
