@@ -11,4 +11,10 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   validates :name, presence: true
+
+  # workaround method to solve a devise error
+  # "no name method found"
+  def name
+    username || email
+  end
 end
