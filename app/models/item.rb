@@ -5,5 +5,4 @@ class Item < ApplicationRecord
   has_many :likes, through: :checklist_items
 
   validates :name, presence: true
-  validates :description, presence: true
 end

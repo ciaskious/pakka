@@ -1,10 +1,9 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!, except: [:public_index, :public_show]
   before_action :set_trip, only: [:show, :edit, :update, :destroy, :duplicate]
-  before_action :set_public_trip, only: [:public_show]
 
   def index
-    @trips = Trip.all
+    @trips = current_user.trips
   end
 
   def show
@@ -75,9 +74,9 @@ class TripsController < ApplicationController
 
   # GET /community (public_index)
   def public_index
-    @trips = current_user.all
+    # @trips = current_user.all
     # TODO: Filtrer les trips publics quand cette fonctionnalité sera ajoutée
-    # @trips = Trip.where(public: true)
+    @trips = Trip.where(public: true)
   end
 
   private
