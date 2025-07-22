@@ -1,12 +1,60 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
+// Navbar styles (add these at the end of application.scss)
+.navbar {
+  font-family: 'DM Sans', sans-serif;
+  padding: 1rem 0;
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+  .navbar-brand {
+    font-size: 1.5rem;
+    color: #3741FA;
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+    &:hover {
+      color: darken(#3741FA, 10%);
+    }
+  }
+
+  .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #3741FA;
+      background-color: rgba(55, 65, 250, 0.1);
+    }
+
+    &.active {
+      color: #3741FA;
+      font-weight: 600;
+    }
+  }
+
+  .btn-outline-primary {
+    border-color: #9CDDAB;
+    color: #9CDDAB;
+
+    &:hover {
+      background-color: #9CDDAB;
+      color: white;
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+
+    .dropdown-item {
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        background-color: rgba(55, 65, 250, 0.1);
+        color: #3741FA;
+      }
+    }
+  }
 }

@@ -1,16 +1,47 @@
-<div class="home-page">
-  <div class="col-md-8 mx-auto">
-      <h1>Welcome to PAKKA ⛱️</h1>
-        <p>Hello girls, this is your app speaking 🥳😂🥳💕😎</p>
+<div class="pakka-home">
+  <!-- Hero Section -->
+  <section class="hero d-flex flex-column justify-content-center align-items-center text-center">
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">Welcome to PAKKA ⛱️</h1>
+      <p class="lead">Your ultimate trip-packing BFF. Plan, pack, and share your adventures with ease.</p>
+      <%= link_to "Start a New Trip", new_trip_path, class: "btn btn-primary-cta mt-3" %>
+    </div>
+  </section>
 
-        <p>PAKKA is a simple app to manage your trips and checklist items.</p>
-        <p>Use the links below to get started:</p>
-        <ul>
-          <li><%= link_to "My Trips", trips_path %></li>
-          <li><%= link_to "Community Trips", public_index_trips_path %></li>
-          <li><%= link_to "New Trip", new_trip_path %></li>
-        </ul>
-        <p>Happy travels! 🌍✈️</p>
+  <!-- Community Trips Section -->
+  <section class="community-trips-section py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 text-dark fw-bold">🌍 Community Trips</h2>
+      <div class="row justify-content-center">
+
+        <% @community_trips.each do |trip| %>
+          <div class="col-md-4 mb-4">
+            <div class="trip-card card shadow-sm border-0 h-100">
+              <% if trip.respond_to?(:cover_image) && trip.cover_image.attached? %>
+                <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 200px; object-fit: cover;" %>
+              <% else %>
+                <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 200px;">
+                  <span class="fst-italic">No image available</span>
+                </div>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title fw-semibold"><%= trip.title %></h5>
+                <% if trip.respond_to?(:description) && trip.description.present? %>
+                  <p class="card-text text-muted small"><%= truncate(trip.description, length: 100) %></p>
+                <% end %>
+                <%= link_to "View Trip", trip_path(trip), class: "btn btn-outline-primary w-100" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @community_trips.empty? %>
+          <div class="text-center text-muted">
+            <p>No community trips yet. Be the first to share!</p>
+          </div>
+        <% end %>
 
       </div>
     </div>
+  </section>
+</div>

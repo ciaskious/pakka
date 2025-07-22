@@ -1,1 +1,72 @@
-// Specific CSS for your home-page
+// Fonts already imported in layout (Poppins and DM Sans)
+
+.pakka-home {
+  font-family: 'DM Sans', sans-serif;
+  color: #333;
+}
+
+.hero {
+  background: url('packing.jpg') center/cover no-repeat;
+  min-height: 80vh;
+  color: white;
+  padding: 4rem 1rem;
+
+  .hero-content {
+    background-color: rgba(55, 65, 250, 0.75); // semi-transparent blue
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 600px;
+  }
+
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #F7F2EB;
+  }
+
+  p {
+    color: #F7F2EB;
+  }
+
+  .btn-primary-cta {
+    background-color: #FB7D92;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 0.6rem 1.5rem;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: darken(#FB7D92, 8%);
+    }
+  }
+}
+
+.community-trips-section {
+  background-color: #F7F2EB;
+
+  h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #3741FA;
+  }
+
+  .trip-card {
+    border-radius: 1rem;
+    overflow: hidden;
+
+    .card-title {
+      color: #3741FA;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-outline-primary {
+      border-color: #9CDDAB;
+      color: #9CDDAB;
+
+      &:hover {
+        background-color: #9CDDAB;
+        color: #fff;
+      }
+    }
+  }
+}

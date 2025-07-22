@@ -1,14 +1,128 @@
-<div class="new-trip">
-  <div class="col-md-6 mx-auto">
-    <h1>New Trip</h1>
-    <%= simple_form_for @trip do |form| %>
-      <%= form.input :title %>
-      <%= form.input :destination %>
-      <%= form.input :country, as: :string %>
-      <%= form.input :start_date %>
-      <%= form.input :end_date %>
-      <%= form.submit %>
-    <% end %>
-    <%= link_to "Back", trips_path %>
+<div class="new-trip-container">
+  <!-- Header Section -->
+  <div class="trip-form-header py-5 text-center" style="background-color: #F7F2EB;">
+    <div class="container">
+      <h1 class="display-5 fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">Plan New Trip</h1>
+      <p class="lead text-muted" style="font-family: 'DM Sans', sans-serif;">Fill in your trip details to get started</p>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="trip-form-card card shadow-sm border-0 p-4">
+          <%= simple_form_for @trip, html: { class: "trip-form" } do |form| %>
+            <div class="row g-4">
+              <div class="col-md-6">
+                <%= form.input :title,
+                  label: "Trip Name",
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;",
+                    placeholder: "Summer Vacation 2023"
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= form.input :destination,
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;",
+                    placeholder: "Bali, Indonesia"
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= form.input :country,
+                  as: :string,
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;",
+                    placeholder: "Indonesia"
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= form.input :cover_image,
+                  as: :file,
+                  wrapper_html: { class: "mb-3" },
+                  label: "Cover Image (Optional)",
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= form.input :start_date,
+                  as: :date,
+                  html5: true,
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;"
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= form.input :end_date,
+                  as: :date,
+                  html5: true,
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;"
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-12">
+                <%= form.input :description,
+                  as: :text,
+                  wrapper_html: { class: "mb-3" },
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;",
+                    rows: 3,
+                    placeholder: "Any special notes about your trip..."
+                  },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+            </div>
+
+            <div class="form-actions mt-4 d-flex justify-content-between">
+              <%= link_to "Cancel", trips_path, class: "btn btn-outline-secondary px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+              <%= form.submit "Create Trip", class: "btn btn-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,28 @@
+.van-card.reservation-card {
+  background-color: #fff8ed;
+  border: 1px solid #e2c49a;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  .card-text {
+    font-size: 1rem;
+    color: #444;
+
+    i {
+      color: var(--orange);
+      margin-right: 0.5rem;
+    }
+  }
+
+  .btn-primary-cta {
+    font-size: 0.95rem;
+    padding: 0.5rem 1.25rem;
+  }
+}

@@ -9,7 +9,17 @@
 
 // Your CSS partials
 @import "components/index";
+@import "pages/home";
 @import "pages/index";
+@import "pages/public_index";
+@import "pages/show";
+@import "pages/new";
+@import "pages/edit";
 @import "components/button";
 @import "components/card";
 @import "components/form";
+@import "components/navbar";
+@import "components/trip_card";
+
+// Navbar styles
+//@import "shared/navbar";
