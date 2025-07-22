@@ -6,14 +6,34 @@
       <p><%= @trip.destination %>, <%= @trip.country %></p>
       <p>Dates: <%= @trip.start_date %> - <%= @trip.end_date %></p>
 
-      <h3>Checklist Items</h3>
-      <% @checklist_items.each do |item| %>
+      <h3>Add a checklist item</h3>
+
+      <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
         <div>
-          <%= item.name %>
-          <%= "(✓)" if item.checked %>
-          - Likes: <%= item.likes.count %>
+          <%= f.label :name, "Custom item name" %>
+          <%= f.text_field :name, placeholder: "e.g. Sunglasses" %>
+          <%= f.label :category, "Item category" %>
+          <%= f.text_field :category, placeholder: "e.g. Documents" %>
         </div>
+
+        <div>
+          <%= f.label :item_id, "Or select from saved items" %>
+          <%= f.collection_select :item_id, Item.all, :id, :name, prompt: "Optional..." %>
+        </div>
+
+        <%= f.submit "Add Item" %>
       <% end %>
+
+      <h3>Checklist Items</h3>
+      <ul>
+        <% @checklist_items.each do |item| %>
+          <li>
+            <%= item.name %>
+            <% if item.checked %> ✅ <% end %>
+            <%= button_to "Delete", checklist_item_path(item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+          </li>
+        <% end %>
+      </ul>
 
       <%= link_to "Edit", edit_trip_path(@trip) %>
       <%= link_to "Duplicate", duplicate_trip_path(@trip), method: :post %>

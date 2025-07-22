@@ -1,9 +1,9 @@
 class TripsController < ApplicationController
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :duplicate, :public_show]
+  before_action :authenticate_user!, except: [:public_index, :public_show]
+  before_action :set_trip, only: [:show, :edit, :update, :destroy, :duplicate]
 
   def index
-    @trips = Trip.all
-
+    @trips = current_user.trips
   end
 
   def show
@@ -16,11 +16,12 @@ class TripsController < ApplicationController
 
   def create
     @trip = Trip.new(trip_params)
-
+    @trip.user = current_user
 
     if @trip.save
-      redirect_to @trip, notice: 'Trip was successfully created.'
+      redirect_to @trip, notice: "Trip created!"
     else
+      puts @trip.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
@@ -30,7 +31,7 @@ class TripsController < ApplicationController
 
   def update
     if @trip.update(trip_params)
-      redirect_to @trip, notice: 'Trip was successfully updated.'
+      redirect_to @trip, notice: "Trip was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +39,7 @@ class TripsController < ApplicationController
 
   def destroy
     @trip.destroy
-    redirect_to trips_url, notice: 'Trip was successfully deleted.'
+    redirect_to trips_url, notice: "Trip was successfully deleted."
   end
 
   def duplicate
@@ -53,34 +54,39 @@ class TripsController < ApplicationController
         @new_trip.checklist_items.create(
           name: item.name,
           checked: false,
+<<<<<<< HEAD
           item: item.item
+=======
+          ai_data: item.ai_data,
+          item: item.item,
+>>>>>>> 7232c67e05dc595a8d371fc54686dca351a9a753
         )
       end
 
-      redirect_to @new_trip, notice: 'Trip was successfully duplicated.'
+      redirect_to @new_trip, notice: "Trip was successfully duplicated."
     else
-      redirect_to @trip, alert: 'Failed to duplicate trip.'
+      redirect_to @trip, alert: "Failed to duplicate trip."
     end
   end
 
   # GET /trips/:id/share (public_show)
   def public_show
-    # Vue publique du trip (sans possibilité de modification)
+    @trip = Trip.find(params[:id]) # don’t scope to current_user
     @checklist_items = @trip.checklist_items.includes(:likes)
     render :show
   end
 
   # GET /community (public_index)
   def public_index
-    @trips = Trip.all
+    # @trips = current_user.all
     # TODO: Filtrer les trips publics quand cette fonctionnalité sera ajoutée
-    # @trips = Trip.where(public: true)
+    @trips = Trip.where(public: true)
   end
 
   private
 
   def set_trip
-    @trip = Trip.find(params[:id])
+    @trip = current_user.trips.find(params[:id])
   end
 
   def trip_params
