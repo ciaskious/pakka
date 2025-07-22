@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/profile'
   devise_for :users
   # Auth (devise ou perso)
   # devise_for :users
@@ -23,6 +24,9 @@ Rails.application.routes.draw do
   end
 
   resources :checklist_items, path: "items", only: [:update, :destroy]
+
+  get "/profile", to: "users#profile", as: :profile
+  resources :items, only: [:create, :destroy]
 
   # APIs
   post "/geocode", to: "locations#geocode"
