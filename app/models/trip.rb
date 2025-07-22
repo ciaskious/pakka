@@ -2,6 +2,7 @@ class Trip < ApplicationRecord
   belongs_to :user
   has_many :checklist_items, dependent: :destroy
   has_many :likes, through: :checklist_items
+  has_many :items, through: :checklist_items
 
   validates :title, presence: true
   validates :destination, presence: true

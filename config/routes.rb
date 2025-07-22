@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # Homepage
   root to: "pages#home"
 
+  get "/ui-kit", to: "pages#ui_kit"
+
   # Trips & Checklists
   resources :trips do
     member do
@@ -23,9 +25,9 @@ Rails.application.routes.draw do
   resources :checklist_items, path: "items", only: [:update, :destroy]
 
   # APIs
-  post "/geocode",  to: "locations#geocode"
-  get  "/weather",  to: "weather#forecast"
-  get  "/accommodation",   to: "lodging#accommodation_details"
+  post "/geocode", to: "locations#geocode"
+  get "/weather", to: "weather#forecast"
+  get "/accommodation", to: "lodging#accommodation_details"
 
   # OpenAI endpoints
   post "/ai/suggest", to: "openai#suggest_items"

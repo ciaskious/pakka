@@ -10,10 +10,10 @@
 
       <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
         <div>
-          <%= f.label :name, "Custom item name" %>
-          <%= f.text_field :name, placeholder: "e.g. Sunglasses" %>
-          <%= f.label :category, "Item category" %>
-          <%= f.text_field :category, placeholder: "e.g. Documents" %>
+          <%#= f.label :name, "Custom item name" %>
+          <%#= f.text_field :name, placeholder: "e.g. Sunglasses" %>
+          <%#= f.label :category, "Item category" %>
+          <%#= f.text_field :category, placeholder: "e.g. Documents" %>
         </div>
 
         <div>
@@ -26,11 +26,11 @@
 
       <h3>Checklist Items</h3>
       <ul>
-        <% @checklist_items.each do |item| %>
+        <% @checklist_items.each do |checklist_item| %>
           <li>
-            <%= item.name %>
-            <% if item.checked %> ✅ <% end %>
-            <%= button_to "Delete", checklist_item_path(item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+            <%= checklist_item.item.name %>
+            <% if checklist_item.checked %> ✅ <% end %>
+            <%= button_to "Delete", checklist_item_path(checklist_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
           </li>
         <% end %>
       </ul>

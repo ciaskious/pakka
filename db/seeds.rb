@@ -17,10 +17,6 @@ user_data = [
 shared_items = [
   { name: "Toothbrush", category: "Toiletries" },
   { name: "Passport", category: "Documents" },
-]
-
-# === Custom checklist items ===
-custom_checklist_items = [
   { name: "Flip flops", category: "Clothing" },
   { name: "Notebook", category: "Stationery" },
   { name: "Snacks", category: "Food" },
@@ -32,7 +28,7 @@ user_data.each_with_index do |user_info, i|
   user = User.create!(user_info)
 
   # Assign reusable items to user
-  reusable_items = shared_items.map do |item_data|
+  items = shared_items.map do |item_data|
     user.items.create!(item_data)
   end
 
@@ -46,20 +42,10 @@ user_data.each_with_index do |user_info, i|
     public: i.even?,
   )
 
-  # Add reusable checklist items (linked)
-  reusable_items.each do |item|
+  # Add checklists items (linked)
+  items.each do |item|
     trip.checklist_items.create!(
-      name: item.name,
       item: item,
-      checked: [true, false].sample,
-    )
-  end
-
-  # Add custom checklist items (not linked)
-  custom_checklist_items.each do |custom|
-    trip.checklist_items.create!(
-      name: custom[:name],
-      category: custom[:category],
       checked: [true, false].sample,
     )
   end
