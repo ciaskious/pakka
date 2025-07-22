@@ -1,0 +1,48 @@
+:root {
+  --orange: #e98800;
+  --gray: rgba(231, 231, 231, 0.38);
+  --blue: #0d6efd;
+}
+
+.btn-primary-cta {
+  background-color: var(--orange);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+
+
+  &:hover {
+    background-color: darken(#e98800, 10%);
+  }
+}
+
+.btn-secondary-cta {
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background-color: darken(#3515b6, 10%);
+    color: white;
+  }
+}
+
+.btn-outline-red {
+  border-color: red;
+  color: red;
+
+  &:hover {
+  border-color: white;
+  background-color: red;
+  color: white;
+  }
+}
