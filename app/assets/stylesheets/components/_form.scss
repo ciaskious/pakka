@@ -1,0 +1,29 @@
+.form-section {
+  background-image: image-url("van_life_6.png");
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.van-form-hero {
+  border-radius: 1rem; // nice rounded corners
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: 3rem;
+    color: #cc7700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}

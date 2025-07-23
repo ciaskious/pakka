@@ -7,7 +7,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    @checklist_items = @trip.checklist_items.includes(:likes)
+    @checklist_items = @trip.checklist_items
   end
 
   def new
