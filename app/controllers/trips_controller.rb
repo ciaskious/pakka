@@ -54,12 +54,8 @@ class TripsController < ApplicationController
         @new_trip.checklist_items.create(
           name: item.name,
           checked: false,
-<<<<<<< HEAD
-          item: item.item
-=======
           ai_data: item.ai_data,
           item: item.item,
->>>>>>> 7232c67e05dc595a8d371fc54686dca351a9a753
         )
       end
 
