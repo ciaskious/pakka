@@ -23,10 +23,10 @@ Rails.application.routes.draw do
     resources :checklist_items, path: "items", only: [:create]
   end
 
-  resources :checklist_items, path: "items", only: [:update, :destroy]
+  resources :checklist_items, path: "trip_items", only: [:update, :destroy]
 
   get "/profile", to: "users#profile", as: :profile
-  resources :items
+  resources :items, except: [:show]
 
   # APIs
   post "/geocode", to: "locations#geocode"

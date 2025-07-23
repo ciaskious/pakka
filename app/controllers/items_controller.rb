@@ -6,6 +6,10 @@ class ItemsController < ApplicationController
     @items = current_user.items
   end
 
+  def show
+    @item = current_user.items.find(params[:id])
+  end
+
   def new
     @item = current_user.items.new
   end
@@ -21,18 +25,15 @@ class ItemsController < ApplicationController
 
   def edit
     @item = current_user.items.find(params[:id])
-    render partial: "edit", locals: { item: @item }
+    render partial: "items/form", locals: { item: @item }
   end
 
   def update
     @item = current_user.items.find(params[:id])
     if @item.update(item_params)
-      respond_to do |format|
-        format.turbo_stream { render partial: "items/item", locals: { item: @item } }
-        format.html { redirect_to profile_path, notice: "Item updated." }
-      end
+      render partial: "items/item", locals: { item: @item }
     else
-      render :edit, status: :unprocessable_entity
+      render partial: "items/form", locals: { item: @item }, status: :unprocessable_entity
     end
   end
 

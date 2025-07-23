@@ -1,6 +1,0 @@
-<p>
-  <strong><%= item.name %></strong> (Category: <%= item.category %>)
-</p>
-
-<%= link_to "Edit", edit_item_path(item), data: { turbo_frame: "item_#{item.id}" } %>
-<%= button_to "Delete", item_path(item), method: :delete, data: { confirm: "Sure?" } %>
