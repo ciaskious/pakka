@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
-      <span class="text-primary">PAKKA</span> ⛱️
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2" do %>
+      <%= image_tag("pakka-logo.png", alt: "Pakka logo", height: "48", class: "navbar-logo") %>
+      <span class="pakka-title">Pakka</span>
     <% end %>
+
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,15 +13,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <%= link_to "My Trips", trips_path, class: "nav-link" %>
+          <%= link_to "My Trips", trips_path, class: "nav-link my-trips-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Community Trips", public_index_trips_path, class: "nav-link" %>
+          <%= link_to "Community Trips", public_index_trips_path, class: "nav-link community-trips-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "New Trip", new_trip_path, class: "nav-link" %>
+          <%= link_to "New Trip", new_trip_path, class: "nav-link new-trip-link" %>
         </li>
       </ul>
+
 
       <ul class="navbar-nav">
         <% if user_signed_in? %>

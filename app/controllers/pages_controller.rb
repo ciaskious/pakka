@@ -7,6 +7,7 @@ class PagesController < ApplicationController
       @my_trips = []
       @community_trips = Trip.where(public: true)
     end
+    @trips = Trip.all
   end
 
   def ui_kit

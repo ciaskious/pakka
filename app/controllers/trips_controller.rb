@@ -1,6 +1,7 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!, except: [:public_index, :public_show]
   before_action :set_trip, only: [:show, :edit, :update, :destroy, :duplicate]
+  before_action :set_public_trip, only: [:public_show]
 
   def index
     @trips = current_user.trips
@@ -82,7 +83,13 @@ class TripsController < ApplicationController
   private
 
   def set_trip
-    @trip = current_user.trips.find(params[:id])
+    @trip = current_user.trips.find_by(id: params[:id])
+    redirect_to trips_path, alert: "Trip not found" unless @trip
+  end
+
+  def set_public_trip
+    @trip = Trip.find_by(id: params[:id])
+    redirect_to public_index_trips_path, alert: "Trip not found" unless @trip
   end
 
   def trip_params

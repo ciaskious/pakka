@@ -1,72 +1,230 @@
-// Fonts already imported in layout (Poppins and DM Sans)
+// Fonts assumed: Poppins for titles, DM Sans for body
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=DM+Sans&display=swap');
 
-.pakka-home {
+body {
   font-family: 'DM Sans', sans-serif;
-  color: #333;
+  background-color: #FCF9F2;
+  color: #222;
 }
 
-.hero {
-  background: url('packing.jpg') center/cover no-repeat;
-  min-height: 80vh;
-  color: white;
-  padding: 4rem 1rem;
-
-  .hero-content {
-    background-color: rgba(55, 65, 250, 0.75); // semi-transparent blue
-    padding: 2rem;
-    border-radius: 1rem;
-    max-width: 600px;
-  }
-
-  h1 {
-    font-family: 'Poppins', sans-serif;
-    color: #F7F2EB;
-  }
-
-  p {
-    color: #F7F2EB;
-  }
-
-  .btn-primary-cta {
-    background-color: #FB7D92;
-    border: none;
-    color: white;
-    font-weight: bold;
-    border-radius: 30px;
-    padding: 0.6rem 1.5rem;
-    transition: 0.3s ease;
-
-    &:hover {
-      background-color: darken(#FB7D92, 8%);
-    }
-  }
-}
-
-.community-trips-section {
+.navbar {
   background-color: #F7F2EB;
 
-  h2 {
+  .pakka-logo {
+    height: 36px;
+    width: auto;
+  }
+
+  .pakka-brand {
     font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #3741FA;
   }
 
-  .trip-card {
-    border-radius: 1rem;
-    overflow: hidden;
+  .nav-link {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    margin-left: 1rem;
+    transition: all 0.3s ease;
 
-    .card-title {
-      color: #3741FA;
-      font-family: 'Poppins', sans-serif;
+    &:hover {
+      background-color: rgba(55, 65, 250, 0.1);
     }
 
-    .btn-outline-primary {
-      border-color: #9CDDAB;
+    &.active {
+      font-weight: 600;
+    }
+
+    &.my-trips:hover {
+      color: #3741FA;
+    }
+
+    &.community-trips:hover {
       color: #9CDDAB;
+    }
+
+    &.new-trip:hover {
+      color: #FB7D92;
+    }
+  }
+}
+
+// Hero
+.hero {
+  background: url('packing.jpg') center/cover no-repeat;
+  min-height: 90vh;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(55, 65, 250, 0.75);
+    padding: 2.5rem 2rem;
+    border-radius: 1rem;
+    max-width: 700px;
+    color: #F7F2EB;
+    animation: fadeInUp 1s ease-out;
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    .btn-primary-cta {
+      background-color: #FB7D92;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 30px;
+      padding: 0.6rem 1.8rem;
+      transition: 0.3s ease;
 
       &:hover {
-        background-color: #9CDDAB;
-        color: #fff;
+        background-color: darken(#FB7D92, 8%);
       }
     }
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Divider
+.section-divider {
+  font-size: 1.2rem;
+  color: #9CDDAB;
+  font-family: 'Poppins', sans-serif;
+}
+
+// Trip Cards
+// .trip-card {
+//   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+//   &:hover {
+//     transform: translateY(-5px);
+//     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+//   }
+
+//   .card-title {
+//     font-size: 1.2rem;
+//     color: #3741FA;
+//   }
+
+//   .card-text {
+//     font-size: 0.95rem;
+//   }
+// }
+
+// Brand colors for reuse
+$text-brand-blue: #3741FA;
+$brand-pink: #FB7D92;
+$brand-green: #9CDDAB;
+$off-white: #F7F2EB;
+
+.text-brand-blue {
+  color: $text-brand-blue;
+}
+
+// Community Trips Section
+.community-trips-section {
+  background-color: $off-white;
+
+  .trip-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+    }
+
+    .card-text {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-brand-outline {
+      border: 2px solid $brand-green;
+      color: $brand-green;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      padding: 0.4rem 1.25rem;
+      width: 100%;
+
+      &:hover {
+        background-color: $brand-green;
+        color: white;
+        box-shadow: 0 0 0 4px rgba($brand-green, 0.2);
+      }
+    }
+
+    .no-image {
+      background-color: #eee;
+      height: 220px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Community Trips Scrollable Section
+
+.scroll-trips-section {
+  background-color: $off-white;
+
+  h2 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .scroll-container {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+
+    .trip-card {
+      scroll-snap-align: start;
+      background-color: white;
+      border-radius: 1.25rem;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
+
+      .btn {
+        border-radius: 20px;
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+      }
+    }
+  }
+}
+
+.bg-brand-green {
+  background-color: #9CDDAB;
+}
+
+.scroll-trips-section .trip-card {
+  .rounded-circle {
+    flex-shrink: 0;
   }
 }
