@@ -1,5 +1,19 @@
-<h1>My Reusable Items</h1>
+<h1>Hey <%= current_user.first_name %></h1>
+<h3>Here are your reusable items</h3>
+<h6>These are things that you always need in your backpack, no matter where you travel</h6>
+<ul>
+  <% @items.each do |item| %>
+    <turbo-frame id="item_<%= item.id %>">
+      <li>
+        <%= item.name %> (Category: <%= item.category %>)
+        <%= link_to "Edit", edit_item_path(item)%>
+        <%= button_to "Delete", item_path(item), method: :delete, data: { confirm: "Sure?" } %>
+      </li>
+    </turbo-frame>
+  <% end %>
+</ul>
 
+<h4>Would you like to add a new item in your list?</h4>
 <%= form_with model: @item, url: items_path, local: true do |f| %>
   <div>
     <%= f.label :name %>
@@ -11,12 +25,3 @@
   </div>
   <%= f.submit "Add Item" %>
 <% end %>
-
-<ul>
-  <% @items.each do |item| %>
-    <li>
-      <%= item.name %> (Category: <%= item.category %>)
-      <%= button_to "Delete", item_path(item), method: :delete, data: { confirm: "Sure?" } %>
-    </li>
-  <% end %>
-</ul>

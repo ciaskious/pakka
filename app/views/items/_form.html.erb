@@ -1,0 +1,5 @@
+<%= form_with model: item, data: { turbo_frame: "item_#{item.id}" } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :category %>
+  <%= f.submit %>
+<% end %>
