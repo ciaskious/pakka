@@ -1,43 +1,84 @@
-<div class="trip-show">
-  <div class="col-md-8 mx-auto">
-    <h1>Trip Details</h1>
-      <h1><%= @trip.title %></h1>
+<div class="trip-show-container">
+  <!-- Trip Header -->
+  <section class="trip-header <%= 'has-image' if @trip.cover_image.attached? %>" style="<%= @trip.cover_image.attached? ? 'background-image: linear-gradient(rgba(55, 65, 250, 0.6), rgba(55, 65, 250, 0.6)), url(' + url_for(@trip.cover_image) + ');' : '' %>">
+    <div class="container">
+      <div class="trip-meta">
+        <h1 class="trip-title"><%= @trip.title %></h1>
+        <p class="trip-destination"><%= @trip.destination %>, <%= @trip.country %></p>
+        <p class="trip-dates"><%= @trip.start_date.to_formatted_s(:long) %> - <%= @trip.end_date.to_formatted_s(:long) %></p>
+      </div>
+    </div>
+  </section>
 
-      <p><%= @trip.destination %>, <%= @trip.country %></p>
-      <p>Dates: <%= @trip.start_date %> - <%= @trip.end_date %></p>
+  <!-- Trip Content -->
+  <section class="trip-content py-5">
+    <div class="container">
+      <div class="row">
+        <!-- Checklist Column -->
+        <div class="col-lg-8">
+          <div class="checklist-card card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white">
+              <h2 class="h4 mb-0">🧳 Packing Checklist</h2>
+            </div>
+            <div class="card-body">
+              <!-- Add Item Form -->
+              <div class="add-item-form mb-4">
+                <h3 class="h5 mb-3">Add a checklist item</h3>
+                <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <%= f.label :item_id, "Select from saved items", class: "form-label" %>
+                      <%= f.collection_select :item_id, Item.all, :id, :name, { prompt: "Choose an item..." }, class: "form-select" %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= f.label :name, "Or create custom item", class: "form-label" %>
+                      <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
+                    </div>
+                    <div class="col-12">
+                      <%= f.submit "Add Item", class: "btn btn-primary" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
 
-      <h3>Add a checklist item</h3>
-
-      <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
-        <div>
-          <%#= f.label :name, "Custom item name" %>
-          <%#= f.text_field :name, placeholder: "e.g. Sunglasses" %>
-          <%#= f.label :category, "Item category" %>
-          <%#= f.text_field :category, placeholder: "e.g. Documents" %>
+              <!-- Checklist Items -->
+              <% if @checklist_items.any? %>
+                <ul class="checklist-items list-group list-group-flush">
+                  <% @checklist_items.each do |checklist_item| %>
+                    <li class="list-group-item d-flex align-items-center">
+                      <div class="form-check flex-grow-1">
+                        <%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked, class: "form-check-input me-3" %>
+                        <label class="form-check-label <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
+                          <%= checklist_item.item&.name || checklist_item.name || "Unnamed Item" %>
+                        </label>
+                      </div>
+                      <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: "Are you sure?" } do %>
+                        <i class="fas fa-trash-alt"></i>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-muted">No items added yet. Start building your packing list!</p>
+              <% end %>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <%= f.label :item_id, "Or select from saved items" %>
-          <%= f.collection_select :item_id, Item.all, :id, :name, prompt: "Optional..." %>
+        <!-- Actions Column -->
+        <div class="col-lg-4">
+          <div class="actions-card card shadow-sm border-0">
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary" %>
+                <%= link_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
+                <%= link_to "Delete Trip", @trip, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+                <%= link_to "Back to Trips", trips_path, class: "btn btn-light" %>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <%= f.submit "Add Item" %>
-      <% end %>
-
-      <h3>Checklist Items</h3>
-      <ul>
-        <% @checklist_items.each do |checklist_item| %>
-          <li>
-            <%= checklist_item.item.name %>
-            <% if checklist_item.checked %> ✅ <% end %>
-            <%= button_to "Delete", checklist_item_path(checklist_item), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
-          </li>
-        <% end %>
-      </ul>
-
-      <%= link_to "Edit", edit_trip_path(@trip) %>
-      <%= link_to "Duplicate", duplicate_trip_path(@trip), method: :post %>
-      <%= link_to "Delete", @trip, method: :delete, confirm: "Are you sure?" %>
-      <%= link_to "Back", trips_path %>
-  </div>
+      </div>
+    </div>
+  </section>
 </div>

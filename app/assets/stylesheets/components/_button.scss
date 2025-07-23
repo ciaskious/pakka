@@ -1,11 +1,14 @@
 :root {
-  --orange: #e98800;
-  --gray: rgba(231, 231, 231, 0.38);
-  --blue: #0d6efd;
+  --black: #3d3d3d;
+  --blue: #3741fa;
+  --green: #9cddab;
+  --pink: #fb7d93;
+  --yellow: #FFEC59;
+  --white: #f7f2eb;
 }
 
 .btn-primary-cta {
-  background-color: var(--orange);
+  background-color: #9cddab;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -17,7 +20,7 @@
 
 
   &:hover {
-    background-color: darken(#e98800, 10%);
+    background-color: darken(#9cddab, 10%);
   }
 }
 
@@ -44,5 +47,59 @@
   border-color: white;
   background-color: red;
   color: white;
+  }
+}
+
+.btn-outline-primary {
+  border-color: #3741fa;
+  color: #3741fa;
+
+  &:hover {
+    background-color: #3741fa;
+    color: white;
+  }
+}
+
+.btn-outline-secondary {
+  border-color: #9cddab;
+  color: #9cddab;
+
+  &:hover {
+    background-color: #9cddab;
+    color: white;
+  }
+}
+
+.btn-outline-tertiary {
+  border-color: #fb7d93;
+  color: #fb7d93;
+
+  &:hover {
+    background-color: #fb7d93;
+    color: white;
+  }
+}
+
+.btn-light {
+  background-color: white;
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+  }
+}
+
+.btn-outline-danger {
+  border-color: red;
+  color: red;
+
+  &:hover {
+    background-color: red;
+    color: white;
   }
 }

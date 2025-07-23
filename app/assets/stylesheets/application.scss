@@ -9,7 +9,31 @@
 
 // Your CSS partials
 @import "components/index";
+@import "pages/home";
 @import "pages/index";
+@import "pages/public_index";
+@import "pages/show";
+@import "pages/new";
+@import "pages/edit";
 @import "components/button";
 @import "components/card";
 @import "components/form";
+@import "components/navbar";
+@import "components/trip_card";
+@import "components/header";
+
+// Navbar styles
+//@import "shared/navbar";
+
+// Global font styles
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Poppins:wght@600&display=swap');
+
+//colors
+:root {
+  --black: #3d3d3d;
+  --blue: #3741fa;
+  --green: #9cddab;
+  --pink: #fb7d93;
+  --yellow: #FFEC59;
+  --white: #f7f2eb;
+}

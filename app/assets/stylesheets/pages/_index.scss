@@ -1,2 +1,42 @@
-// Import page-specific CSS files here.
-@import "home";
+// Trips Index Styles
+.trips-index {
+  .btn-primary-cta {
+    background-color: #9cddab;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    padding: 0.6rem 1.5rem;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: darken(#9cddab, 8%);
+      color: white;
+    }
+  }
+
+  .trip-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-title {
+      color: #3741FA;
+    }
+
+    .trip-actions .btn {
+      padding: 0.35rem 0.5rem;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

@@ -4,6 +4,8 @@ class Trip < ApplicationRecord
   has_many :likes, through: :checklist_items
   has_many :items, through: :checklist_items
 
+  has_one_attached :cover_image
+
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true

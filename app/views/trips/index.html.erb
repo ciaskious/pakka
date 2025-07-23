@@ -1,22 +1,72 @@
 <div class="trips-index">
-  <div class="col-md-8 mx-auto">
-    <h1>My Trips</h1>
-    <p>Manage your trips and checklist items</p>
+  <!-- Header Section -->
+  <div class="trips-header py-5 text-center">
+    <div class="container">
+      <h1 class="display-5 fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">My Trips</h1>
+      <p class="lead text-muted" style="font-family: 'DM Sans', sans-serif;">Manage your trips and checklist items</p>
+      <%= link_to "New Trip", new_trip_path, class: "btn btn-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+    </div>
+  </div>
 
-    <%= link_to "New Trip", new_trip_path, class: "btn btn-primary" %>
+  <!-- Trips Grid -->
+  <div class="container py-5">
+    <div class="row g-4">
+      <% if @trips.any? %>
+        <% @trips.each do |trip| %>
+          <div class="col-12 col-sm-6 col-lg-4">
+            <div class="trip-card card shadow-sm border-0 h-100" style="font-family: 'DM Sans', sans-serif;">
+              <% if trip.cover_image.attached? %>
+                <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
+              <% else %>
+                <div class="trip-card-img-placeholder d-flex align-items-center justify-content-center" style="height: 180px; background-color: #f8f9fa;">
+                  <i class="fas fa-suitcase-rolling text-muted" style="font-size: 3rem;"></i>
+                </div>
+              <% end %>
 
-    <% @trips.each do |trip| %>
-      <div>
-        <h3><%= trip.title %></h3>
-        <p><%= trip.destination %>, <%= trip.country %></p>
-        <p>Items: <%= trip.checklist_items.count %></p>
-
-        <%= link_to "View", trip %>
-        <%= link_to "Edit", edit_trip_path(trip) %>
-        <%= link_to "Duplicate", duplicate_trip_path(trip), method: :post %>
-        <%= link_to "Delete", trip, method: :delete, confirm: "Are you sure?" %>
-      </div>
-    <% end %>
-    <%= link_to "home page", root_path %>
+              <div class="card-body">
+                <h3 class="card-title h5 fw-bold" style="font-family: 'Poppins', sans-serif;"><%= trip.title %></h3>
+                <p class="card-text text-muted mb-2">
+                  <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                  <%= trip.destination %>, <%= trip.country %>
+                </p>
+                <p class="card-text small text-muted mb-3">
+                  <i class="fas fa-calendar-alt text-primary me-1"></i>
+                  <%= trip.start_date.to_formatted_s(:short) %> - <%= trip.end_date.to_formatted_s(:short) %>
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge bg-light text-dark">
+                    <i class="fas fa-list-check me-1"></i>
+                    <%= trip.checklist_items.count %> items
+                  </span>
+                  <div class="trip-actions">
+                    <%= link_to trip_path(trip), class: "btn btn-sm btn-outline-primary me-1", title: "View" do %>
+                      <i class="fas fa-eye"></i>
+                    <% end %>
+                    <%= link_to edit_trip_path(trip), class: "btn btn-sm btn-outline-secondary me-1", title: "Edit" do %>
+                      <i class="fas fa-pencil"></i>
+                    <% end %>
+                    <%= link_to duplicate_trip_path(trip), method: :post, class: "btn btn-sm btn-outline-tertiary me-1", title: "Duplicate" do %>
+                      <i class="fas fa-copy"></i>
+                    <% end %>
+                    <%= link_to trip_path(trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger", title: "Delete" do %>
+                      <i class="fas fa-trash"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="col-12 text-center py-5">
+          <div class="empty-state">
+            <i class="fas fa-suitcase text-muted mb-4" style="font-size: 4rem;"></i>
+            <h3 class="h4 mb-3" style="font-family: 'Poppins', sans-serif;">No trips yet</h3>
+            <p class="text-muted mb-4" style="font-family: 'DM Sans', sans-serif;">Start by creating your first trip packing checklist</p>
+            <%= link_to "Create New Trip", new_trip_path, class: "btn btn-primary px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

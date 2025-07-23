@@ -1,16 +1,96 @@
-<div class="home-page">
-  <div class="col-md-8 mx-auto">
-      <h1>Welcome to PAKKA ⛱️</h1>
-        <p>Hello girls, this is your app speaking 🥳😂🥳💕😎</p>
+<!-- Hero Section -->
+<section class="hero d-flex justify-content-center align-items-center text-center">
+  <div class="hero-content">
+    <h1 class="display-4 fw-bold">From Lists to Adventures: <br> Plan less. Pack better. Travel together. ⛱️</h1>
+    <p class="lead">With Pakka, your trips get easier — share your list, pack smart, and never forget a thing again 🧳</p>
+    <%= link_to "Start a New Trip", new_trip_path, class: "btn btn-primary-cta mt-3" %>
+  </div>
+</section>
 
-        <p>PAKKA is a simple app to manage your trips and checklist items.</p>
-        <p>Use the links below to get started:</p>
-        <ul>
-          <li><%= link_to "My Trips", trips_path %></li>
-          <li><%= link_to "Community Trips", public_index_trips_path %></li>
-          <li><%= link_to "New Trip", new_trip_path %></li>
-        </ul>
-        <p>Happy travels! 🌍✈️</p>
+<!-- Divider -->
+<div class="section-divider my-5 text-center">
+  <span>↓ Discover more trips ↓</span>
+</div>
 
-      </div>
+<!-- Community Trips Section -->
+<section class="community-trips-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold text-brand-blue">🌍 Community Trips</h2>
+    <div class="row justify-content-center">
+
+      <% @community_trips.each do |trip| %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="trip-card card h-100 border-0 shadow-sm rounded-4">
+            <% if trip.respond_to?(:cover_image) && trip.cover_image.attached? %>
+              <%= image_tag trip.cover_image, class: "card-img-top rounded-top-4", style: "height: 220px; object-fit: cover;" %>
+            <% else %>
+              <div class="no-image d-flex align-items-center justify-content-center rounded-top-4">
+                <span class="fst-italic text-muted">No image available</span>
+              </div>
+            <% end %>
+
+            <div class="card-body d-flex flex-column justify-content-between">
+              <div>
+                <h5 class="card-title fw-bold text-brand-blue"><%= trip.title %></h5>
+                <% if trip.respond_to?(:description) && trip.description.present? %>
+                  <p class="card-text text-muted small"><%= truncate(trip.description, length: 100) %></p>
+                <% end %>
+              </div>
+              <%= link_to "View Trip", trip_path(trip), class: "btn btn-brand-outline mt-3" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if @community_trips.empty? %>
+        <div class="text-center text-muted">
+          <p>No community trips yet. Be the first to share!</p>
+        </div>
+      <% end %>
+
     </div>
+  </div>
+</section>
+
+
+<!-- Horizontal Scroll Section -->
+<section class="scroll-trips-section py-5">
+  <div class="container-fluid px-4">
+    <h2 class="mb-4 fw-bold text-brand-blue">🌟 Discover Trips by the Community</h2>
+
+    <div class="scroll-container d-flex overflow-auto gap-4 pb-3">
+
+      <% @community_trips.each do |trip| %>
+        <div class="trip-card card border-0 shadow-sm rounded-4 flex-shrink-0" style="width: 280px;">
+          <% if trip.cover_image.attached? %>
+            <%= image_tag trip.cover_image, class: "card-img-top rounded-top-4", style: "height: 180px; object-fit: cover;" %>
+          <% else %>
+            <div class="d-flex align-items-center justify-content-center bg-light rounded-top-4" style="height: 180px;">
+              <span class="text-muted fst-italic">No image</span>
+            </div>
+          <% end %>
+
+          <div class="card-body d-flex flex-column">
+            <h6 class="fw-bold text-brand-blue mb-1"><%= trip.title %></h6>
+            <p class="mb-1 text-muted small">📍 <%= trip.location %></p>
+
+            <% if trip.user.present? %>
+              <div class="d-flex align-items-center mb-2">
+                <% if trip.user.avatar.attached? %>
+                  <%= image_tag trip.user.avatar.variant(resize_to_fill: [30, 30]), class: "rounded-circle me-2", alt: "#{trip.user.first_name}'s avatar" %>
+                <% else %>
+                  <div class="rounded-circle bg-brand-green text-white d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">
+                    <%= trip.user.first_name.first.upcase %>
+                  </div>
+                <% end %>
+                <small class="text-muted">Shared by <strong><%= trip.user.first_name %></strong></small>
+              </div>
+            <% end %>
+
+            <%= link_to "View Trip", trip_path(trip), class: "btn btn-outline-primary btn-sm mt-auto" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

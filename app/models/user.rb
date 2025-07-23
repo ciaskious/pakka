@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :likes, dependent: :destroy
 
+  has_one_attached :avatar
+
   validates :name, presence: true
 
   # workaround method to solve a devise error
