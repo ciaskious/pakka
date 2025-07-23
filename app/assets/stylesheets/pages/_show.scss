@@ -1,26 +1,42 @@
-// Trip Show Styles
 .trip-show-container {
   font-family: 'DM Sans', sans-serif;
 
+  // Typography
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  p, li, label, input, select, button {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  // Trip Header
   .trip-header {
     color: white;
-    padding: 3rem 0;
+    padding: 4rem 0;
     background-color: #3741FA;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     margin-bottom: 2rem;
     text-align: center;
+    transition: background-image 0.3s ease-in-out;
+
+    &.with-image {
+      background-blend-mode: overlay;
+    }
 
     .trip-title {
       font-family: 'Poppins', sans-serif;
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
     }
 
     .trip-destination {
       font-size: 1.25rem;
-      opacity: 0.9;
+      font-weight: 500;
+      opacity: 0.95;
       margin-bottom: 0.25rem;
     }
 
@@ -53,6 +69,10 @@
       &:hover {
         background-color: #f8f9fa;
       }
+
+      label {
+        font-family: 'DM Sans', sans-serif;
+      }
     }
   }
 
@@ -72,5 +92,22 @@
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    border-radius: 10px;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 10px;
+  }
+
+  .add-item-form {
+    border-radius: 12px;
+  }
+
+  .card {
+    border-radius: 16px;
   }
 }

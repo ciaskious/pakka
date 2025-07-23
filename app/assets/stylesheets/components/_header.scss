@@ -1,0 +1,148 @@
+// my trips header
+
+.trips-header {
+  background-image: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url('pakka-banner-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 0;
+  color: white;
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .trips-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .trips-subtitle {
+    color: #f7f2eb;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .btn-primary-cta {
+    background-color: #FFEC59;
+    border: none;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken(#FFEC59, 8%);
+      color: white;
+    }
+  }
+}
+
+
+// community trips header
+
+.community-header{
+  background-image: linear-gradient(rgba(255, 236, 88, 0.7), rgba(255, 236, 88, 0.7)), url('pakka-banner-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 0;
+  color: white;
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .community-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+
+  .community-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .btn-primary-cta {
+    background-color: #FB7D92;
+    border: none;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken(#FB7D92, 8%);
+      color: white;
+    }
+  }
+}
+
+
+// new trip header
+
+.trip-form-header {
+  background-image: linear-gradient(rgba(251, 125, 147, 0.7), rgba(251, 125, 147, 0.7)), url('pakka-banner-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 0;
+  color: white;
+
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .trip-form-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .trip-form-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: rgba(0,0,0,0.7);
+  }
+}

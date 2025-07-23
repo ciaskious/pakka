@@ -1,6 +1,6 @@
 <div class="trips-index">
   <!-- Header Section -->
-  <div class="trips-header py-5 text-center" style="background-color: #F7F2EB;">
+  <div class="trips-header py-5 text-center">
     <div class="container">
       <h1 class="display-5 fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">My Trips</h1>
       <p class="lead text-muted" style="font-family: 'DM Sans', sans-serif;">Manage your trips and checklist items</p>
@@ -45,7 +45,7 @@
                     <%= link_to edit_trip_path(trip), class: "btn btn-sm btn-outline-secondary me-1", title: "Edit" do %>
                       <i class="fas fa-pencil"></i>
                     <% end %>
-                    <%= link_to duplicate_trip_path(trip), method: :post, class: "btn btn-sm btn-outline-info me-1", title: "Duplicate" do %>
+                    <%= link_to duplicate_trip_path(trip), method: :post, class: "btn btn-sm btn-outline-tertiary me-1", title: "Duplicate" do %>
                       <i class="fas fa-copy"></i>
                     <% end %>
                     <%= link_to trip_path(trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger", title: "Delete" do %>

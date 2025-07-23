@@ -7,49 +7,6 @@ body {
   color: #222;
 }
 
-.navbar {
-  background-color: #F7F2EB;
-
-  .pakka-logo {
-    height: 36px;
-    width: auto;
-  }
-
-  .pakka-brand {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #3741FA;
-  }
-
-  .nav-link {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    margin-left: 1rem;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: rgba(55, 65, 250, 0.1);
-    }
-
-    &.active {
-      font-weight: 600;
-    }
-
-    &.my-trips:hover {
-      color: #3741FA;
-    }
-
-    &.community-trips:hover {
-      color: #9CDDAB;
-    }
-
-    &.new-trip:hover {
-      color: #FB7D92;
-    }
-  }
-}
-
 // Hero
 .hero {
   background: url('packing.jpg') center/cover no-repeat;

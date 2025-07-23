@@ -32,6 +32,11 @@
     border-radius: 0.5rem;
     transition: all 0.3s ease;
     color: #333;
+
+    &:hover {
+      color: #9CDDAB;
+      background-color: rgba(156, 221, 171, 0.1);
+    }
   }
 
   // 🔵 My Trips link
@@ -49,11 +54,11 @@
   // 🟢 Community Trips link
   .community-trips-link {
     &:hover {
-      color: #9CDDAB;
-      background-color: rgba(156, 221, 171, 0.1);
+      color: #FFEC59;
+      background-color: rgba(255, 236, 88, 0.1);
     }
     &.active {
-      color: #9CDDAB;
+      color: #FFEC59;
       font-weight: 600;
     }
   }

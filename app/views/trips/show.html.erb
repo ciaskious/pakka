@@ -1,6 +1,6 @@
 <div class="trip-show-container">
   <!-- Trip Header -->
-  <section class="trip-header" style="<%= 'background: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url(' + url_for(@trip.cover_image) + ');' if @trip.cover_image.attached? %>">
+  <section class="trip-header <%= 'has-image' if @trip.cover_image.attached? %>" style="<%= @trip.cover_image.attached? ? 'background-image: linear-gradient(rgba(55, 65, 250, 0.6), rgba(55, 65, 250, 0.6)), url(' + url_for(@trip.cover_image) + ');' : '' %>">
     <div class="container">
       <div class="trip-meta">
         <h1 class="trip-title"><%= @trip.title %></h1>
@@ -70,8 +70,8 @@
           <div class="actions-card card shadow-sm border-0">
             <div class="card-body">
               <div class="d-grid gap-2">
-                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-primary" %>
-                <%= link_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-secondary" %>
+                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary" %>
+                <%= link_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
                 <%= link_to "Delete Trip", @trip, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
                 <%= link_to "Back to Trips", trips_path, class: "btn btn-light" %>
               </div>

@@ -1,7 +1,7 @@
 // Trips Index Styles
 .trips-index {
   .btn-primary-cta {
-    background-color: #FB7D92;
+    background-color: #9cddab;
     border: none;
     color: white;
     font-weight: bold;
@@ -10,7 +10,7 @@
     transition: 0.3s ease;
 
     &:hover {
-      background-color: darken(#FB7D92, 8%);
+      background-color: darken(#9cddab, 8%);
       color: white;
     }
   }
