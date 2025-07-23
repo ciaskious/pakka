@@ -1,0 +1,42 @@
+<h1>Hey <%= current_user.first_name %></h1>
+
+<% if current_user.avatar.attached? %>
+  <%= cl_image_tag current_user.avatar.key %>
+<% else %>
+  <p>No avatar uploaded</p>
+<% end %>
+
+<%= form_with model: current_user, url: user_registration_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+  <!-- other fields -->
+
+  <div>
+    <%= f.label :avatar %><br>
+    <%= f.file_field :avatar%>
+  </div>
+
+  <%= f.submit "Update Profile" %>
+<% end %>
+
+<h3>Here are your reusable items</h3>
+<h6>These are things that you always need in your backpack, no matter where you travel</h6>
+
+<ul>
+  <% @items.each do |item| %>
+    <turbo-frame id="item_<%= item.id %>">
+      <%= render "items/item", item: item %>
+    </turbo-frame>
+  <% end %>
+</ul>
+
+<h4>Would you like to add a new item to your list?</h4>
+<%= form_with model: @item, url: items_path, local: true do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :category %>
+    <%= f.text_field :category %>
+  </div>
+  <%= f.submit "Add Item" %>
+<% end %>
