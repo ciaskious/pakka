@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get "users/profile"
-  devise_for :users
-  # Auth (devise ou perso)
-  # devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   # Homepage
   root to: "pages#home"

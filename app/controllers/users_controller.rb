@@ -5,4 +5,10 @@ class UsersController < ApplicationController
     @item = Item.new
     @items = current_user.items
   end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:avatar)
+  end
 end

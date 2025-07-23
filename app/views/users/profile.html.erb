@@ -1,10 +1,22 @@
 <h1>Hey <%= current_user.first_name %></h1>
 
 <% if current_user.avatar.attached? %>
-  <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]) %>
+  <%= cl_image_tag current_user.avatar.key %>
 <% else %>
   <p>No avatar uploaded</p>
 <% end %>
+
+<%= form_with model: current_user, url: user_registration_path, method: :patch, local: true, html: { multipart: true } do |f| %>
+  <!-- other fields -->
+
+  <div>
+    <%= f.label :avatar %><br>
+    <%= f.file_field :avatar%>
+  </div>
+
+  <%= f.submit "Update Profile" %>
+<% end %>
+
 <h3>Here are your reusable items</h3>
 <h6>These are things that you always need in your backpack, no matter where you travel</h6>
 
