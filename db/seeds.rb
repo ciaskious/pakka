@@ -8,20 +8,20 @@ puts "🌱 Seeding database..."
 
 # === User data ===
 user_data = [
-  { email: "duparcrobin@gmail.com", first_name: "Robin", password: "1946kitt" },
-  { email: "ciaskious@gmail.com", first_name: "Asia", password: "1946kitt" },
-  { email: "joanagaalves@gmail.com", first_name: "Joana", password: "1946kitt" },
+  { email: "duparcrobin@gmail.com", username: "Robin", password: "1946kitt" },
+  { email: "ciaskious@gmail.com", username: "Asia", password: "1946kitt" },
+  { email: "joanagaalves@gmail.com", username: "Joana", password: "1946kitt" },
 ]
 
 # === Reusable items ===
 shared_items = [
-  { name: "Toothbrush", category: "Toiletries" },
-  { name: "Passport", category: "Documents" },
-  { name: "Flip flops", category: "Clothing" },
-  { name: "Notebook", category: "Stationery" },
-  { name: "Snacks", category: "Food" },
-  { name: "Travel pillow", category: "Comfort" },
-  { name: "Power bank", category: "Electronics" },
+  { name: "Toothbrush", description: "Toiletries" },
+  { name: "Passport", description: "Documents" },
+  { name: "Flip flops", description: "Clothing" },
+  { name: "Notebook", description: "Stationery" },
+  { name: "Snacks", description: "Food" },
+  { name: "Travel pillow", description: "Comfort" },
+  { name: "Power bank", description: "Electronics" },
 ]
 
 user_data.each_with_index do |user_info, i|
@@ -45,6 +45,7 @@ user_data.each_with_index do |user_info, i|
   # Add checklists items (linked)
   items.each do |item|
     trip.checklist_items.create!(
+      name: item.name,
       item: item,
       checked: [true, false].sample,
     )
