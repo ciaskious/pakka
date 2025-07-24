@@ -1,6 +1,4 @@
-// Community Trips Styles
 .community-trips-container {
-
   .community-trip-card {
     border-radius: 12px;
     overflow: hidden;
@@ -15,11 +13,6 @@
       color: #3741FA;
     }
 
-    .user-avatar-placeholder {
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
     .btn-primary {
       background-color: #FB7D92;
       border: none;
@@ -31,6 +24,27 @@
         background-color: darken(#FB7D92, 8%);
         color: white;
       }
+    }
+
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #9CDDAB;
+    }
+
+    .user-avatar-fallback {
+      width: 30px;
+      height: 30px;
+      background-color: #9CDDAB;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
   }
 }
