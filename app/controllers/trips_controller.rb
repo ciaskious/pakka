@@ -20,6 +20,15 @@ class TripsController < ApplicationController
     @trip.user = current_user
 
     if @trip.save
+      # Create checklist_items from user's saved items
+      current_user.items.each do |item|
+        @trip.checklist_items.create!(
+          name: item.name,
+          category: item.category,
+          item: item,
+          checked: false,
+        )
+      end
       redirect_to @trip, notice: "Trip created!"
     else
       puts @trip.errors.full_messages
