@@ -1,5 +1,5 @@
 class Trip < ApplicationRecord
-  belongs_to :user, optional: true  # Temporaire en attendant Devise
+  belongs_to :user
   has_many :checklist_items, dependent: :destroy
   has_many :likes, through: :checklist_items
   has_many :items, through: :checklist_items
