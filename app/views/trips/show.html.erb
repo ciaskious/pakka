@@ -22,13 +22,12 @@
             </div>
             <div class="card-body">
               <!-- Add Item Form -->
-          <!--
               <div class="add-item-form mb-4">
                 <h3 class="h5 mb-3">Add a checklist item</h3>
                 <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
                   <div class="row g-3">
                     <div class="col-md-6">
-                      <%= f.label :name, "Or create custom item", class: "form-label" %>
+                      <%= f.label :name, "Create custom item", class: "form-label" %>
                       <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
                     </div>
                     <div class="col-12">
@@ -37,7 +36,7 @@
                   </div>
                 <% end %>
               </div>
-              -->
+
               <!-- Checklist Items -->
               <% if @checklist_items.any? %>
                 <ul class="checklist-items list-group list-group-flush">
