@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   # Trips & Checklists
   resources :trips do
     member do
-      post :duplicate       # /trips/:id/duplicate
-      get :share, to: "trips#public_show"  # /trips/:id/share
+      post :duplicate
+      get :share, to: "trips#public_show"
     end
 
     collection do
-      get :public_index, path: "community"  # /community
+      get :public_index, path: "community"
     end
 
     resources :checklist_items, path: "items", only: [:create]
@@ -25,6 +25,14 @@ Rails.application.routes.draw do
 
   get "/profile", to: "users#profile", as: :profile
   resources :items, except: [:show]
+
+  # User Profile
+  resource :user do
+    patch '/users/avatar', to: 'users#update_avatar', as: :user_avatar
+  end
+
+  # Reusable Items
+  resources :reusable_items
 
   # APIs
   post "/geocode", to: "locations#geocode"
