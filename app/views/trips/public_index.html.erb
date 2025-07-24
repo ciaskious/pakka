@@ -7,47 +7,57 @@
     </div>
   </div>
 
-  <!-- Trips Grid -->
+  <!-- Trips Grid Section -->
   <div class="container py-5">
     <div class="row g-4">
       <% if @trips.any? %>
         <% @trips.each do |trip| %>
           <div class="col-12 col-sm-6 col-lg-4">
-            <div class="community-trip-card card shadow-sm border-0 h-100" style="font-family: 'DM Sans', sans-serif;">
-              <% if trip.cover_image.attached? %>
-                <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
-              <% else %>
-                <div class="trip-card-img-placeholder d-flex align-items-center justify-content-center" style="height: 180px; background-color: #f8f9fa;">
-                  <i class="fas fa-suitcase-rolling text-muted" style="font-size: 3rem;"></i>
-                </div>
-              <% end %>
-
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <div class="user-avatar-placeholder rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; background-color: #9CDDAB; color: white;">
-                    <%= trip.user.email.first.upcase %>
+            <%= link_to trip_path(trip), class: "text-decoration-none text-dark" do %>
+              <div class="community-trip-card card shadow-sm border-0 h-100" style="font-family: 'DM Sans', sans-serif;">
+                <% if trip.cover_image.attached? %>
+                  <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
+                <% else %>
+                  <div class="trip-card-img-placeholder d-flex align-items-center justify-content-center" style="height: 180px; background-color: #f8f9fa;">
+                    <i class="fas fa-suitcase-rolling text-muted" style="font-size: 3rem;"></i>
                   </div>
-                  <small class="text-muted"><%= trip.user.username || trip.user.email.split('@').first %></small>
-                </div>
+                <% end %>
 
-                <h3 class="card-title h5 fw-bold" style="font-family: 'Poppins', sans-serif;"><%= trip.title %></h3>
-                <p class="card-text text-muted mb-2">
-                  <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                  <%= trip.destination %>, <%= trip.country %>
-                </p>
-                <p class="card-text small text-muted mb-3">
-                  <i class="fas fa-calendar-alt text-primary me-1"></i>
-                  <%= trip.start_date.to_formatted_s(:short) %> - <%= trip.end_date.to_formatted_s(:short) %>
-                </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="badge bg-light text-dark">
-                    <i class="fas fa-list-check me-1"></i>
-                    <%= trip.checklist_items.count %> items
-                  </span>
-                  <%= link_to "View Trip", trip_path(trip), class: "btn btn-sm btn-primary px-3", style: "font-family: 'DM Sans', sans-serif; border-radius: 20px;" %>
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-2">
+                    <% if trip.user.avatar.attached? %>
+                      <%= cl_image_tag trip.user.avatar.key, class: "rounded-circle me-2", alt: "User avatar", style: "width: 30px; height: 30px; object-fit: cover; border: 2px solid #9CDDAB;" %>
+                    <% else %>
+                      <div class="rounded-circle bg-success d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 0.8rem; color: white; font-weight: bold;">
+                        <%= trip.user.first_name&.first&.upcase || trip.user.email.first.upcase %>
+                      </div>
+                    <% end %>
+                    <small class="text-muted" style="font-family: 'DM Sans', sans-serif;">
+                      <%= trip.user.username || trip.user.email.split('@').first %>
+                    </small>
+                  </div>
+
+                  <h3 class="card-title h5 fw-bold" style="font-family: 'Poppins', sans-serif;"><%= trip.title %></h3>
+                  <p class="card-text text-muted mb-2">
+                    <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                    <%= trip.destination %>, <%= trip.country %>
+                  </p>
+                  <p class="card-text small text-muted mb-3">
+                    <i class="fas fa-calendar-alt text-primary me-1"></i>
+                    <%= trip.start_date.to_formatted_s(:short) %> - <%= trip.end_date.to_formatted_s(:short) %>
+                  </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-light text-dark">
+                      <i class="fas fa-list-check me-1"></i>
+                      <%= trip.checklist_items.count %> items
+                    </span>
+                    <span class="btn btn-sm btn-outline-primary px-3" style="font-family: 'DM Sans', sans-serif; border-radius: 20px;">
+                      View Trip
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           </div>
         <% end %>
       <% else %>
