@@ -1,0 +1,113 @@
+.trip-show-container {
+  font-family: 'DM Sans', sans-serif;
+
+  // Typography
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  p, li, label, input, select, button {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  // Trip Header
+  .trip-header {
+    color: white;
+    padding: 4rem 0;
+    background-color: #3741FA;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 2rem;
+    text-align: center;
+    transition: background-image 0.3s ease-in-out;
+
+    &.with-image {
+      background-blend-mode: overlay;
+    }
+
+    .trip-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-destination {
+      font-size: 1.25rem;
+      font-weight: 500;
+      opacity: 0.95;
+      margin-bottom: 0.25rem;
+    }
+
+    .trip-dates {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+  }
+
+  .checklist-card, .actions-card {
+    border-radius: 12px;
+    overflow: hidden;
+
+    .card-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      background-color: white;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+  }
+
+  .checklist-items {
+    .list-group-item {
+      padding: 0.75rem 1.25rem;
+      border-color: rgba(0,0,0,0.05);
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+
+      label {
+        font-family: 'DM Sans', sans-serif;
+      }
+    }
+  }
+
+  .form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0.15em;
+
+    &:checked {
+      background-color: #9CDDAB;
+      border-color: #9CDDAB;
+    }
+  }
+
+  .add-item-form {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    border-radius: 10px;
+  }
+
+  .form-control,
+  .form-select {
+    border-radius: 10px;
+  }
+
+  .add-item-form {
+    border-radius: 12px;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+}

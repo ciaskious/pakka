@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Auth (devise ou perso)
-  # devise_for :users
+  get "users/profile"
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   # Homepage
   root to: "pages#home"
@@ -22,7 +21,10 @@ Rails.application.routes.draw do
     resources :checklist_items, path: "items", only: [:create]
   end
 
-  resources :checklist_items, path: "items", only: [:update, :destroy]
+  resources :checklist_items, path: "trip_items", only: [:update, :destroy]
+
+  get "/profile", to: "users#profile", as: :profile
+  resources :items, except: [:show]
 
   # APIs
   post "/geocode", to: "locations#geocode"

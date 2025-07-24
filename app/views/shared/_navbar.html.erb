@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2" do %>
+      <%= image_tag("pakka-logo.png", alt: "Pakka logo", height: "48", class: "navbar-logo") %>
+      <span class="pakka-title">Pakka</span>
+    <% end %>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to "My Trips", trips_path, class: "nav-link my-trips-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Community Trips", public_index_trips_path, class: "nav-link community-trips-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "New Trip", new_trip_path, class: "nav-link new-trip-link" %>
+        </li>
+      </ul>
+
+
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= current_user.email %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><%= link_to "My Profile", users_profile_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to "Account Settings", edit_user_registration_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-secondary ms-2" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

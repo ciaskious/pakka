@@ -1,0 +1,7 @@
+<turbo-frame id="item_<%= item.id %>">
+  <li>
+    <%= item.name %> (Category: <%= item.category %>)
+    <%= link_to "Edit", edit_item_path(item), data: { turbo_frame: "item_#{item.id}" } %>
+    <%= button_to "Delete", item_path(item), method: :delete, data: { confirm: "Sure?" } %>
+  </li>
+</turbo-frame>

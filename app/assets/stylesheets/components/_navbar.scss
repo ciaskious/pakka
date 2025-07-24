@@ -1,12 +1,104 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
-}
+.navbar {
+  background-color: #FCF9F2 !important;
+  font-family: 'DM Sans', sans-serif;
+  padding: 1rem 0;
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+  .navbarlogo {
+    height: 56px;
+    width: auto;
+  }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+
+
+    .pakka-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #9CDDAB;
+
+      &:hover {
+        color: darken(#9CDDAB, 10%);
+      }
+    }
+  }
+
+  .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    color: #333;
+
+    &:hover {
+      color: #9CDDAB;
+      background-color: rgba(156, 221, 171, 0.1);
+    }
+  }
+
+  // 🔵 My Trips link
+  .my-trips-link {
+    &:hover {
+      color: #3741FA;
+      background-color: rgba(55, 65, 250, 0.1);
+    }
+    &.active {
+      color: #3741FA;
+      font-weight: 600;
+    }
+  }
+
+  // 🟢 Community Trips link
+  .community-trips-link {
+    &:hover {
+      color: #FFEC59;
+      background-color: rgba(255, 236, 88, 0.1);
+    }
+    &.active {
+      color: #FFEC59;
+      font-weight: 600;
+    }
+  }
+
+  // 🩷 New Trip link
+  .new-trip-link {
+    &:hover {
+      color: #FB7D92;
+      background-color: rgba(251, 125, 146, 0.1);
+    }
+    &.active {
+      color: #FB7D92;
+      font-weight: 600;
+    }
+  }
+
+  .btn-outline-primary {
+    border-color: #9CDDAB;
+    color: #9CDDAB;
+
+    &:hover {
+      background-color: #9CDDAB;
+      color: white;
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+
+    .dropdown-item {
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        background-color: rgba(55, 65, 250, 0.1);
+        color: #3741FA;
+      }
+    }
+  }
 }
