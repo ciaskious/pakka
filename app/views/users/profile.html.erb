@@ -1,42 +1,82 @@
-<h1>Hey <%= current_user.first_name %></h1>
+  <!-- 🧑‍🦰 PROFILE HEADER SECTION -->
+  <section class="profile-header">
+    <div class="container text-white text-center">
+      <h1 class="fw-bold mb-4" style="font-family: Poppins, sans-serif;">Hi <%= current_user.first_name %> 👋</h1>
 
-<% if current_user.avatar.attached? %>
-  <%= cl_image_tag current_user.avatar.key %>
-<% else %>
-  <p>No avatar uploaded</p>
-<% end %>
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+        <% if current_user.avatar.attached? %>
+          <%= cl_image_tag current_user.avatar.key, class: "rounded-circle shadow-sm profile-avatar", alt: "Profile picture" %>
+        <% else %>
+          <div class="rounded-circle bg-light text-primary d-flex align-items-center justify-content-center shadow-sm profile-avatar-fallback">
+            <%= current_user.first_name.first.upcase %>
+          </div>
+        <% end %>
 
-<%= form_with model: current_user, url: user_registration_path, method: :patch, local: true, html: { multipart: true } do |f| %>
-  <!-- other fields -->
+        <%= form_with model: current_user, url: user_registration_path, method: :patch, local: true, html: { multipart: true, class: "d-flex flex-column gap-2" } do |f| %>
+          <%= f.label :avatar, "Upload Profile Picture", class: "form-label fw-bold" %>
+          <%= f.file_field :avatar, class: "form-control" %>
+          <%= f.submit "Save", class: "btn btn-outline-light mt-2" %>
+        <% end %>
+      </div>
+    </div>
+  </section>
 
-  <div>
-    <%= f.label :avatar %><br>
-    <%= f.file_field :avatar%>
-  </div>
+<div class="profile-container px-3 px-md-5">
+  <!-- 📊 STATS CARDS SECTION -->
+  <section class="stats-section my-5 py-4">
+    <h2 class="fw-bold mb-4 pakka-green" style="font-family: Poppins, sans-serif;">Your Travel Stats</h2>
 
-  <%= f.submit "Update Profile" %>
-<% end %>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm rounded-4 p-4 h-100">
+          <h5 class="fw-bold mb-1">🧭 Total Trips</h5>
+          <p class="display-6 fw-bold text-success"><%= @past_trips&.count || 0 %></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm rounded-4 p-4 h-100">
+          <h5 class="fw-bold mb-1">📍 Favorite Destination</h5>
+          <p class="h4 fw-bold text-primary"><%= current_user.favorite_destination || "N/A" %></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm rounded-4 p-4 h-100">
+          <h5 class="fw-bold mb-1">📅 Last Trip</h5>
+          <p class="h4 fw-bold text-muted">
+            <%= @past_trips&.first&.created_at&.strftime("%B %Y") || "N/A" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h3>Here are your reusable items</h3>
-<h6>These are things that you always need in your backpack, no matter where you travel</h6>
+  <!-- 🎒 REUSABLE ITEMS SECTION -->
+  <section class="reusable-items-section my-5 py-4">
+    <h2 class="fw-bold pakka-blue mb-3" style="font-family: Poppins, sans-serif;">Your Reusable Items</h2>
+    <p class="text-muted mb-4" style="font-family: DM Sans, sans-serif;">These are things you always need in your backpack.</p>
 
-<ul>
-  <% @items.each do |item| %>
-    <turbo-frame id="item_<%= item.id %>">
-      <%= render "items/item", item: item %>
-    </turbo-frame>
-  <% end %>
-</ul>
+    <ul class="list-group mb-4">
+      <% @items.each do |item| %>
+        <turbo-frame id="item_<%= item.id %>">
+          <%= render "items/item", item: item %>
+        </turbo-frame>
+      <% end %>
+    </ul>
 
-<h4>Would you like to add a new item to your list?</h4>
-<%= form_with model: @item, url: items_path, local: true do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div>
-    <%= f.label :category %>
-    <%= f.text_field :category %>
-  </div>
-  <%= f.submit "Add Item" %>
-<% end %>
+    <div class="card p-4 shadow-sm rounded-4">
+      <h4 class="fw-bold pakka-pink mb-3">Add a new item to your list</h4>
+
+      <%= form_with model: @item, url: items_path, local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :name, class: "form-label fw-semibold" %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :category, class: "form-label fw-semibold" %>
+          <%= f.text_field :category, class: "form-control" %>
+        </div>
+        <%= f.submit "Add Item", class: "btn btn-success rounded-pill" %>
+      <% end %>
+    </div>
+  </section>
+</div>
