@@ -40,10 +40,10 @@
                       <%= image_tag trip.user.avatar.variant(resize_to_fill: [30, 30]), class: "rounded-circle me-2", alt: "#{trip.user.first_name}'s avatar" %>
                     <% else %>
                       <div class="rounded-circle bg-brand-green text-white d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">
-                        <%= trip.user.first_name.first.upcase %>
+                        <%= trip.user.first_name&.first&.upcase || trip.user.email.first.upcase %>
                       </div>
                     <% end %>
-                    <small class="text-muted">Shared by <strong><%= trip.user.first_name %></strong></small>
+                    <small class="text-muted">Shared by <strong><%= trip.user.first_name || trip.user.username || trip.user.email.split('@').first %></strong></small>
                   </div>
                 <% end %>
               </div>

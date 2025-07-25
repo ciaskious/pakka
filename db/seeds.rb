@@ -8,9 +8,9 @@ puts "🌱 Seeding database..."
 
 # === User data ===
 user_data = [
-  { email: "duparcrobin@gmail.com", username: "Robin", password: "1946kitt" },
-  { email: "ciaskious@gmail.com", username: "Asia", password: "1946kitt" },
-  { email: "joanagaalves@gmail.com", username: "Joana", password: "1946kitt" },
+  { email: "duparcrobin@gmail.com", first_name: "Robin", password: "1946kitt" },
+  { email: "ciaskious@gmail.com", first_name: "Asia", password: "1946kitt" },
+  { email: "joanagaalves@gmail.com", first_name: "Joana", password: "1946kitt" },
 ]
 
 # === Reusable items ===
