@@ -1,0 +1,16 @@
+<%= form_with model: item,
+              url: item_path(item),
+              method: :patch,
+              local: false,
+              data: {
+                turbo: "false",
+                controller: "ajax-submit",
+                action: "ajax:success->inline-edit#update ajax:error->inline-edit#error"
+              },
+              html: { class: "edit-form" } do |f| %>
+
+  <%= f.text_field :name %>
+  <%= f.text_field :category %>
+  <%= f.submit "Save" %>
+  <button type="button" data-action="click->inline-edit#cancel">Cancel</button>
+<% end %>

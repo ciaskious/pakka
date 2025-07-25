@@ -8,6 +8,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = current_user.items.find(params[:id])
+    render partial: "item", locals: { item: @item }
   end
 
   def new
@@ -25,15 +26,15 @@ class ItemsController < ApplicationController
 
   def edit
     @item = current_user.items.find(params[:id])
-    render partial: "items/form", locals: { item: @item }
+    render partial: "items/edit", formats: [:html], locals: { item: @item }
   end
 
   def update
     @item = current_user.items.find(params[:id])
     if @item.update(item_params)
-      render partial: "items/item", locals: { item: @item }
+      render partial: "items/item", locals: { item: @item }, formats: [:html]
     else
-      render partial: "items/form", locals: { item: @item }, status: :unprocessable_entity
+      render partial: "items/edit", locals: { item: @item }, status: :unprocessable_entity
     end
   end
 
