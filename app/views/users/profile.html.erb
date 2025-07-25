@@ -61,7 +61,6 @@
           <div data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
             <div data-inline-edit-target="display">
               <%= render "items/item", item: item %>
-              <button data-action="click->inline-edit#showForm">Edit</button>
             </div>
             <div data-inline-edit-target="form" class="d-none">
               <%= render "items/edit", item: item %>

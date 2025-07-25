@@ -1,8 +1,8 @@
 <%= form_with model: item,
               url: item_path(item),
               method: :patch,
-              local: false,
               data: {
+                remote: true,
                 turbo: "false",
                 controller: "ajax-submit",
                 action: "ajax:success->inline-edit#update ajax:error->inline-edit#error"

@@ -19,8 +19,8 @@ export default class extends Controller {
   }
 
   update(event) {
-    const [html] = event.detail;
-    this.displayTarget.innerHTML = html;
+    const [_data, _status, xhr] = event.detail;
+    this.displayTarget.innerHTML = xhr.responseText;
     this.cancel();
   }
 

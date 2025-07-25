@@ -32,7 +32,8 @@ class ItemsController < ApplicationController
   def update
     @item = current_user.items.find(params[:id])
     if @item.update(item_params)
-      render partial: "items/item", locals: { item: @item }, formats: [:html]
+      html = render_to_string(partial: "items/item", formats: [:html], locals: { item: @item })
+      render plain: html, content_type: "text/html"
     else
       render partial: "items/edit", locals: { item: @item }, status: :unprocessable_entity
     end
