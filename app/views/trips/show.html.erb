@@ -68,7 +68,7 @@
               <div class="d-grid gap-2">
                 <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary" %>
                 <%= link_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
-                <%= link_to "Delete Trip", @trip, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+                <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
                 <%= link_to "Back to Trips", trips_path, class: "btn btn-light" %>
               </div>
             </div>
