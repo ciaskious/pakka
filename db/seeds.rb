@@ -15,13 +15,13 @@ user_data = [
 
 # === Reusable items ===
 shared_items = [
-  { name: "Toothbrush", description: "Toiletries" },
-  { name: "Passport", description: "Documents" },
-  { name: "Flip flops", description: "Clothing" },
-  { name: "Notebook", description: "Stationery" },
-  { name: "Snacks", description: "Food" },
-  { name: "Travel pillow", description: "Comfort" },
-  { name: "Power bank", description: "Electronics" },
+  { name: "Toothbrush", category: "Toiletries" },
+  { name: "Passport", category: "Documents" },
+  { name: "Flip flops", category: "Clothing" },
+  { name: "Notebook", category: "Stationery" },
+  { name: "Snacks", category: "Food" },
+  { name: "Travel pillow", category: "Comfort" },
+  { name: "Power bank", category: "Electronics" },
 ]
 
 user_data.each_with_index do |user_info, i|
