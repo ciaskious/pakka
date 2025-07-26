@@ -10,6 +10,9 @@ AllCops:
     - 'tmp/**/*'
     - 'test/**/*'
 
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
 Style/ConditionalAssignment:
   Enabled: false
 Style/StringLiterals:

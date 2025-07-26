@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_item, only: %i[edit update destroy]
 
   def index
     @items = current_user.items
@@ -8,6 +8,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = current_user.items.find(params[:id])
+    render partial: "item", locals: { item: @item }
   end
 
   def new
@@ -17,23 +18,26 @@ class ItemsController < ApplicationController
   def create
     @item = current_user.items.new(item_params)
     if @item.save
-      redirect_to profile_path, notice: "Item created!"
+      redirect_to profile_path, notice: "Reusable item created!"
     else
+      flash.now[:alert] = "Failed to add item: #{@item.errors.full_messages.join(", ")}"
+
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
     @item = current_user.items.find(params[:id])
-    render partial: "items/form", locals: { item: @item }
+    render partial: "items/edit", formats: [:html], locals: { item: @item }
   end
 
   def update
     @item = current_user.items.find(params[:id])
     if @item.update(item_params)
-      render partial: "items/item", locals: { item: @item }
+      html = render_to_string(partial: "items/item", formats: [:html], locals: { item: @item })
+      render plain: html, content_type: "text/html"
     else
-      render partial: "items/form", locals: { item: @item }, status: :unprocessable_entity
+      render partial: "items/edit", locals: { item: @item }, status: :unprocessable_entity
     end
   end
 
@@ -49,6 +53,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :category)
+    params.require(:item).permit(:name, :category, :reusable)
   end
 end

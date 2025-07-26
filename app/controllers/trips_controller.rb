@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
-  before_action :authenticate_user!, except: [:public_index, :public_show]
-  before_action :set_trip, only: [:show, :edit, :update, :destroy, :duplicate]
+  before_action :authenticate_user!, except: %i[public_index public_show]
+  before_action :set_trip, only: %i[show edit update destroy duplicate]
   before_action :set_public_trip, only: [:public_show]
 
   def index
@@ -8,7 +8,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    @checklist_items = @trip.checklist_items
+    @trip = Trip.find(params[:id])
+    @checklist_items = @trip.checklist_items.includes(:item)
   end
 
   def new
@@ -26,7 +27,7 @@ class TripsController < ApplicationController
           name: item.name,
           category: item.category,
           item: item,
-          checked: false,
+          checked: false
         )
       end
       redirect_to @trip, notice: "Trip created!"
@@ -64,7 +65,7 @@ class TripsController < ApplicationController
         @new_trip.checklist_items.create(
           name: item.name,
           checked: false,
-          item: item.item,
+          item: item.item
         )
       end
 

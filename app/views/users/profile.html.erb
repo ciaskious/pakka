@@ -55,11 +55,21 @@
     <h2 class="fw-bold pakka-blue mb-3" style="font-family: Poppins, sans-serif;">Your Reusable Items</h2>
     <p class="text-muted mb-4" style="font-family: DM Sans, sans-serif;">These are things you always need in your backpack.</p>
 
-    <ul class="list-group mb-4">
+    <ul >
       <% @items.each do |item| %>
-        <turbo-frame id="item_<%= item.id %>">
-          <%= render "items/item", item: item %>
-        </turbo-frame>
+        <li id="item_<%= item.id %>">
+          <div data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
+            <div data-inline-edit-target="display">
+              <%= render "items/item", item: item %>
+            </div>
+            <div data-inline-edit-target="form" class="d-none">
+              <%= render "items/edit", item: item %>
+            </div>
+            <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: "Are you sure?" } do %>
+            <i class="fas fa-trash-alt"></i>
+            <% end %>
+          </div>
+        </li>
       <% end %>
     </ul>
 
@@ -73,8 +83,10 @@
         </div>
         <div class="mb-3">
           <%= f.label :category, class: "form-label fw-semibold" %>
-          <%= f.text_field :category, class: "form-control" %>
+          <%= f.select :category, Item::CATEGORIES.map { |c| [c.humanize, c] }, prompt: "Select", class: "form-select" %>
         </div>
+        <%= f.hidden_field :reusable, value: true %>
+
         <%= f.submit "Add Item", class: "btn btn-success rounded-pill" %>
       <% end %>
     </div>

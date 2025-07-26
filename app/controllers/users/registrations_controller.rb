@@ -45,8 +45,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.update_without_password(params)
   end
 
-  def after_update_path_for(resource)
-    profile_path  # Stay on the profile page after updating it
+  def after_update_path_for(_resource)
+    profile_path # Stay on the profile page after updating it
   end
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -24,11 +24,15 @@
               <!-- Add Item Form -->
               <div class="add-item-form mb-4">
                 <h3 class="h5 mb-3">Add a checklist item</h3>
-                <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
+                <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
                   <div class="row g-3">
                     <div class="col-md-6">
                       <%= f.label :name, "Create custom item", class: "form-label" %>
                       <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
+                    </div>
+                    <div class="col-md-6">
+                      <%= f.label :category, "Select item category", class: "form-label" %>
+                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat]}, prompt: "Select", class: "form-select" %>
                     </div>
                     <div class="col-12">
                       <%= f.submit "Add Item", class: "btn btn-primary" %>
@@ -41,14 +45,21 @@
               <% if @checklist_items.any? %>
                 <ul class="checklist-items list-group list-group-flush">
                   <% @checklist_items.each do |checklist_item| %>
-                    <li class="list-group-item d-flex align-items-center">
-                      <div class="form-check flex-grow-1">
-                        <%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked, class: "form-check-input me-3" %>
-                        <label class="form-check-label <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
-                          <%= checklist_item.item&.name || checklist_item.name || "Unnamed Item" %>
-                        </label>
+                    <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
+                      <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
+
+                        <!-- Display version -->
+                        <div data-inline-edit-target="display">
+                          <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
+                        </div>
+
+                        <!-- Inline-edit form -->
+                        <div data-inline-edit-target="form" class="d-none">
+                          <%= render "checklist_items/edit", checklist_item: checklist_item %>
+                        </div>
                       </div>
-                      <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: "Are you sure?" } do %>
+
+                      <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { confirm: "Are you sure?" } do %>
                         <i class="fas fa-trash-alt"></i>
                       <% end %>
                     </li>
@@ -67,7 +78,7 @@
             <div class="card-body">
               <div class="d-grid gap-2">
                 <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary" %>
-                <%= link_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
+                <%= button_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
                 <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
                 <%= link_to "Back to Trips", trips_path, class: "btn btn-light" %>
               </div>
