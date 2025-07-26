@@ -80,8 +80,10 @@
         </div>
         <div class="mb-3">
           <%= f.label :category, class: "form-label fw-semibold" %>
-          <%= f.text_field :category, class: "form-control" %>
+          <%= f.select :category, Item::CATEGORIES.map { |c| [c.humanize, c] }, prompt: "Select", class: "form-select" %>
         </div>
+        <%= f.hidden_field :reusable, value: true %>
+
         <%= f.submit "Add Item", class: "btn btn-success rounded-pill" %>
       <% end %>
     </div>

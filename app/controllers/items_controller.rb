@@ -16,10 +16,12 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = current_user.items.new(item_params.merge(reusable: true))
+    @item = current_user.items.new(item_params)
     if @item.save
       redirect_to profile_path, notice: "Reusable item created!"
     else
+      flash.now[:alert] = "Failed to add item: #{@item.errors.full_messages.join(", ")}"
+
       render :new, status: :unprocessable_entity
     end
   end
@@ -51,6 +53,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :category)
+    params.require(:item).permit(:name, :category, :reusable)
   end
 end

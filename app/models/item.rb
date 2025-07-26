@@ -11,4 +11,6 @@ class Item < ApplicationRecord
   CATEGORIES = %w[clothes toiletries tech food documents].freeze
 
   validates :category, inclusion: { in: CATEGORIES }
+
+  scope :reusable, -> { where(reusable: true) }
 end
