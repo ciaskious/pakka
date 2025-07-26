@@ -1,5 +1,5 @@
 <%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked, class: "form-check-input me-3" %>
 <label class="form-check-label <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
-  <%= checklist_item.item&.name || checklist_item.name || "Unnamed Item"  %> (<%= checklist_item.category %>)
+  <%= checklist_item.item.name.humanize || "Unnamed Item"  %> (<%= checklist_item.item.category.humanize %>)
 </label>
 <button data-action="click->inline-edit#showForm">Edit</button>
