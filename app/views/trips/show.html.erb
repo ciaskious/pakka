@@ -45,14 +45,21 @@
               <% if @checklist_items.any? %>
                 <ul class="checklist-items list-group list-group-flush">
                   <% @checklist_items.each do |checklist_item| %>
-                    <li class="list-group-item d-flex align-items-center">
-                      <div class="form-check flex-grow-1">
-                        <%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked, class: "form-check-input me-3" %>
-                        <label class="form-check-label <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
-                          <%= checklist_item.item&.name || checklist_item.name || "Unnamed Item" %>
-                        </label>
+                    <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
+                      <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
+
+                        <!-- Display version -->
+                        <div data-inline-edit-target="display">
+                          <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
+                        </div>
+
+                        <!-- Inline-edit form -->
+                        <div data-inline-edit-target="form" class="d-none">
+                          <%= render "checklist_items/edit", checklist_item: checklist_item %>
+                        </div>
                       </div>
-                      <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: "Are you sure?" } do %>
+
+                      <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { confirm: "Are you sure?" } do %>
                         <i class="fas fa-trash-alt"></i>
                       <% end %>
                     </li>

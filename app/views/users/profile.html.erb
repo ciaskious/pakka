@@ -65,6 +65,9 @@
             <div data-inline-edit-target="form" class="d-none">
               <%= render "items/edit", item: item %>
             </div>
+            <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger", data: { confirm: "Are you sure?" } do %>
+            <i class="fas fa-trash-alt"></i>
+            <% end %>
           </div>
         </li>
       <% end %>

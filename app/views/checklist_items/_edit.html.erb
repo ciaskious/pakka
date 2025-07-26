@@ -1,5 +1,6 @@
-<%= form_with model: item,
-              url: item_path(item),
+<%= form_with model: checklist_item.item,
+              url: item_path(checklist_item.item),
+              scope: :item,
               method: :patch,
               data: {
                 remote: true,
@@ -9,8 +10,9 @@
               },
               html: { class: "edit-form" } do |f| %>
 
-  <%= f.text_field :name %>
+  <%= f.text_field :name, class: "form-control" %>
   <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat]}, {}, class: "form-select" %>
+
   <%= f.submit "Save" %>
   <button type="button" data-action="click->inline-edit#cancel">Cancel</button>
 <% end %>

@@ -1,4 +1,19 @@
 class ChecklistItemsController < ApplicationController
+  def edit
+    @item = current_user.items.find(params[:id])
+    render partial: "checklist_items/edit", formats: [:html], locals: { item: @item }
+  end
+
+  def update
+    @checklist_item = ChecklistItem.find(params[:id])
+    if @checklist_item.update(checklist_item_params)
+      html = render_to_string(partial: "checklist_items/checklist_item", formats: [:html], locals: { checklist_item: @checklist_item })
+      render plain: html, content_type: "text/html"
+    else
+      render partial: "checklist_items/edit", locals: { checklist_item: @checklist_item }, status: :unprocessable_entity
+    end
+  end
+
   def create
     @trip = Trip.find(params[:trip_id])
 
@@ -44,5 +59,11 @@ class ChecklistItemsController < ApplicationController
     trip = @checklist_item.trip
     @checklist_item.destroy
     redirect_to trip, notice: "Item deleted."
+  end
+
+  private
+
+  def checklist_item_params
+    params.require(:checklist_item).permit(:checked, :name, item_attributes: [:id, :name, :category])
   end
 end
