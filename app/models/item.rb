@@ -5,7 +5,10 @@ class Item < ApplicationRecord
   has_many :likes, through: :checklist_items
 
   validates :name, :category, presence: true
-  validates :category, inclusion: { in: CATEGORIES }
+
+  validates :reusable, inclusion: { in: [true, false] }
 
   CATEGORIES = %w[clothes toiletries tech food documents].freeze
+
+  validates :category, inclusion: { in: CATEGORIES }
 end

@@ -24,15 +24,15 @@
               <!-- Add Item Form -->
               <div class="add-item-form mb-4">
                 <h3 class="h5 mb-3">Add a checklist item</h3>
-                <%= form_with model: [@trip, ChecklistItem.new], local: true do |f| %>
+                <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
                   <div class="row g-3">
                     <div class="col-md-6">
                       <%= f.label :name, "Create custom item", class: "form-label" %>
                       <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
                     </div>
                     <div class="col-md-6">
-                      <%= f.label :item_id, "Select item category", class: "form-label" %>
-                      <%= f.collection_select :item_id, Item::CATEGORIES.map { |cat| [cat.humanize, cat]}, :id, :name, prompt: "Select", class: "form-select" %>
+                      <%= f.label :category, "Select item category", class: "form-label" %>
+                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat]}, prompt: "Select", class: "form-select" %>
                     </div>
                     <div class="col-12">
                       <%= f.submit "Add Item", class: "btn btn-primary" %>

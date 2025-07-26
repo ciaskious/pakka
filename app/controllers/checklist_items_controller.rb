@@ -1,21 +1,41 @@
 class ChecklistItemsController < ApplicationController
   def create
     @trip = Trip.find(params[:trip_id])
-    @checklist_item = @trip.checklist_items.new(checklist_item_params)
 
-    if @checklist_item.checked.nil?
-      @checklist_item.checked = false
+    item_name = params[:name]
+    item_category = params[:category]
+
+    if item_name.blank? || item_category.blank?
+      redirect_to @trip, alert: "Name and category are required."
+      return
     end
 
-    if @checklist_item.item_id.present? && @checklist_item.name.blank?
-      @checklist_item.name = @checklist_item.item.name
-    end
+    # Create a non-reusable item
+    item = Item.new(
+      name: item_name,
+      category: item_category,
+      reusable: false,
+      user_id: current_user.id,
+    )
 
-    if @checklist_item.save
-      redirect_to @trip, notice: "Item added!"
+    if item.save
+      @checklist_item = @trip.checklist_items.new(
+        item: item,
+        name: item.name,
+        checked: false,
+      )
+
+      if @checklist_item.save
+        redirect_to @trip, notice: "Item added!"
+      else
+        logger.error "❌ ChecklistItem errors: #{@checklist_item.errors.full_messages}"
+
+        redirect_to @trip, alert: "Failed to save checklist item: #{@checklist_item.errors.full_messages.join(", ")}"
+      end
     else
-      puts @checklist_item.errors.full_messages
-      redirect_to @trip, alert: "Failed to add item."
+      logger.error "❌ Item errors: #{item.errors.full_messages}"
+
+      redirect_to @trip, alert: "Failed to create item: #{item.errors.full_messages.join(", ")}"
     end
   end
 
@@ -24,11 +44,5 @@ class ChecklistItemsController < ApplicationController
     trip = @checklist_item.trip
     @checklist_item.destroy
     redirect_to trip, notice: "Item deleted."
-  end
-
-  private
-
-  def checklist_item_params
-    params.require(:checklist_item).permit(:name, :item_id, :checked, :category)
   end
 end

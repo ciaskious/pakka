@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_item, only: %i[edit update destroy]
 
   def index
     @items = current_user.items
@@ -16,9 +16,9 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = current_user.items.new(item_params)
+    @item = current_user.items.new(item_params.merge(reusable: true))
     if @item.save
-      redirect_to profile_path, notice: "Item created!"
+      redirect_to profile_path, notice: "Reusable item created!"
     else
       render :new, status: :unprocessable_entity
     end
