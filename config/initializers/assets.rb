@@ -10,4 +10,17 @@ Rails.application.config.assets.version = "1.0"
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w(bootstrap.min.js popper.js)
+# Rails.application.config.assets.precompile += %w(bootstrap.min.js popper.js)
+
+# Tell Sprockets about your JS controllers folder
+Rails.application.config.assets.paths << Rails.root.join("app/javascript")
+
+# Precompile all files under controllers so they end up in public/assets
+Rails.application.config.assets.precompile += %w[
+  bootstrap.min.js
+  popper.js
+  controllers/index.js
+  controllers/inline_edit_controller.js
+  # add any other controllers here, or
+  controllers/*.js
+]
