@@ -25,3 +25,8 @@
         aria-label="Edit item">
   <i class="fas fa-pen"></i>
 </button>
+
+<!-- Delete button -->
+<%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
+  <i class="fas fa-trash-alt"></i>
+<% end %>

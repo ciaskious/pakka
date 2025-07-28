@@ -1,25 +1,31 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["display", "form", "editButton"];
+  static targets = ["display", "form", "editButton", "deleteButton"];
   static values = { itemId: Number };
 
   // Toggle strikethrough
   toggleStrikethrough(event) {
-    const checkbox = event.target;
-    const textSpan = checkbox.closest('.form-check').querySelector('.checklist-text');
+    console.log("checked");
 
-    textSpan.classList.toggle('text-decoration-line-through', checkbox.checked);
-    textSpan.classList.toggle('text-muted', checkbox.checked);
+    const checkbox = event.target;
+    const textSpan = checkbox
+      .closest(".form-check")
+      .querySelector(".checklist-text");
+
+    textSpan.classList.toggle("text-decoration-line-through", checkbox.checked);
+    textSpan.classList.toggle("text-muted", checkbox.checked);
 
     this.updateCheckStatus(checkbox.checked);
   }
 
   // Show edit form
   showForm() {
+    console.log("clicked");
     this.displayTarget.classList.add("d-none");
     this.formTarget.classList.remove("d-none");
     this.editButtonTarget.classList.add("d-none"); // Hide edit button when editing
+    this.deleteButtonTarget.classList.add("d-none"); // Hide delete button when editing
   }
 
   // Cancel editing
@@ -27,6 +33,7 @@ export default class extends Controller {
     this.formTarget.classList.add("d-none");
     this.displayTarget.classList.remove("d-none");
     this.editButtonTarget.classList.remove("d-none"); // Show edit button again
+    this.deleteButtonTarget.classList.remove("d-none"); // Show delete button when editing
   }
 
   // Update after successful edit
@@ -45,12 +52,13 @@ export default class extends Controller {
   // Private method to update check status
   updateCheckStatus(checked) {
     fetch(`/checklist_items/${this.itemIdValue}/toggle`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+          .content,
       },
-      body: JSON.stringify({ checked })
-    }).catch(error => console.error('Error:', error));
+      body: JSON.stringify({ checked }),
+    }).catch((error) => console.error("Error:", error));
   }
 }
