@@ -21,6 +21,5 @@ Rails.application.config.assets.precompile += %w[
   popper.js
   controllers/index.js
   controllers/inline_edit_controller.js
-  # add any other controllers here, or
   controllers/*.js
 ]
