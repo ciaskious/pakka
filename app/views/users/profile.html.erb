@@ -89,7 +89,7 @@
         <div class="card-body">
           <% if @items.any? %>
             <ul class="reusable-items list-group list-group-flush">
-              <% @items.each do |item| %>
+              <% @items.select(&:reusable).each do |item| %>
                 <li class="list-group-item d-flex align-items-center" id="item_<%= item.id %>">
                   <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
                     <!-- Display version -->
