@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center flex-grow-1">
   <%= check_box_tag "item_#{checklist_item.id}",
                     1,
                     checklist_item.checked,
@@ -16,17 +16,20 @@
   </label>
 </div>
 
+<!-- Action buttons -->
+<div class="d-flex align-items-center action-buttons">
 <!-- Edit button to toggle inline edit form -->
-<button type="button"
-        class="btn btn-sm btn-outline-primary ms-2"
-        style="font-family: 'DM Sans', sans-serif;"
-        data-action="click->inline-edit#showForm"
-        data-inline-edit-target="editButton"
-        aria-label="Edit item">
-  <i class="fas fa-pen"></i>
-</button>
+  <button type="button"
+          class="btn btn-sm btn-outline-primary ms-2"
+          style="font-family: 'DM Sans', sans-serif;"
+          data-action="click->inline-edit#showForm"
+          data-inline-edit-target="editButton"
+          aria-label="Edit item">
+    <i class="fas fa-pen"></i>
+  </button>
 
-<!-- Delete button -->
-<%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
-  <i class="fas fa-trash-alt"></i>
-<% end %>
+  <!-- Delete button -->
+  <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
+    <i class="fas fa-trash-alt"></i>
+  <% end %>
+</div>

@@ -1,4 +1,5 @@
-<div class="d-flex align-items-center">
+
+<div class="d-flex align-items-center flex-grow-1">
   <label class="form-check-label">
     <span class="checklist-text">
       <%= item.name.humanize || "Unnamed Item" %> (<%= item.category.humanize %>)
@@ -8,7 +9,7 @@
 
 
 <!-- Action buttons -->
-<div class="d-flex action-buttons">
+<div class="d-flex align-items-center action-buttons">
   <!-- Edit button to toggle inline edit form -->
   <button type="button"
           class="btn btn-sm btn-outline-primary ms-2"
@@ -20,7 +21,7 @@
   </button>
 
   <!-- Delete button -->
-    <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", style: "border-radius: 10px", data: { confirm: "Are you sure?" } do %>
-      <i class="fas fa-trash-alt"></i>
-    <% end %>
+  <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", style: "border-radius: 10px", data: { confirm: "Are you sure?" } do %>
+    <i class="fas fa-trash-alt"></i>
+  <% end %>
 </div>
