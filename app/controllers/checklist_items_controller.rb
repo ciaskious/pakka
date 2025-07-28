@@ -54,6 +54,15 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
+  def toggle
+    @checklist_item = ChecklistItem.find(params[:id])
+    @checklist_item.update(checked: params[:checked])
+
+    respond_to do |format|
+      format.json { render json: { status: :ok } }
+    end
+  end
+
   def destroy
     @checklist_item = ChecklistItem.find(params[:id])
     trip = @checklist_item.trip

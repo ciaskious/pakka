@@ -8,7 +8,7 @@ class Item < ApplicationRecord
 
   validates :reusable, inclusion: { in: [true, false] }
 
-  CATEGORIES = %w[clothes toiletries tech food documents medicine].freeze
+  CATEGORIES = %w[clothing toiletries electronics documents medication food miscellaneous].freeze
 
   validates :category, inclusion: { in: CATEGORIES }
 
