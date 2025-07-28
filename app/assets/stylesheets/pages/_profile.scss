@@ -43,4 +43,21 @@
       border: 4px solid #9CDDAB;
     }
   }
+
+
+// Item Form
+  // For both forms
+  .form-control-lg, .form-select-lg {
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    border-radius: 10px !important;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:focus {
+      border-color: #3741FA;
+      box-shadow: 0 0 0 0.25rem rgba(55, 65, 250, 0.2);
+    }
+  }
 }
