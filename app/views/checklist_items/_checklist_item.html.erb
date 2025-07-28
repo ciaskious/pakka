@@ -11,7 +11,7 @@
 
   <label for="item_checkbox_<%= checklist_item.id %>" class="form-check-label">
     <span class="checklist-text <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
-      <%= checklist_item.item.name.humanize || "Unnamed Item" %> (<%= checklist_item.item.category.humanize %>)
+      <%= checklist_item.item&.name&.humanize || "Unnamed Item" %> (<%= checklist_item.item&.category&.humanize %>)
     </span>
   </label>
 </div>

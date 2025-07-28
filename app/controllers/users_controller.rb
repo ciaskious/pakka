@@ -6,7 +6,6 @@ class UsersController < ApplicationController
     @items = current_user.items
     @past_trips = current_user.trips.order(created_at: :desc) # or however you define "past"
     @items = current_user.items.reusable
-    @reusable_items = ReusableItem.where(user: current_user)
   end
 
   def update_avatar

@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_many :trips, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_many :reusable_items, dependent: :destroy
 
   validates :username, presence: true
 
@@ -17,6 +16,6 @@ class User < ApplicationRecord
   end
 
   def favorite_destination
-    trips.group(:destination).order('count_id DESC').count('id').first&.first
+    trips.group(:destination).order("count_id DESC").count("id").first&.first
   end
 end
