@@ -1,5 +1,27 @@
-<%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked, class: "form-check-input me-3" %>
-<label class="form-check-label <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
-  <%= checklist_item.item.name.humanize || "Unnamed Item"  %> (<%= checklist_item.item.category.humanize %>)
-</label>
-<button data-action="click->inline-edit#showForm">Edit</button>
+<div class="d-flex align-items-center">
+  <%= check_box_tag "item_#{checklist_item.id}",
+                    1,
+                    checklist_item.checked,
+                    class: "form-check-input me-3",
+                    id: "item_checkbox_#{checklist_item.id}",
+                    data: {
+                      action: "change->inline-edit#toggleStrikethrough",
+                      "inline-edit-item-id-value": checklist_item.id
+                    } %>
+
+  <label for="item_checkbox_<%= checklist_item.id %>" class="form-check-label">
+    <span class="checklist-text <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
+      <%= checklist_item.item.name.humanize || "Unnamed Item" %> (<%= checklist_item.item.category.humanize %>)
+    </span>
+  </label>
+</div>
+
+<!-- Edit button to toggle inline edit form -->
+<button type="button"
+        class="btn btn-sm btn-outline-primary ms-2"
+        style="font-family: 'DM Sans', sans-serif;"
+        data-action="click->inline-edit#showForm"
+        data-inline-edit-target="editButton"
+        aria-label="Edit item">
+  <i class="fas fa-pen"></i>
+</button>

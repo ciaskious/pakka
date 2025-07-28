@@ -25,14 +25,14 @@
               <div class="add-item-form mb-4">
                 <h3 class="h5 mb-3">Add a checklist item</h3>
                 <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
-                  <div class="row g-3">
+                  <div class="row g-3 align-items-end">
                     <div class="col-md-6">
-                      <%= f.label :name, "Create custom item", class: "form-label" %>
+                      <%= f.label :name, "Create custom item", class: "form-label fw-semibold" %>
                       <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
                     </div>
                     <div class="col-md-6">
-                      <%= f.label :category, "Select item category", class: "form-label" %>
-                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat]}, prompt: "Select", class: "form-select" %>
+                      <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
+                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] }, { prompt: "Select" }, { class: "form-select custom-pakka-select" } %>
                     </div>
                     <div class="col-12">
                       <%= f.submit "Add Item", class: "btn btn-primary" %>
@@ -47,10 +47,21 @@
                   <% @checklist_items.each do |checklist_item| %>
                     <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
                       <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
-
                         <!-- Display version -->
-                        <div data-inline-edit-target="display">
-                          <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
+                        <div data-inline-edit-target="display" class="d-flex align-items-center">
+                          <%= check_box_tag "item_#{checklist_item.id}", 1, checklist_item.checked,
+                                class: "form-check-input me-3",
+                                id: "item_checkbox_#{checklist_item.id}",
+                                data: {
+                                  action: "change->inline-edit#toggleStrikethrough",
+                                  "inline-edit-item-id-value": checklist_item.id
+                                } %>
+
+                          <label for="item_checkbox_<%= checklist_item.id %>" class="form-check-label">
+                            <span class="checklist-text <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
+                              <%= checklist_item.item.name.humanize || "Unnamed Item" %> (<%= checklist_item.item.category.humanize %>)
+                            </span>
+                          </label>
                         </div>
 
                         <!-- Inline-edit form -->
@@ -59,6 +70,16 @@
                         </div>
                       </div>
 
+                      <!-- Edit button -->
+                      <button type="button"
+                              class="btn btn-sm btn-outline-primary ms-2"
+                              data-action="click->inline-edit#showForm"
+                              data-inline-edit-target="editButton"
+                              aria-label="Edit item">
+                        <i class="fas fa-pen"></i>
+                      </button>
+
+                      <!-- Delete button -->
                       <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", data: { confirm: "Are you sure?" } do %>
                         <i class="fas fa-trash-alt"></i>
                       <% end %>

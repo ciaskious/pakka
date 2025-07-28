@@ -33,6 +33,11 @@ Rails.application.routes.draw do
 
   # Reusable Items
   resources :reusable_items
+  resources :checklist_items do
+    member do
+      patch :toggle
+    end
+  end
 
   # APIs
   post "/geocode", to: "locations#geocode"
