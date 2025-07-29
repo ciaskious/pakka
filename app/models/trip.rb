@@ -14,6 +14,11 @@ class Trip < ApplicationRecord
   validate :end_date_after_start_date
   validate :start_date_not_in_past
 
+  # Generate AI-powered packing suggestions
+  def generate_packing_suggestions
+    AiPackingService.call(self)
+  end
+
   private
 
   def end_date_after_start_date
