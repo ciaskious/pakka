@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!, except: %i[public_index public_show]
-  before_action :set_trip, only: %i[show edit update destroy duplicate]
+  before_action :set_trip, only: %i[show edit update destroy duplicate generate_ai_suggestions]
   before_action :set_public_trip, only: [:public_show]
 
   def index
@@ -10,6 +10,8 @@ class TripsController < ApplicationController
   def show
     @trip = Trip.find(params[:id])
     @checklist_items = @trip.checklist_items.includes(:item)
+    @ai_suggestions = session[:ai_suggestions] # Récupérer les suggestions de la session
+    session.delete(:ai_suggestions) # Nettoyer après affichage
   end
 
   def new
@@ -87,6 +89,20 @@ class TripsController < ApplicationController
     # @trips = current_user.all
     # TODO: Filtrer les trips publics quand cette fonctionnalité sera ajoutée
     @trips = Trip.where(public: true)
+  end
+
+  def generate_ai_suggestions
+    @ai_suggestions = @trip.generate_packing_suggestions
+    
+    # Stocker les suggestions dans la session pour l'affichage
+    session[:ai_suggestions] = @ai_suggestions
+    
+    respond_to do |format|
+      format.html { redirect_to @trip, notice: "🤖 AI packing suggestions generated! Check them out below." }
+    end
+  rescue StandardError => e
+    Rails.logger.error "Failed to generate AI suggestions: #{e.message}"
+    redirect_to @trip, alert: "Sorry, we couldn't generate suggestions right now. Please try again."
   end
 
   private

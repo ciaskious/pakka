@@ -23,7 +23,12 @@
             <div class="card-body">
               <!-- Add Item Form -->
               <div class="add-item-form mb-4">
-                <h3 class="h5 mb-3">Add a checklist item</h3>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h3 class="h5 mb-0">Add a checklist item</h3>
+                  <%= form_with url: generate_ai_suggestions_trip_path(@trip), method: :post, local: true, class: "d-inline" do |f| %>
+                    <%= f.submit "🤖 Generate AI Suggestions", class: "btn btn-outline-primary btn-sm" %>
+                  <% end %>
+                </div>
                 <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
                   <div class="row g-3 align-items-end">
                     <div class="col-md-6">
@@ -48,6 +53,25 @@
                   </div>
                 <% end %>
               </div>
+
+              <!-- AI Suggestions (if available) -->
+              <% if @ai_suggestions.present? %>
+                <div class="ai-suggestions-card card mb-4 border-primary">
+                  <div class="card-header bg-primary text-white">
+                    <h4 class="h6 mb-0">🤖 AI Packing Suggestions</h4>
+                  </div>
+                  <div class="card-body">
+                    <div class="ai-suggestions-content">
+                      <%= simple_format(@ai_suggestions, {}, wrapper_tag: "div", class: "mb-0") %>
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                      💡 These are AI-generated suggestions based on your destination and trip duration.
+                      Feel free to add relevant items to your checklist above.
+                    </small>
+                  </div>
+                </div>
+              <% end %>
 
               <!-- Checklist Items -->
               <% if @checklist_items.any? %>
