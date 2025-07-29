@@ -38,8 +38,15 @@ class AiPackingService < ApplicationService
   end
 
   def default_max_tokens
-    # Plus de détails pour voyages longs
-    trip_duration_in_days <= 7 ? 600 : 900
+    # Plus de détails pour voyages longs, mais plus concis en général
+    case trip_duration_in_days
+    when 1..3
+      400  # Liste très concise pour courts séjours
+    when 4..7
+      600  # Liste standard
+    else
+      700  # Un peu plus détaillée pour longs voyages
+    end
   end
 
   def ai_prompt_context
@@ -71,11 +78,13 @@ class AiPackingService < ApplicationService
       Your role is to:
       - Provide practical, destination-specific packing recommendations
       - Consider local climate, culture, and travel logistics
-      - Suggest essential items while avoiding overpacking
+      - Suggest ESSENTIAL items while avoiding overpacking
       - Include safety and health considerations
+      - Keep suggestions concise but comprehensive
 
       Return only a clean, organized checklist with one item per line.
       Group items by category (Clothing, Electronics, Personal Care, Documents, etc.) if helpful.
+      Focus on the most important 30-40 items maximum.
       No commentary, introductions, or explanations - just the practical checklist.
     PROMPT
   end
