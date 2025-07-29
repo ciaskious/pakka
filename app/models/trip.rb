@@ -24,6 +24,11 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
+  # Generate AI-powered packing suggestions
+  def generate_packing_suggestions
+    AiPackingService.call(self)
+  end
+
   private
 
   def end_date_after_start_date
