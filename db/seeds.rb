@@ -65,6 +65,8 @@ users.each_with_index do |user, index|
   puts "🧳 #{user.email} now has #{user.items.reusable.count} reusable items"
 end
 
+accommodation_options = Trip::ACCOMMODATION_OPTIONS
+
 puts "🗺️ Creating trips..."
 
 trip_data = [
@@ -89,6 +91,7 @@ users.each_with_index do |user, index|
       location: trip_attrs[:location],
       start_date: Date.today + (i * 10),
       end_date: Date.today + (i * 10) + 5,
+      accommodation_type: accommodation_options.sample,
       public: [true, false].sample,
     )
     begin
