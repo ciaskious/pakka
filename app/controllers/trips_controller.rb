@@ -29,7 +29,7 @@ class TripsController < ApplicationController
           name: item.name,
           category: item.category,
           item: item,
-          checked: false
+          checked: false,
         )
       end
       redirect_to @trip, notice: "Trip created!"
@@ -67,7 +67,7 @@ class TripsController < ApplicationController
         @new_trip.checklist_items.create(
           name: item.name,
           checked: false,
-          item: item.item
+          item: item.item,
         )
       end
 
@@ -93,10 +93,10 @@ class TripsController < ApplicationController
 
   def generate_ai_suggestions
     @ai_suggestions = @trip.generate_packing_suggestions
-    
+
     # Stocker les suggestions dans la session pour l'affichage
     session[:ai_suggestions] = @ai_suggestions
-    
+
     respond_to do |format|
       format.html { redirect_to @trip, notice: "🤖 AI packing suggestions generated! Check them out below." }
     end
@@ -118,6 +118,6 @@ class TripsController < ApplicationController
   end
 
   def trip_params
-    params.require(:trip).permit(:title, :destination, :country, :start_date, :end_date, :cover_image)
+    params.require(:trip).permit(:title, :destination, :country, :accommodation_type, :start_date, :end_date, :cover_image)
   end
 end
