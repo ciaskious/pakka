@@ -25,9 +25,9 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
-  ACCOMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
+  ACCOMMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
 
-  validates :accommodation_type, inclusion: { in: ACCOMODATION_OPTIONS }
+  validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
 
   # Generate AI-powered packing suggestions
   def generate_packing_suggestions
