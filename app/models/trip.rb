@@ -9,6 +9,7 @@ class Trip < ApplicationRecord
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true
+  validates :accommodation_type, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
 
@@ -23,6 +24,10 @@ class Trip < ApplicationRecord
   end
 
   before_save :calculate_duration
+
+  ACCOMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
+
+  validates :accommodation_type, inclusion: { in: ACCOMODATION_OPTIONS }
 
   # Generate AI-powered packing suggestions
   def generate_packing_suggestions
