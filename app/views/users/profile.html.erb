@@ -1,9 +1,10 @@
   <!-- 🧑‍🦰 PROFILE HEADER SECTION -->
   <section class="profile-header">
-    <div class="container text-white text-center">
-      <h1 class="fw-bold mb-4" style="font-family: Poppins, sans-serif;">Hi <%= current_user.first_name %> 👋</h1>
+  <div class="container text-white text-center">
+    <h1 class="fw-bold mb-4" style="font-family: Poppins, sans-serif;">Hi <%= current_user.first_name %> 👋</h1>
 
-      <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+      <div class="avatar-container position-relative">
         <% if current_user.avatar.attached? %>
           <%= cl_image_tag current_user.avatar.key, class: "rounded-circle shadow-sm profile-avatar", alt: "Profile picture" %>
         <% else %>
@@ -12,14 +13,25 @@
           </div>
         <% end %>
 
-        <%= form_with model: current_user, url: user_registration_path, method: :patch, local: true, html: { multipart: true, class: "d-flex flex-column gap-2" } do |f| %>
-          <%= f.label :avatar, "Upload Profile Picture", class: "form-label fw-bold" %>
-          <%= f.file_field :avatar, class: "form-control" %>
-          <%= f.submit "Save", class: "btn btn-outline-light mt-2" %>
-        <% end %>
+        <div class="avatar-overlay rounded-circle d-flex align-items-center justify-content-center">
+          <%= form_with model: current_user,
+                        url: user_registration_path,
+                        method: :patch,
+                        local: true,
+                        html: { multipart: true, class: "avatar-upload-form" } do |f| %>
+            <%= f.file_field :avatar,
+                  class: "d-none",
+                  id: "avatar-upload",
+                  onchange: "this.form.submit()" %>
+            <label for="avatar-upload" class="btn btn-light m-0 p-2">
+              <i class="fas fa-camera"></i>
+            </label>
+          <% end %>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 <div class="profile-container px-3 px-md-5">
   <!-- 📊 STATS CARDS SECTION -->
@@ -29,86 +41,92 @@
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card shadow-sm rounded-4 p-4 h-100">
-          <h5 class="fw-bold mb-1">🧭 Total Trips</h5>
-          <p class="display-6 fw-bold text-success"><%= @past_trips&.count || 0 %></p>
+          <h5 class="fw-bold mb-1" style="font-family: Poppins, sans-serif;">🧭 Total Trips</h5>
+          <p class="display-6 fw-bold text-success" style="font-family: DM Sans, sans-serif;"><%= @past_trips&.count || "No trips yet—adventure awaits!" %></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm rounded-4 p-4 h-100">
-          <h5 class="fw-bold mb-1">📍 Favorite Destination</h5>
-          <p class="h4 fw-bold text-primary"><%= current_user.favorite_destination || "N/A" %></p>
+          <h5 class="fw-bold mb-1" style="font-family: Poppins, sans-serif;">📍 Favorite Destination</h5>
+          <p class="h4 fw-bold text-primary" style="font-family: DM Sans, sans-serif;"><%= current_user.favorite_destination || "Where to next? Save your top spot" %></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm rounded-4 p-4 h-100">
-          <h5 class="fw-bold mb-1">📅 Last Trip</h5>
-          <p class="h4 fw-bold text-muted">
-            <%= @past_trips&.first&.created_at&.strftime("%B %Y") || "N/A" %>
+          <h5 class="fw-bold mb-1" style="font-family: Poppins, sans-serif;">📅 Last Trip</h5>
+          <p class="h4 fw-bold text-muted" style="font-family: DM Sans, sans-serif;">
+            <%= @past_trips&.first&.created_at&.strftime("%B %Y") || "Your first checklist starts here" %>
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 🎒 REUSABLE ITEMS SECTION -->
-  <section class="reusable-items-section my-5 py-4">
-    <h2 class="fw-bold pakka-blue mb-3" style="font-family: Poppins, sans-serif;">Your Reusable Items</h2>
-
-    <!-- Add New Item Card -->
-    <div class="card p-4 shadow-sm rounded-4 mb-4">
-      <h4 class="fw-bold pakka-pink mb-3" style="font-family: DM Sans, sans-serif;"><strong>Add a new item to your list</strong></h4>
-
-      <%= form_with model: @item, url: items_path, local: true, class: "add-item-form" do |f| %>
-        <div class="row g-3 align-items-end">
-          <div class="col-md-6">
-            <%= f.label :name, "Item name", class: "form-label fw-semibold" %>
-            <%= f.text_field :name,
-                  class: "form-control form-control-lg",
-                  placeholder: "e.g. Passport",
-                  style: "border-radius: 10px;" %>
-          </div>
-          <div class="col-md-6">
-            <%= f.label :category, "Category", class: "form-label d-block fw-semibold" %>
-            <%= f.select :category,
-                  Item::CATEGORIES.map { |c| [c.humanize, c] },
-                  { prompt: "Select" },
-                  { class: "form-select form-select-lg custom-pakka-select",
-                    style: "border-radius: 10px;" } %>
-          </div>
-          <div class="col-12">
-            <%= f.hidden_field :reusable, value: true %>
-            <%= f.submit "Add Item",
-                  class: "btn btn-primary",
-                  style: "border-radius: 10px;" %>
-          </div>
-        </div>
-      <% end %>
-      <!-- Reusable Items List -->
-      <div class="reusable-items-card card shadow-sm border-0">
-        <h4 class="fw-bold pakka-pink mb-3" style="font-family: DM Sans, sans-serif;"><strong>Added Items</strong></h4>
-        <div class="card-body">
-          <% if @items.any? %>
-            <ul class="reusable-items list-group list-group-flush">
-              <% @items.select(&:reusable).each do |item| %>
-                <li class="list-group-item d-flex align-items-center" id="item_<%= item.id %>">
-                  <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
-                    <!-- Display version -->
-                    <div data-inline-edit-target="display" class="d-flex align-items-center">
-                      <%= render "items/item", item: item %>
+  <!-- Trip Content -->
+  <section class="trip-content py-5">
+    <div class="container">
+      <div class="row">
+        <!-- Checklist Column -->
+        <div class="col-lg-8">
+          <div class="checklist-card card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white">
+              <h2 class="h4 mb-0">🧳 Packing Essentials</h2>
+            </div>
+            <div class="card-body">
+              <!-- Add Item Form -->
+              <div class="add-item-form mb-4">
+                <h3 class="h5 mb-3">Add a checklist item</h3>
+                <%= form_with model: @item, url: items_path, local: true, class: "add-item-form" do |f| %>
+                  <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                      <%= f.label :name, "Create custom item", class: "form-label fw-semibold" %>
+                      <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
                     </div>
-
-                    <!-- Inline-edit form -->
-                    <div data-inline-edit-target="form" class="d-none">
-                      <%= render "items/edit", item: item %>
+                    <div class="col-md-6">
+                      <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
+                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] },
+                          { prompt: "Select" },
+                          { class: "form-select custom-pakka-select" } %>
+                    </div>
+                    <div class="col-12">
+                      <%= f.submit "Add Item", class: "btn btn-secondary-cta" %>
                     </div>
                   </div>
+                <% end %>
+              </div>
 
-                </li>
+              <!-- Checklist Items -->
+              <% if @items.any? %>
+                <% grouped_items = @items.group_by { |item| item.category } %>
+
+                <ul class="checklist-items list-group list-group-flush">
+                  <% grouped_items.each do |category, items| %>
+                    <li class="list-group-item bg-light fw-semibold mt-4" style="font-family: 'DM Sans', sans-serif;">
+                      <h5 class="mb-2 pakka-blue"><%= category.humanize %></h5>
+                    </li>
+
+                    <% items.each do |item| %>
+                      <li class="list-group-item d-flex align-items-center" id="item_<%= item.id %>">
+                        <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
+                          <!-- Display version -->
+                          <div data-inline-edit-target="display" class="d-flex align-items-center">
+                            <%= render "items/item", item: item %>
+                          </div>
+
+                          <!-- Inline-edit form -->
+                          <div data-inline-edit-target="form" class="d-none">
+                            <%= render "items/edit", item: item %>
+                          </div>
+                        </div>
+                      </li>
+                    <% end %>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-muted">No items added yet. Start building your packing list!</p>
               <% end %>
-            </ul>
-          <% else %>
-            <p class="text-muted">No reusable items added yet. Start your list above!</p>
-          <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
