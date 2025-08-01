@@ -64,10 +64,15 @@
               </div>
 
               <div class="col-md-6">
-                <%= f.input :cover_image,
-                  as: :file,
+                <%= f.input :accommodation_type,
+                  as: :select,
+                  collection: Trip::ACCOMMODATION_OPTIONS.map { |opt| [opt.humanize, opt] },
+                  prompt: "Select Accommodation",
                   wrapper_html: { class: "mb-3" },
-                  label: "Cover Image (Optional)",
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;",
+                  },
                   label_html: {
                     class: "form-label",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
@@ -98,6 +103,17 @@
                     class: "form-control-lg",
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
+                  label_html: {
+                    class: "form-label",
+                    style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
+                  } %>
+              </div>
+
+              <div class="col-md-6">
+                <%= f.input :cover_image,
+                  as: :file,
+                  wrapper_html: { class: "mb-3" },
+                  label: "Cover Image (Optional)",
                   label_html: {
                     class: "form-label",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"

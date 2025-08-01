@@ -9,11 +9,13 @@ class Trip < ApplicationRecord
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true
+  validates :accommodation_type, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
   validate :end_date_after_start_date
   validate :start_date_not_in_past
 
+<<<<<<< HEAD
   def duration
     return 0 unless start_date && end_date
 
@@ -22,6 +24,17 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
+=======
+  ACCOMMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
+
+  validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
+
+  # Generate AI-powered packing suggestions
+  def generate_packing_suggestions
+    AiPackingService.call(self)
+  end
+
+>>>>>>> master
   private
 
   def end_date_after_start_date
