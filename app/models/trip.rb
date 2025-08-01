@@ -15,7 +15,6 @@ class Trip < ApplicationRecord
   validate :end_date_after_start_date
   validate :start_date_not_in_past
 
-<<<<<<< HEAD
   def duration
     return 0 unless start_date && end_date
 
@@ -24,7 +23,6 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
-=======
   ACCOMMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
 
   validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
@@ -34,7 +32,6 @@ class Trip < ApplicationRecord
     AiPackingService.call(self)
   end
 
->>>>>>> master
   private
 
   def end_date_after_start_date
