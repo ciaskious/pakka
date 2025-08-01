@@ -21,7 +21,7 @@ class TripsController < ApplicationController
     @trip.user = current_user
 
     if @trip.save
-      # Ajouter automatiquement les items réutilisables de l'utilisateur
+      # Automatically add user's reusable items
       add_default_items_to_trip
 
       redirect_to @trip, notice: "Trip created!"
@@ -54,7 +54,7 @@ class TripsController < ApplicationController
     @new_trip.end_date = nil
 
     if @new_trip.save
-      # Dupliquer les checklist_items
+      # Duplicate checklist_items
       @trip.checklist_items.each do |item|
         @new_trip.checklist_items.create(
           name: item.name,
@@ -79,24 +79,24 @@ class TripsController < ApplicationController
   # GET /community (public_index)
   def public_index
     # @trips = current_user.all
-    # TODO: Filtrer les trips publics quand cette fonctionnalité sera ajoutée
+    # TODO: Filter public trips when this feature is added
     @trips = Trip.where(public: true)
   end
 
   def generate_ai_suggestions
     ai_response = @trip.generate_packing_suggestions
 
-    # Parse les suggestions en items individuels
+    # Parse suggestions into individual items
     @ai_suggestions = parse_ai_suggestions(ai_response)
 
-    # Charger les items de checklist pour la vue show
+    # Load checklist items for the show view
     @checklist_items = @trip.checklist_items.includes(:item)
 
-    # Debug pour voir ce qui se passe
+    # Debug to see what happens
     Rails.logger.info "AI Suggestions generated: #{@ai_suggestions.inspect}"
 
     respond_to do |format|
-      format.html { render :show }  # Re-render la vue show avec les suggestions
+      format.html { render :show }  # Re-render the show view with suggestions
     end
   rescue StandardError => e
     Rails.logger.error "Failed to generate AI suggestions: #{e.message}"
@@ -109,17 +109,17 @@ class TripsController < ApplicationController
     if selected_suggestions.any?
       added_count = 0
       selected_suggestions.each do |suggestion|
-        # Vérifier si l'item existe déjà
+        # Check if item already exists
         existing_item = @trip.checklist_items.joins(:item).where(items: { name: suggestion }).exists?
 
         unless existing_item
-          # Créer ou trouver l'item pour cet utilisateur
+          # Create or find item for this user
           item = current_user.items.find_or_create_by(name: suggestion) do |new_item|
             new_item.category = determine_category(suggestion)
-            new_item.reusable = false  # Les suggestions AI ne sont pas réutilisables par défaut
+            new_item.reusable = false  # AI suggestions are not reusable by default
           end
 
-          # Créer le checklist_item
+          # Create checklist_item
           @trip.checklist_items.create!(item: item, checked: false)
           added_count += 1
         end
@@ -143,16 +143,16 @@ class TripsController < ApplicationController
   private
 
   def parse_ai_suggestions(ai_response)
-    # Séparer la réponse en lignes et nettoyer
+    # Split response into lines and clean
     suggestions = ai_response.split("\n")
                             .map(&:strip)
                             .reject(&:empty?)
-                            .reject { |line| line.match?(/^[A-Za-z\s]+:$/) } # Supprimer les titres de catégories
-                            .map { |line| line.gsub(/^[-*•]\s*/, '') } # Supprimer les puces
-                            .reject { |line| line.match?(/^(Clothing|Electronics|Personal Care|Documents|Toiletries|Accessories|Shoes|Health|Safety|Travel|Miscellaneous):?$/i) } # Supprimer headers de catégories
-                            .select { |line| line.length > 2 } # Garder seulement les vrais items
+                            .reject { |line| line.match?(/^[A-Za-z\s]+:$/) } # Remove category titles
+                            .map { |line| line.gsub(/^[-*•]\s*/, '') } # Remove bullets
+                            .reject { |line| line.match?(/^(Clothing|Electronics|Personal Care|Documents|Toiletries|Accessories|Shoes|Health|Safety|Travel|Miscellaneous):?$/i) } # Remove category headers
+                            .select { |line| line.length > 2 } # Keep only real items
 
-    suggestions.first(30) # Limiter à 30 suggestions max
+    suggestions.first(30) # Limit to 30 suggestions max
   end
 
   def determine_category(item_name)
@@ -162,7 +162,7 @@ class TripsController < ApplicationController
     when /t-shirt|shirt|pants|jeans|dress|skirt|jacket|coat|sweater|hoodie|shorts|underwear|bra|socks|pajama|sleepwear/
       "clothing"
     when /shoe|boot|sandal|sneaker|heel|flip.flop/
-      "clothing"  # footwear n'existe pas, on utilise clothing
+      "clothing"  # footwear doesn't exist, use clothing
     when /phone|charger|camera|laptop|tablet|headphone|cable|adapter|battery|power.bank/
       "electronics"
     when /toothbrush|toothpaste|shampoo|soap|deodorant|perfume|makeup|skincare|razor|towel/
@@ -170,11 +170,11 @@ class TripsController < ApplicationController
     when /passport|visa|ticket|insurance|license|document|id|card/
       "documents"
     when /medicine|pill|vitamin|bandaid|sunscreen|insect.repellent/
-      "medication"  # health_and_safety n'existe pas, on utilise medication
+      "medication"  # health_and_safety doesn't exist, use medication
     when /book|guide|map|journal|pen|notebook/
-      "miscellaneous"  # entertainment n'existe pas
+      "miscellaneous"  # entertainment doesn't exist
     when /bag|suitcase|backpack|purse|wallet|sunglasses|hat|umbrella|watch/
-      "miscellaneous"  # accessories n'existe pas
+      "miscellaneous"  # accessories doesn't exist
     when /snack|water|candy|fruit/
       "food"
     else
@@ -197,7 +197,7 @@ class TripsController < ApplicationController
   end
 
   def add_default_items_to_trip
-    # Ajouter tous les items réutilisables de l'utilisateur au nouveau trip
+    # Add all user's reusable items to the new trip
     current_user.items.reusable.each do |item|
       @trip.checklist_items.create!(
         item: item,
