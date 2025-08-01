@@ -21,7 +21,9 @@ class TripsController < ApplicationController
     @trip.user = current_user
 
     if @trip.save
-      # Nouveau trip commence vide - l'utilisateur ajoutera ses items
+      # Ajouter automatiquement les items réutilisables de l'utilisateur
+      add_default_items_to_trip
+
       redirect_to @trip, notice: "Trip created!"
     else
       puts @trip.errors.full_messages
@@ -114,7 +116,7 @@ class TripsController < ApplicationController
           # Créer ou trouver l'item pour cet utilisateur
           item = current_user.items.find_or_create_by(name: suggestion) do |new_item|
             new_item.category = determine_category(suggestion)
-            new_item.reusable = true
+            new_item.reusable = false  # Les suggestions AI ne sont pas réutilisables par défaut
           end
           
           # Créer le checklist_item
@@ -192,5 +194,15 @@ class TripsController < ApplicationController
 
   def trip_params
     params.require(:trip).permit(:title, :destination, :country, :accommodation_type, :start_date, :end_date, :cover_image)
+  end
+
+  def add_default_items_to_trip
+    # Ajouter tous les items réutilisables de l'utilisateur au nouveau trip
+    current_user.items.reusable.each do |item|
+      @trip.checklist_items.create!(
+        item: item,
+        checked: false
+      )
+    end
   end
 end
