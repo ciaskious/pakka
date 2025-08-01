@@ -105,32 +105,32 @@ class TripsController < ApplicationController
 
   def add_multiple_suggestions
     selected_suggestions = params[:suggestions]&.values&.reject(&:blank?) || []
-    
+
     if selected_suggestions.any?
       added_count = 0
       selected_suggestions.each do |suggestion|
         # Vérifier si l'item existe déjà
         existing_item = @trip.checklist_items.joins(:item).where(items: { name: suggestion }).exists?
-        
+
         unless existing_item
           # Créer ou trouver l'item pour cet utilisateur
           item = current_user.items.find_or_create_by(name: suggestion) do |new_item|
             new_item.category = determine_category(suggestion)
             new_item.reusable = false  # Les suggestions AI ne sont pas réutilisables par défaut
           end
-          
+
           # Créer le checklist_item
           @trip.checklist_items.create!(item: item, checked: false)
           added_count += 1
         end
       end
-      
+
       message = if added_count > 0
         "Successfully added #{added_count} item#{added_count > 1 ? 's' : ''} to your packing list!"
       else
         "All selected items were already in your packing list."
       end
-      
+
       redirect_to @trip, notice: message
     else
       redirect_to @trip, alert: "Please select at least one item to add."
@@ -157,7 +157,7 @@ class TripsController < ApplicationController
 
   def determine_category(item_name)
     item_lower = item_name.downcase
-    
+
     case item_lower
     when /t-shirt|shirt|pants|jeans|dress|skirt|jacket|coat|sweater|hoodie|shorts|underwear|bra|socks|pajama|sleepwear/
       "clothing"
