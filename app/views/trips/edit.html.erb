@@ -1,11 +1,14 @@
 <div class="edit-trip-container">
   <!-- Header Section -->
-  <div class="edit-header py-5 text-center" style="background: linear-gradient(135deg, #3741FA 0%, #FB7D92 100%);">
-    <div class="container">
-      <h1 class="display-5 fw-bold mb-3" style="font-family: 'Poppins', sans-serif; color: white;">Edit Your Trip</h1>
-      <p class="lead" style="font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.9);">
-        Update your <%= @trip.title %> details
-      </p>
+  <div class="edit-header py-5 <%= 'has-image' if @trip.cover_image.attached? %>"
+      style="<%= @trip.cover_image.attached? ? "background: linear-gradient(rgba(55, 65, 250, 0.6), rgba(55, 65, 250, 0.6)), url('#{url_for(@trip.cover_image)}');" : 'background-color: #3741FA;' %>">
+    <div class="container h-100">
+      <div class="d-flex flex-column align-items-center justify-content-center h-100 text-center">
+        <h1 class="display-5 fw-bold mb-2">Edit Your Trip</h1>
+        <p class="lead">
+          Update your <%= @trip.title %> trip details
+        </p>
+      </div>
     </div>
   </div>
 
@@ -124,13 +127,13 @@
             </div>
 
             <div class="form-actions mt-4 d-flex justify-content-between">
-              <%= link_to "Cancel", trip_path(@trip), class: "btn btn-outline-secondary px-4", style: "font-family: 'DM Sans', sans-serif;" %>
-              <%= f.submit "Update Trip", class: "btn btn-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+              <%= link_to "Cancel", trip_path(@trip), class: "btn cancel-button px-4", style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
+              <%= f.submit "Update Trip", class: "btn btn-secondary-cta px-4", style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
               <%= link_to "Delete Trip", trip_path(@trip),
                   method: :delete,
                   data: { confirm: "Are you sure you want to delete this trip?" },
                   class: "btn btn-outline-danger px-4",
-                  style: "font-family: 'DM Sans', sans-serif;" %>
+                  style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
             </div>
           <% end %>
         </div>

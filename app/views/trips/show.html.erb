@@ -27,15 +27,23 @@
                 <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
                   <div class="row g-3 align-items-end">
                     <div class="col-md-6">
-                      <%= f.label :name, "Create custom item", class: "form-label fw-semibold" %>
-                      <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses" %>
+                      <%= f.label :name, "Add custom item", class: "form-label fw-semibold" %>
+                      <%= f.text_field :name,
+                            class: "form-control",
+                            placeholder: "e.g. Sunglasses",
+                            style: "border-radius: 10px;" %>
                     </div>
                     <div class="col-md-6">
                       <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
-                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] }, { prompt: "Select" }, { class: "form-select custom-pakka-select" } %>
+                      <%= f.select :category,
+                            Item::CATEGORIES.map { |cat| [cat.humanize, cat] },
+                            { prompt: "Select" },
+                            { class: "form-select custom-pakka-select", style: "border-radius: 10px;" } %>
                     </div>
                     <div class="col-12">
-                      <%= f.submit "Add Item", class: "btn btn-primary" %>
+                      <%= f.submit "Add Item",
+                            class: "btn btn-secondary-cta",
+                            style: "border-radius: 10px;" %>
                     </div>
                   </div>
                 <% end %>
@@ -43,24 +51,30 @@
 
               <!-- Checklist Items -->
               <% if @checklist_items.any? %>
+                <% grouped_items = @checklist_items.group_by { |item| item.item.category } %>
+
                 <ul class="checklist-items list-group list-group-flush">
-                  <% @checklist_items.each do |checklist_item| %>
-                    <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
-                      <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
-                        <!-- Display version -->
-                        <div data-inline-edit-target="display" class="d-flex align-items-center">
-                          <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
-                        </div>
-
-                        <!-- Inline-edit form -->
-                        <div data-inline-edit-target="form" class="d-none">
-                          <%= render "checklist_items/edit", checklist_item: checklist_item %>
-                        </div>
-                      </div>
-
-
-
+                  <% grouped_items.each do |category, items| %>
+                    <li class="list-group-item bg-light fw-semibold mt-4" style="font-family: 'DM Sans', sans-serif;">
+                      <h5 class="mb-2 pakka-blue"><%= category.humanize %></h5>
                     </li>
+
+                    <% items.each do |checklist_item| %>
+                      <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
+                        <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
+                          <!-- Display version -->
+                          <div data-inline-edit-target="display" class="d-flex align-items-center">
+                            <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
+                          </div>
+
+                          <!-- Inline-edit form -->
+                          <div data-inline-edit-target="form" class="d-none">
+                            <%= render "checklist_items/edit", checklist_item: checklist_item %>
+                          </div>
+                        </div>
+
+                      </li>
+                    <% end %>
                   <% end %>
                 </ul>
               <% else %>
@@ -75,10 +89,10 @@
           <div class="actions-card card shadow-sm border-0">
             <div class="card-body">
               <div class="d-grid gap-2">
-                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary" %>
-                <%= button_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary" %>
-                <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
-                <%= link_to "Back to Trips", trips_path, class: "btn btn-light" %>
+                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary w-100 border-radius: 10px;" %>
+                <%= button_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary w-100 border-radius: 10px;" %>
+                <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-icon-danger w-100 border-radius: 10px;" %>
+                <%= link_to "Back to Trips", trips_path, class: "btn btn-light w-100 border-radius: 10px;" %>
               </div>
             </div>
           </div>

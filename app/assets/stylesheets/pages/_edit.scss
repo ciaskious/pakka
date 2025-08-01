@@ -2,6 +2,39 @@
 .edit-trip-container {
   font-family: 'DM Sans', sans-serif;
 
+  .edit-header {
+    min-height: 300px;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    // Only apply the blue background when no image exists
+    &:not(.has-image) {
+      background-color: #3741FA;
+    }
+
+    // Container styles for perfect centering
+    .container {
+      height: 100%;
+      position: relative; // Ensure content stays above any pseudo-elements
+      z-index: 2; // Higher than the gradient overlay
+    }
+
+    // Text styles (already centered by flex properties)
+    h1 {
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    p {
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+  }
+
   .edit-form-card {
     border-radius: 12px;
     background-color: white;

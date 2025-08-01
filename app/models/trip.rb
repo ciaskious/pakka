@@ -16,6 +16,14 @@ class Trip < ApplicationRecord
   validate :start_date_not_in_past,
            if: -> { new_record? || will_save_change_to_start_date? }
 
+  def duration
+    return 0 unless start_date && end_date
+
+    (end_date - start_date).to_i + 1 # +1 to include both start and end days
+  end
+
+  before_save :calculate_duration
+
   private
 
   def end_date_after_start_date
@@ -28,5 +36,9 @@ class Trip < ApplicationRecord
     return unless start_date
 
     errors.add(:start_date, "cannot be in the past") if start_date < Date.current
+  end
+
+  def calculate_duration
+    self.duration = (end_date - start_date).to_i + 1 if start_date && end_date
   end
 end
