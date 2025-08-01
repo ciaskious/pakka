@@ -111,9 +111,10 @@ class TripsController < ApplicationController
         existing_item = @trip.checklist_items.joins(:item).where(items: { name: suggestion }).exists?
         
         unless existing_item
-          # Créer ou trouver l'item
-          item = Item.find_or_create_by(name: suggestion) do |new_item|
+          # Créer ou trouver l'item pour cet utilisateur
+          item = current_user.items.find_or_create_by(name: suggestion) do |new_item|
             new_item.category = determine_category(suggestion)
+            new_item.reusable = true
           end
           
           # Créer le checklist_item
@@ -159,7 +160,7 @@ class TripsController < ApplicationController
     when /t-shirt|shirt|pants|jeans|dress|skirt|jacket|coat|sweater|hoodie|shorts|underwear|bra|socks|pajama|sleepwear/
       "clothing"
     when /shoe|boot|sandal|sneaker|heel|flip.flop/
-      "footwear"
+      "clothing"  # footwear n'existe pas, on utilise clothing
     when /phone|charger|camera|laptop|tablet|headphone|cable|adapter|battery|power.bank/
       "electronics"
     when /toothbrush|toothpaste|shampoo|soap|deodorant|perfume|makeup|skincare|razor|towel/
@@ -167,11 +168,13 @@ class TripsController < ApplicationController
     when /passport|visa|ticket|insurance|license|document|id|card/
       "documents"
     when /medicine|pill|vitamin|bandaid|sunscreen|insect.repellent/
-      "health_and_safety"
+      "medication"  # health_and_safety n'existe pas, on utilise medication
     when /book|guide|map|journal|pen|notebook/
-      "entertainment"
+      "miscellaneous"  # entertainment n'existe pas
     when /bag|suitcase|backpack|purse|wallet|sunglasses|hat|umbrella|watch/
-      "accessories"
+      "miscellaneous"  # accessories n'existe pas
+    when /snack|water|candy|fruit/
+      "food"
     else
       "miscellaneous"
     end
