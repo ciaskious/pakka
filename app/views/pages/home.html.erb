@@ -1,58 +1,119 @@
 <!-- Hero Section -->
-<section class="hero d-flex justify-content-center align-items-center text-center">
-  <div class="hero-content">
-    <h1 class="display-4 fw-bold">From Lists to Adventures: <br> Plan less. Pack better. Travel together. ⛱️</h1>
-    <p class="lead">With Pakka, your trips get easier — share your list, pack smart, and never forget a thing again 🧳</p>
-    <%= link_to "Start a New Trip", new_trip_path, class: "btn btn-primary-cta mt-3" %>
+<section class="hero d-flex justify-content-center align-items-center text-center position-relative">
+  <div class="hero-overlay"></div>
+  <div class="hero-content position-relative z-1">
+    <h1 class="display-4 fw-bold mb-2" style="font-family: 'Poppins', sans-serif;">Plan less. Pack better. Travel together. ⛱️</h1>
+    <div class="hero-subtext mb-5">
+      <p class="mb-0" style="font-family: 'DM Sans', sans-serif;">With Pakka, your trips get easier — share your list, pack smart, and never forget a thing again 🧳</p>
+    </div>
+    <div class="d-flex gap-3 justify-content-center">
+      <%= link_to "Start a New Trip", new_trip_path, class: "btn btn-primary-cta px-4 py-3 border-radius: 10px;" %>
+      <%= link_to "How It Works", "#how-it-works", class: "btn btn-secondary-cta px-4 py-3 border-radius: 10px;" %>
+    </div>
   </div>
 </section>
 
-<!-- Divider -->
-<div class="section-divider my-5 text-center">
-  <span>↓ Discover more trips ↓</span>
-</div>
+<!-- How It Works Section -->
+<section class="how-it-works py-5" id="how-it-works" style="background-color: #f8f9fa;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-3" style="font-family: 'Poppins', sans-serif; color: #3741FA;">✨ How Pakka Works</h2>
+      <p class="text-muted" style="font-family: 'DM Sans', sans-serif;">Your perfect packing companion in three simple steps</p>
+    </div>
 
-<!-- Horizontal Scroll Section -->
-<section class="scroll-trips-section py-5">
-  <div class="container-fluid px-4">
-    <h2 class="mb-4 fw-bold text-brand-blue">🌟 Discover Trips by the Community</h2>
-
-    <div class="scroll-container d-flex overflow-auto gap-4 pb-3">
-      <% @community_trips.each do |trip| %>
-        <%= link_to trip_path(trip), class: "text-decoration-none text-dark" do %>
-          <div class="trip-card card border-0 shadow-sm rounded-4 flex-shrink-0" style="width: 280px;">
-            <% if trip.cover_image.attached? %>
-              <%= image_tag trip.cover_image, class: "card-img-top rounded-top-4", style: "height: 180px; object-fit: cover;" %>
-            <% else %>
-              <div class="d-flex align-items-center justify-content-center bg-light rounded-top-4" style="height: 180px;">
-                <span class="text-muted fst-italic">No image</span>
-              </div>
-            <% end %>
-
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div>
-                <h6 class="fw-bold text-brand-blue mb-1"><%= trip.title %></h6>
-                <p class="mb-2 text-muted small">📍 <%= trip.location %></p>
-
-                <% if trip.user.present? %>
-                  <div class="d-flex align-items-center mb-3">
-                    <% if trip.user.avatar.attached? %>
-                      <%= cl_image_tag trip.user.avatar.key, transformation: { width: 30, height: 30, crop: "fill", gravity: "auto" }, class: "rounded-circle me-2", alt: "#{trip.user.first_name}'s avatar" %>
-                    <% else %>
-                      <div class="rounded-circle bg-brand-green text-white d-flex align-items-center justify-content-center me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">
-                        <%= trip.user.first_name&.first&.upcase || trip.user.email.first.upcase %>
-                      </div>
-                    <% end %>
-                    <small class="text-muted">Shared by <strong><%= trip.user.username || trip.user.email.split('@').first %></strong></small>
-                  </div>
-                <% end %>
-              </div>
-              <p class="btn btn-outline-primary btn-sm mt-auto mb-0">View Trip</p>
-            </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="how-it-works-card p-4 text-center h-100" style="background-color: white; border-top: 4px solid #3741FA;">
+          <div class="step-number mb-3" style="background-color: #3741FA;">1</div>
+          <h4 style="font-family: 'Poppins', sans-serif;">Create Your Trip</h4>
+          <p style="font-family: 'DM Sans', sans-serif;">Start by adding your trip details and destination</p>
+          <div class="step-icon" style="color: #3741FA;">
+            <i class="fas fa-map-marked-alt"></i>
           </div>
-        <% end %>
-      <% end %>
+        </div>
+      </div>
 
+      <div class="col-md-4">
+        <div class="how-it-works-card p-4 text-center h-100" style="background-color: white; border-top: 4px solid #9CDDAB;">
+          <div class="step-number mb-3" style="background-color: #9CDDAB;">2</div>
+          <h4 style="font-family: 'Poppins', sans-serif;">Build Your Packing List</h4>
+          <p style="font-family: 'DM Sans', sans-serif;">Use our smart suggestions or create custom items</p>
+          <div class="step-icon" style="color: #9CDDAB;">
+            <i class="fas fa-suitcase-rolling"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="how-it-works-card p-4 text-center h-100" style="background-color: white; border-top: 4px solid #FB7D93;">
+          <div class="step-number mb-3" style="background-color: #FB7D93;">3</div>
+          <h4 style="font-family: 'Poppins', sans-serif;">Share & Collaborate</h4>
+          <p style="font-family: 'DM Sans', sans-serif;">Invite travel companions to contribute to your list</p>
+          <div class="step-icon" style="color: #FB7D93;">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Community Trips Section -->
+<section class="community-trips py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-3">🔍 Discover Community Trips</h2>
+      <p>Get inspired by trips shared by other travelers</p>
+    </div>
+
+    <div class="position-relative">
+      <div class="scroll-trips-container">
+        <% @community_trips.each do |trip| %>
+          <%= link_to trip_path(trip), class: "trip-card-link" do %>
+            <div class="trip-card card border-0 shadow-sm rounded-4 h-100">
+              <% if trip.cover_image.attached? %>
+                <div class="trip-card-img" style="background-image: url('<%= cl_image_path trip.cover_image.key %>')"></div>
+              <% else %>
+                <div class="trip-card-img-placeholder d-flex align-items-center justify-content-center">
+                  <i class="fas fa-suitcase text-muted"></i>
+                </div>
+              <% end %>
+
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0"><%= trip.title %></h5>
+                  <% if trip.start_date && trip.end_date %>
+                    <span class="badge bg-pakka-green text-white">
+                      <%= (trip.end_date - trip.start_date).to_i + 1 %> days
+                    </span>
+                  <% end %>
+                </div>
+                <p class="text-muted small mb-3">
+                  <i class="fas fa-map-marker-alt me-1"></i> <%= trip.destination %>
+                </p>
+
+                <div class="d-flex align-items-center">
+                  <% if trip.user.avatar.attached? %>
+                    <%= cl_image_tag trip.user.avatar.key, class: "rounded-circle me-2", width: 32, height: 32, crop: :fill %>
+                  <% else %>
+                    <div class="user-avatar-fallback rounded-circle me-2">
+                      <%= trip.user.first_name.first.upcase %>
+                    </div>
+                  <% end %>
+                  <small>By <%= trip.user.username || trip.user.first_name %></small>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <button class="scroll-button scroll-left" aria-label="Scroll left">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="scroll-button scroll-right" aria-label="Scroll right">
+        <i class="fas fa-chevron-right"></i>
+      </button>
     </div>
   </div>
 </section>
