@@ -80,12 +80,24 @@ class AiPackingService < ApplicationService
       - Consider local climate, culture, and travel logistics
       - Suggest ESSENTIAL items while avoiding overpacking
       - Include safety and health considerations
-      - Keep suggestions concise but comprehensive
+      - Organize items by clear categories
 
-      Return only a clean, organized checklist with one item per line.
-      Group items by category (Clothing, Electronics, Personal Care, Documents, etc.) if helpful.
-      Focus on the most important 30-40 items maximum.
-      No commentary, introductions, or explanations - just the practical checklist.
+      IMPORTANT: Format your response EXACTLY as follows:
+      - Use clear category headers like "Clothing:", "Electronics:", "Personal Care:", "Documents:", etc.
+      - List each item on a new line with a dash (-)
+      - Keep each item concise (1-4 words maximum)
+      - Focus on 25-35 most essential items
+      - No introductions or explanations, just the categorized list
+
+      Example format:
+      Clothing:
+      - T-shirts
+      - Long pants
+      - Underwear
+
+      Electronics:
+      - Phone charger
+      - Camera
     PROMPT
   end
 
