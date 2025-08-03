@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-  get "users/profile"
+  # Devise stuff & profile
   devise_for :users, controllers: { registrations: "users/registrations" }
+  get "/profile", to: "users#profile", as: :profile
 
-  # Homepage
+  # Static pages
   root to: "pages#home"
-
   get "/ui-kit", to: "pages#ui_kit"
+
+  resources :items, except: [:show]
 
   # Trips & Checklists
   resources :trips do
@@ -23,22 +25,15 @@ Rails.application.routes.draw do
     resources :checklist_items, path: "items", only: [:create]
   end
 
-  resources :checklist_items, path: "trip_items", only: [:update, :destroy]
+  resources :checklist_items,
+            path: "items",
+            only: %i[create update destroy]
 
-  get "/profile", to: "users#profile", as: :profile
   resources :items, except: [:show]
 
-  # User Profile
-  resource :user do
-    patch '/users/avatar', to: 'users#update_avatar', as: :user_avatar
-  end
-
-  # Reusable Items
-  resources :reusable_items
-  resources :checklist_items do
-    member do
-      patch :toggle
-    end
+  # User avatar update
+  resource :user, only: [] do
+    patch :update_avatar, path: "avatar"
   end
 
   # APIs
