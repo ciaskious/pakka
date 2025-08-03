@@ -54,6 +54,7 @@ class TripsController < ApplicationController
       @new_trip = @trip.dup
       @new_trip.user = current_user
       @new_trip.title = "#{@trip.title} (Copy)"
+      @new_trip.skip_date_validation = true
       @new_trip.start_date = nil
       @new_trip.end_date = nil
 

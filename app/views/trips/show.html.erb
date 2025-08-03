@@ -5,7 +5,7 @@
       <div class="trip-meta">
         <h1 class="trip-title"><%= @trip.title %></h1>
         <p class="trip-destination"><%= @trip.destination %>, <%= @trip.country %></p>
-        <p class="trip-dates"><%= @trip.start_date.to_formatted_s(:long) %> - <%= @trip.end_date.to_formatted_s(:long) %></p>
+        <p class="trip-dates"><%= @trip.start_date.try(:to_formatted_s, :long) || "Choose start date" %> - <%= @trip.end_date.try(:to_formatted_s, :long)   || "Choose end date" %></p>
       </div>
     </div>
   </section>
