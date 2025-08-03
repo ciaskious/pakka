@@ -48,25 +48,45 @@ class TripsController < ApplicationController
   end
 
   def duplicate
-    @new_trip = @trip.dup
-    @new_trip.title = "#{@trip.title} (Copy)"
-    @new_trip.start_date = nil
-    @new_trip.end_date = nil
+    # Wrap in a transaction so we roll back if anything goes wrong
+    Trip.transaction do
+      # 1) Duplicate the trip itself (this carries over user_id but not timestamps or PK)
+      @new_trip = @trip.dup
+      @new_trip.user = current_user
+      @new_trip.title = "#{@trip.title} (Copy)"
+      @new_trip.start_date = nil
+      @new_trip.end_date = nil
 
-    if @new_trip.save
-      # Duplicate checklist_items
-      @trip.checklist_items.each do |item|
-        @new_trip.checklist_items.create(
-          name: item.name,
-          checked: false,
-          item: item.item,
+      # 2) Re‐attach any cover_image
+      if @trip.cover_image.attached?
+        @new_trip.cover_image.attach(
+          io: StringIO.new(@trip.cover_image.download),
+          filename: @trip.cover_image.filename.to_s,
+          content_type: @trip.cover_image.content_type,
         )
       end
 
+      # 3) Save the new trip (this will raise if invalid)
+      Rails.logger.debug "Duping: user=#{@new_trip.user_id}, valid?=#{@new_trip.valid?}, errors=#{@new_trip.errors.full_messages}"
+
+      @new_trip.save!
+
+      # 4) Duplicate each checklist item
+      @trip.checklist_items.find_each do |ci|
+        @new_trip.checklist_items.create!(
+          item: ci.item,
+          name: ci.name,
+          checked: false,
+        )
+      end
+
+      # 5) Redirect on success
       redirect_to @new_trip, notice: "Trip was successfully duplicated."
-    else
-      redirect_to @trip, alert: "Failed to duplicate trip."
     end
+  rescue ActiveRecord::RecordInvalid => e
+    # If anything failed in the transaction, roll back and show errors
+    Rails.logger.error "Trip duplication failed: #{e.record.errors.full_messages.join(", ")}"
+    redirect_to @trip, alert: "Failed to duplicate trip: #{e.record.errors.full_messages.join("; ")}"
   end
 
   # GET /trips/:id/share (public_show)
@@ -126,10 +146,10 @@ class TripsController < ApplicationController
       end
 
       message = if added_count > 0
-        "Successfully added #{added_count} item#{added_count > 1 ? 's' : ''} to your packing list!"
-      else
-        "All selected items were already in your packing list."
-      end
+          "Successfully added #{added_count} item#{added_count > 1 ? "s" : ""} to your packing list!"
+        else
+          "All selected items were already in your packing list."
+        end
 
       redirect_to @trip, notice: message
     else
@@ -145,12 +165,12 @@ class TripsController < ApplicationController
   def parse_ai_suggestions(ai_response)
     # Split response into lines and clean
     suggestions = ai_response.split("\n")
-                            .map(&:strip)
-                            .reject(&:empty?)
-                            .reject { |line| line.match?(/^[A-Za-z\s]+:$/) } # Remove category titles
-                            .map { |line| line.gsub(/^[-*•]\s*/, '') } # Remove bullets
-                            .reject { |line| line.match?(/^(Clothing|Electronics|Personal Care|Documents|Toiletries|Accessories|Shoes|Health|Safety|Travel|Miscellaneous):?$/i) } # Remove category headers
-                            .select { |line| line.length > 2 } # Keep only real items
+      .map(&:strip)
+      .reject(&:empty?)
+      .reject { |line| line.match?(/^[A-Za-z\s]+:$/) } # Remove category titles
+      .map { |line| line.gsub(/^[-*•]\s*/, "") } # Remove bullets
+      .reject { |line| line.match?(/^(Clothing|Electronics|Personal Care|Documents|Toiletries|Accessories|Shoes|Health|Safety|Travel|Miscellaneous):?$/i) } # Remove category headers
+      .select { |line| line.length > 2 } # Keep only real items
 
     suggestions.first(30) # Limit to 30 suggestions max
   end
@@ -201,7 +221,7 @@ class TripsController < ApplicationController
     current_user.items.reusable.each do |item|
       @trip.checklist_items.create!(
         item: item,
-        checked: false
+        checked: false,
       )
     end
   end
