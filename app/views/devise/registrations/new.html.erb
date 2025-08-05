@@ -9,9 +9,31 @@
       <%= f.error_notification %>
 
       <div class="form-inputs">
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :first_name,
+                        required: true,
+                        wrapper_html: { class: "form-group" },
+                        input_html: {
+                          class: "form-control pakka-input",
+                          placeholder: "First name"
+                        },
+                        label_html: { class: "form-label" } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :last_name,
+                        required: true,
+                        wrapper_html: { class: "form-group" },
+                        input_html: {
+                          class: "form-control pakka-input",
+                          placeholder: "Last name"
+                        },
+                        label_html: { class: "form-label" } %>
+          </div>
+        </div>
+
         <%= f.input :email,
                     required: true,
-                    autofocus: true,
                     wrapper_html: { class: "form-group" },
                     input_html: {
                       class: "form-control pakka-input",

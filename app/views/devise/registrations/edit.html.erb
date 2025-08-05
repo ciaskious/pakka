@@ -1,35 +1,82 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2 class="auth-title">Edit Your Profile</h2>
+    </div>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "auth-form" }) do |f| %>
+      <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+      <div class="form-inputs">
+        <!-- Avatar Upload -->
+        <div class="text-center mb-4">
+          <div class="avatar-container position-relative mx-auto" style="width: 100px; height: 100px;">
+            <% if resource.avatar.attached? %>
+              <%= cl_image_tag resource.avatar.key, class: "rounded-circle shadow-sm w-100 h-100 object-fit-cover", alt: "Profile picture" %>
+            <% else %>
+              <div class="rounded-circle bg-light text-primary d-flex align-items-center justify-content-center shadow-sm w-100 h-100">
+                <%= resource.first_name.first.upcase %>
+              </div>
+            <% end %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <div class="avatar-overlay rounded-circle d-flex align-items-center justify-content-center">
+              <%= f.file_field :avatar,
+                    class: "d-none",
+                    id: "avatar-upload-edit",
+                    onchange: "this.form.submit()" %>
+              <label for="avatar-upload-edit" class="btn btn-light m-0 p-2" style="border-radius: 50%;">
+                <i class="fas fa-camera"></i>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- First and Last Name Update -->
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :first_name,
+                        required: true,
+                        input_html: { class: "form-control pakka-input" } %>
+          </div>
+          <div class="col-md-6">
+            <%= f.input :last_name,
+                        required: true,
+                        input_html: { class: "form-control pakka-input" } %>
+          </div>
+        </div>
+
+        <%= f.input :email, required: true, input_html: { class: "form-control pakka-input" } %>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div class="alert alert-warning">
+            Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+          </div>
+        <% end %>
+
+        <!-- Password Update -->
+        <div class="password-section mt-4">
+          <%= f.input :password,
+                      hint: "Leave blank if you don't want to change it",
+                      required: false,
+                      input_html: { class: "form-control pakka-input" } %>
+
+          <%= f.input :password_confirmation,
+                      required: false,
+                      input_html: { class: "form-control pakka-input" } %>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions d-grid gap-2">
+        <%= f.button :submit, "Save Changes", class: "btn btn-primary-cta", style: "border-radius: 10px;" %>
+        <%= link_to "Cancel", edit_user_registration_path, class: "btn btn-outline-secondary", style: "border-radius: 10px;" %>
+        <%= button_to "Delete my account",
+                    registration_path(resource_name),
+                    data: { confirm: "Are you sure? All your data will be permanently deleted." },
+                    method: :delete,
+                    class: "btn btn-outline-danger",
+                    style: "border-radius: 10px;" %>
+      </div>
     <% end %>
-
-    <%= f.input :password,
-                hint: "leave it blank if you don't want to change it",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "we need your current password to confirm your changes",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

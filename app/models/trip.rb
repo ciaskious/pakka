@@ -12,18 +12,23 @@ class Trip < ApplicationRecord
   validates :accommodation_type, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true
+  validate :start_date_not_in_past, on: :create # Only validate on create
   validate :end_date_after_start_date
-  validate :start_date_not_in_past
+
+
+  scope :upcoming, -> { where("start_date >= ?", Date.current).order(start_date: :asc) }
+  scope :past, -> { where("start_date < ?", Date.current).order(start_date: :desc) }
+  scope :chronological, -> { order(start_date: :asc) }
 
   def duration
-    return 0 unless start_date && end_date
+    return 0 unless valid_dates?
 
-    (end_date - start_date).to_i + 1 # +1 to include both start and end days
+    (end_date - start_date).to_i + 1
   end
 
   before_save :calculate_duration
 
-  ACCOMMODATION_OPTIONS = %w[hostel hotel appartment campsite homestay cabin resort].freeze
+  ACCOMMODATION_OPTIONS = %w[hotel hostel apartment campsite homestay cabin resort].freeze
 
   validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
 
@@ -34,16 +39,24 @@ class Trip < ApplicationRecord
 
   private
 
-  def end_date_after_start_date
-    return unless start_date && end_date
-
-    errors.add(:end_date, "must be after start date") if end_date < start_date
+  def valid_dates?
+    start_date.present? && end_date.present? && end_date >= start_date
   end
 
   def start_date_not_in_past
-    return unless start_date
+    return unless start_date.present?
 
-    errors.add(:start_date, "cannot be in the past") if start_date < Date.current
+    errors.add(:start_date, "must be today or in the future for new trips") if start_date < Date.current
+  end
+
+  def end_date_after_start_date
+    return unless start_date.present? && end_date.present?
+
+    if end_date < start_date
+      errors.add(:end_date, "must be after start date")
+    elsif end_date == start_date
+      errors.add(:end_date, "must be at least 1 day after start date")
+    end
   end
 
   def calculate_duration
