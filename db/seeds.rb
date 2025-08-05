@@ -14,7 +14,7 @@ puts "👤 Creating users..."
 user_data = [
   { email: "duparcrobin@gmail.com", first_name: "Robin", username: "duparcrobin", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/robin_y06loa.jpg" },
   { email: "ciaskious@gmail.com", first_name: "Asia", username: "ciaskious", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/asia_ssajaw.png" },
-  { email: "joanagaalves@gmail.com", first_name: "Joana", username: "joanagaalves", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/joana_oijl6g.jpg" },
+  { email: "joanagaalves@gmail.com", first_name: "Joana", last_name: "Azevedo", username: "joanagaalves", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/joana_oijl6g.jpg" },
 ]
 
 users = user_data.map do |attrs|
