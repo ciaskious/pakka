@@ -87,8 +87,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_31_233435) do
     t.datetime "updated_at", null: false
     t.text "description"
     t.string "location"
-    t.string "accommodation_type"
     t.integer "duration"
+    t.string "accommodation_type"
     t.index ["user_id"], name: "index_trips_on_user_id"
   end
 
