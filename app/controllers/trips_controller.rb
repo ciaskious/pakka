@@ -11,7 +11,7 @@ class TripsController < ApplicationController
 
   # GET /trips/community
   def public_index
-    @trips = Trip.community_trips(current_user)
+    @community_trips = Trip.community_trips(current_user)
   end
 
   # GET /trips/:id
