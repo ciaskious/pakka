@@ -29,7 +29,8 @@
   </button>
 
   <!-- Delete button -->
-  <%= button_to checklist_item_path(checklist_item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", style: "border-radius: 10px", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
+  <%= button_to trip_checklist_item_path(checklist_item.trip, checklist_item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", style: "border-radius: 10px", data: {  action: "ajax:success->checklist-items#destroy", "inline-edit-target": "deleteButton", confirm: "Are you sure?" } do %>
     <i class="fas fa-trash-alt"></i>
   <% end %>
+
 </div>

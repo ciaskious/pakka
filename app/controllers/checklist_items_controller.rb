@@ -6,11 +6,24 @@ class ChecklistItemsController < ApplicationController
 
   def update
     @checklist_item = ChecklistItem.find(params[:id])
-    if @checklist_item.update(checklist_item_params)
-      html = render_to_string(partial: "checklist_items/checklist_item", formats: [:html], locals: { checklist_item: @checklist_item })
+    item = @checklist_item.item
+
+    # Pull name/category from params
+    attrs = params
+      .require(:checklist_item)
+      .permit(:name, :category)
+
+    if item.update(attrs)
+      # Re-render the checklist row (checkbox + buttons)
+      html = render_to_string(
+        partial: "checklist_items/checklist_item",
+        locals: { checklist_item: @checklist_item },
+      )
       render plain: html, content_type: "text/html"
     else
-      render partial: "checklist_items/edit", locals: { checklist_item: @checklist_item }, status: :unprocessable_entity
+      render partial: "checklist_items/edit",
+             locals: { checklist_item: @checklist_item },
+             status: :unprocessable_entity
     end
   end
 

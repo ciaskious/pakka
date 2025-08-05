@@ -1,4 +1,6 @@
 class Trip < ApplicationRecord
+  attr_accessor :skip_date_validation
+
   belongs_to :user
   has_many :checklist_items, dependent: :destroy
   has_many :likes, through: :checklist_items
@@ -9,9 +11,9 @@ class Trip < ApplicationRecord
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true
+  validates :start_date, presence: true, unless: :skip_date_validation
+  validates :end_date, presence: true, unless: :skip_date_validation
   validates :accommodation_type, presence: true
-  validates :start_date, presence: true
-  validates :end_date, presence: true
   validate :start_date_not_in_past, on: :create # Only validate on create
   validate :end_date_after_start_date
 
