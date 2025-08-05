@@ -76,7 +76,6 @@ class TripsController < ApplicationController
       @trip.checklist_items.find_each do |ci|
         @new_trip.checklist_items.create!(
           item: ci.item,
-          name: ci.name,
           checked: false,
         )
       end
