@@ -39,4 +39,19 @@
       justify-content: center;
     }
   }
+
+  .past-trip {
+    opacity: 0.85;
+  }
+
+  .past-trip .card-body {
+    border-left: 3px solid #6c757d;
+    padding-left: 1.25rem;
+  }
+
+  .alert-info {
+    color: lightslategray;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
 }

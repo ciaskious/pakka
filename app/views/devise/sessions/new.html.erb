@@ -1,0 +1,51 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-subtitle">Log in to access your checklists</p>
+    </div>
+
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <div class="form-inputs">
+        <%= f.input :email,
+                    required: false,
+                    autofocus: true,
+                    wrapper_html: { class: "form-group" },
+                    input_html: {
+                      class: "form-control pakka-input",
+                      autocomplete: "email",
+                      placeholder: "Email address"
+                    },
+                    label_html: { class: "form-label" } %>
+
+        <%= f.input :password,
+                    required: false,
+                    wrapper_html: { class: "form-group" },
+                    input_html: {
+                      class: "form-control pakka-input",
+                      autocomplete: "current-password",
+                      placeholder: "Password"
+                    },
+                    label_html: { class: "form-label" } %>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="remember-me">
+            <%= f.input :remember_me,
+                        as: :boolean,
+                        wrapper_html: { class: "form-check" },
+                        input_html: { class: "form-check-input" },
+                        label_html: { class: "form-check-label" } %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Log in", class: "btn btn-primary-cta w-100" %>
+      </div>
+    <% end %>
+
+    <div class="auth-links">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

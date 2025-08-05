@@ -21,7 +21,7 @@
   </button>
 
   <!-- Delete button -->
-  <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", style: "border-radius: 10px", data: { confirm: "Are you sure?" } do %>
+  <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", style: "border-radius: 10px", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
     <i class="fas fa-trash-alt"></i>
   <% end %>
 </div>

@@ -93,6 +93,11 @@
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
+              <div class="alert alert-info alert-dismissible fade show d-inline-flex align-items-center py-2 px-3 ms-auto" style="max-width: 420px;">
+                <i class="fas fa-info-circle me-2"></i>
+                <span class="pe-3 me-auto">You can set past dates when editing an existing trip.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
 
               <div class="col-md-6">
                 <%= f.input :end_date,
@@ -101,6 +106,13 @@
                   wrapper_html: { class: "mb-3" },
                   input_html: {
                     class: "form-control-lg",
+                    data: {
+                      controller: "trip-dates",
+                      action: "change->trip-dates#validate"
+                    },
+                    error_html: {
+                      class: "text-danger small"
+                    },
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
