@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   # Trips & Checklists
   resources :trips do
+    resources :checklist_items,
+              path: "items",
+              only: %i[create update destroy]
     member do
       post :duplicate
       get :share, to: "trips#public_show"
@@ -21,13 +24,7 @@ Rails.application.routes.draw do
     collection do
       get :public_index, path: "community"
     end
-
-    resources :checklist_items, path: "items", only: [:create]
   end
-
-  resources :checklist_items,
-            path: "items",
-            only: %i[create update destroy]
 
   resources :items, except: [:show]
 
