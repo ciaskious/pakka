@@ -1,6 +1,6 @@
-<%= form_with model: checklist_item.item,
-              url: item_path(checklist_item.item),
-              scope: :item,
+<%= form_with model: checklist_item,
+              url: trip_checklist_item_path(checklist_item.trip, checklist_item),
+              scope: :checklist_item,
               method: :patch,
               data: {
                 remote: true,
@@ -13,6 +13,7 @@
   <div class="row gx-3 mb-2">
     <div class="col-md-6">
       <%= f.text_field :name,
+            value:  checklist_item.item.name,
             class: "form-control form-control-sm",
             style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
     </div>
@@ -20,7 +21,7 @@
     <div class="col-md-6">
       <%= f.select :category,
             Item::CATEGORIES.map { |c| [c.humanize, c] },
-            {},
+            { selected: checklist_item.item.category },
             { class: "form-select form-select-sm", style: "border-radius: 10px;" } %>
     </div>
   </div>

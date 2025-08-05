@@ -1,4 +1,6 @@
 class Trip < ApplicationRecord
+  attr_accessor :skip_date_validation
+
   belongs_to :user
   has_many :checklist_items, dependent: :destroy
   has_many :likes, through: :checklist_items
