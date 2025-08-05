@@ -16,7 +16,6 @@ Rails.application.routes.draw do
               only: %i[create update destroy]
     member do
       post :duplicate
-      get :share, to: "trips#public_show"
       post :generate_ai_suggestions
       post :add_multiple_suggestions
     end

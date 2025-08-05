@@ -6,6 +6,7 @@
         <h1 class="trip-title"><%= @trip.title %></h1>
         <p class="trip-destination"><%= @trip.destination %>, <%= @trip.country %></p>
         <p class="trip-dates"><%= @trip.start_date.try(:to_formatted_s, :long) || "Choose start date" %> - <%= @trip.end_date.try(:to_formatted_s, :long)   || "Choose end date" %></p>
+        <p class="trip-dates"><%= @trip.accommodation_type %></p>
       </div>
     </div>
   </section>
@@ -153,10 +154,16 @@
           <div class="actions-card card shadow-sm border-0 mb-4">
             <div class="card-body">
               <div class="d-grid gap-2">
-                <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary w-100 border-radius: 10px;" %>
-                <%= button_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary w-100 border-radius: 10px;" %>
-                <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-icon-danger w-100 border-radius: 10px;" %>
-                <%= link_to "Back to Trips", trips_path, class: "btn btn-light w-100 border-radius: 10px;" %>
+                <% if user_signed_in? && current_user == @trip.user %>
+                  <%= link_to "Edit Trip", edit_trip_path(@trip), class: "btn btn-outline-secondary w-100 border-radius: 10px;" %>
+                <% end %>
+                  <%= button_to "Duplicate Trip", duplicate_trip_path(@trip), method: :post, class: "btn btn-outline-tertiary w-100 border-radius: 10px;" %>
+                <% if user_signed_in? && current_user == @trip.user %>
+                  <%= button_to "Delete Trip", trip_path(@trip), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-icon-danger w-100 border-radius: 10px;" %>
+                <% end %>
+                <%= link_to( @came_from_community ? "← Community Trips" : "← My Trips",
+                    @came_from_community ? public_index_trips_path : trips_path, class: "btn btn-light w-100 border-radius: 10px;") %>
+
               </div>
             </div>
           </div>

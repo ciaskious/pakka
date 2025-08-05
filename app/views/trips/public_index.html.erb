@@ -10,8 +10,8 @@
   <!-- Trips Grid Section -->
   <div class="container py-5">
     <div class="row g-4">
-      <% if @trips.any? %>
-        <% @trips.each do |trip| %>
+      <% if @community_trips.any? %>
+        <% @community_trips.each do |trip| %>
           <div class="col-12 col-sm-6 col-lg-4">
             <%= link_to trip_path(trip), class: "text-decoration-none text-dark" do %>
               <div class="community-trip-card card shadow-sm border-0 h-100" style="font-family: 'DM Sans', sans-serif;">

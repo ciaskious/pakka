@@ -70,15 +70,15 @@ accommodation_options = Trip::ACCOMMODATION_OPTIONS
 puts "🗺️ Creating trips..."
 
 trip_data = [
-  { title: "Summer Escape", destination: "Lisbon", country: "Portugal", location: "Lisbon", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/lisbon_bmoivj.jpg" },
-  { title: "Mountain Retreat", destination: "Zermatt", country: "Switzerland", location: "Alps", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/zermatt_zc5drx.jpg" },
-  { title: "City Break", destination: "Berlin", country: "Germany", location: "Berlin", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733343/berlin_lji0wm.avif" },
-  { title: "Island Hopping", destination: "Santorini", country: "Greece", location: "Aegean Sea", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/santorini_xslml6.avif" },
-  { title: "Desert Adventure", destination: "Marrakech", country: "Morocco", location: "Atlas Mountains", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/marrakech_iifnyv.jpg" },
-  { title: "Scandinavian Escape", destination: "Stockholm", country: "Sweden", location: "Stockholm", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/stockholm_ps2mrj.avif" },
-  { title: "Jungle Trek", destination: "Ubud", country: "Indonesia", location: "Bali", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/ubud_zuqriu.jpg" },
-  { title: "Cultural Tour", destination: "Kyoto", country: "Japan", location: "Kyoto", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/ubud_zuqriu.jpg" },
-  { title: "Road Trip", destination: "California", country: "USA", location: "Pacific Coast", cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/california_vxedbe.webp" },
+  { title: "Summer Escape", destination: "Lisbon", country: "Portugal", location: "Lisbon", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/lisbon_bmoivj.jpg" },
+  { title: "Mountain Retreat", destination: "Zermatt", country: "Switzerland", location: "Alps", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/zermatt_zc5drx.jpg" },
+  { title: "City Break", destination: "Berlin", country: "Germany", location: "Berlin", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733343/berlin_lji0wm.avif" },
+  { title: "Island Hopping", destination: "Santorini", country: "Greece", location: "Aegean Sea", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/santorini_xslml6.avif" },
+  { title: "Desert Adventure", destination: "Marrakech", country: "Morocco", location: "Atlas Mountains", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/marrakech_iifnyv.jpg" },
+  { title: "Scandinavian Escape", destination: "Stockholm", country: "Sweden", location: "Stockholm", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/stockholm_ps2mrj.avif" },
+  { title: "Jungle Trek", destination: "Ubud", country: "Indonesia", location: "Bali", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/ubud_zuqriu.jpg" },
+  { title: "Cultural Tour", destination: "Kyoto", country: "Japan", location: "Kyoto", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733287/kyoto_pgjpyo.jpg" },
+  { title: "Road Trip", destination: "California", country: "USA", location: "Pacific Coast", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/california_vxedbe.webp" },
 ]
 
 users.each_with_index do |user, index|
@@ -92,7 +92,6 @@ users.each_with_index do |user, index|
       start_date: Date.today + (i * 10),
       end_date: Date.today + (i * 10) + 5,
       accommodation_type: accommodation_options.sample,
-      public: [true, false].sample,
     )
     begin
       file = URI.open(trip_attrs[:cover_url])
@@ -107,8 +106,6 @@ users.each_with_index do |user, index|
     # Add 3 reusable checklist items
     user.items.reusable.reorder("RANDOM()").limit(3).each do |item|
       trip.checklist_items.create!(
-        name: item.name,
-        category: item.category,
         item_id: item.id,
         checked: [true, false].sample,
       )
@@ -120,8 +117,6 @@ users.each_with_index do |user, index|
       category = user.items.reusable.sample.category
       custom_item = user.items.create!(name: name, category: category, reusable: false)
       trip.checklist_items.create!(
-        name: custom_item.name,
-        category: custom_item.category,
         item_id: custom_item.id,
         checked: [true, false].sample,
       )
