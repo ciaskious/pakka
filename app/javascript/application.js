@@ -1,10 +1,11 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-//import "@hotwired/turbo-rails"
-
-// Import Rails UJS (Unobtrusive JavaScript)
 import Rails from "@rails/ujs"
 Rails.start()
 
-import "controllers"
+import { Application } from "@hotwired/stimulus"
+import InlineEditController from "controllers/inline_edit_controller"
+
+const application = Application.start()
+application.register("inline-edit", InlineEditController)
+
 import "@popperjs/core"
 import "bootstrap"

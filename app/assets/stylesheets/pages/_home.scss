@@ -1,187 +1,167 @@
-// Fonts assumed: Poppins for titles, DM Sans for body
+// Global Variables & Settings
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=DM+Sans&display=swap');
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: #FCF9F2;
-  color: #222;
+:root {
+  --pakka-blue: #3741FA;
+  --pakka-green: #9CDDAB;
+  --pakka-pink: #FB7D93;
+  --pakka-light: #f8f9fa;
+  --text-dark: #333;
+  --text-muted: #6c757d;
 }
 
-// Hero
-.hero {
-  background: url('packing.jpg') center/cover no-repeat;
-  min-height: 90vh;
-  position: relative;
+// Mixins & Utilities
+@mixin card-hover-effect {
+  transition: all 0.3s ease;
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    background-color: rgba(55, 65, 250, 0.75);
-    padding: 2.5rem 2rem;
-    border-radius: 1rem;
-    max-width: 700px;
-    color: #F7F2EB;
-    animation: fadeInUp 1s ease-out;
-
-    h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 2.5rem;
-    }
-
-    p {
-      font-size: 1.2rem;
-    }
-
-    .btn-primary-cta {
-      background-color: #FB7D92;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 30px;
-      padding: 0.6rem 1.8rem;
-      transition: 0.3s ease;
-
-      &:hover {
-        background-color: darken(#FB7D92, 8%);
-      }
-    }
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-// Divider
-.section-divider {
-  font-size: 1.2rem;
-  color: #9CDDAB;
+// Typography
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
 }
 
-// Trip Cards
-// .trip-card {
-//   transition: transform 0.2s ease, box-shadow 0.2s ease;
+body, p, small, .form-control {
+  font-family: 'DM Sans', sans-serif;
+}
 
-//   &:hover {
-//     transform: translateY(-5px);
-//     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-//   }
+// Hero Section
+.hero {
+  min-height: 80vh;
+  background-image:
+    linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)),
+    url('packing.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: white;
+  padding: 4rem 1rem;
+  position: relative;
 
-//   .card-title {
-//     font-size: 1.2rem;
-//     color: #3741FA;
-//   }
+  &-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+  }
 
-//   .card-text {
-//     font-size: 0.95rem;
-//   }
-// }
-
-// Brand colors for reuse
-$text-brand-blue: #3741FA;
-$brand-pink: #FB7D92;
-$brand-green: #9CDDAB;
-$off-white: #F7F2EB;
-
-.text-brand-blue {
-  color: $text-brand-blue;
+  &-content {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 // Community Trips Section
-.community-trips-section {
-  background-color: $off-white;
+.community-trips {
+  background-color: var(--pakka-blue);
+  color: white;
+
+  .scroll-trips-container {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    scrollbar-width: none; // Firefox
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari
+    }
+  }
+
+  .trip-card-link {
+    flex: 0 0 280px;
+    text-decoration: none;
+    color: var(--text-dark);
+  }
 
   .trip-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    @include card-hover-effect;
+    background-color: white;
+    overflow: hidden;
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    &-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
     }
 
-    .card-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
+    &-img-placeholder {
+      height: 180px;
+      background-color: var(--pakka-light);
+      color: var(--text-muted);
+      font-size: 2rem;
     }
+  }
 
-    .card-text {
-      font-family: 'DM Sans', sans-serif;
-    }
+  .user-avatar-fallback {
+    width: 32px;
+    height: 32px;
+    background-color: var(--pakka-green);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
 
-    .btn-brand-outline {
-      border: 2px solid $brand-green;
-      color: $brand-green;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-      padding: 0.4rem 1.25rem;
-      width: 100%;
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 
-      &:hover {
-        background-color: $brand-green;
-        color: white;
-        box-shadow: 0 0 0 4px rgba($brand-green, 0.2);
-      }
-    }
-
-    .no-image {
-      background-color: #eee;
-      height: 220px;
-      font-size: 0.9rem;
-    }
+    &.scroll-left { left: -20px; }
+    &.scroll-right { right: -20px; }
   }
 }
 
-// Community Trips Scrollable Section
+// How It Works Section
+.how-it-works {
+  background-color: var(--pakka-light);
 
-.scroll-trips-section {
-  background-color: $off-white;
+  .how-it-works-card {
+    @include card-hover-effect;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid;
 
-  h2 {
-    font-family: 'Poppins', sans-serif;
+    &:nth-child(1) { border-color: var(--pakka-blue); }
+    &:nth-child(2) { border-color: var(--pakka-green); }
+    &:nth-child(3) { border-color: var(--pakka-pink); }
   }
 
-  .scroll-container {
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 1rem;
+  .step-number {
+    width: 40px;
+    height: 40px;
+    color: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
 
-    .trip-card {
-      scroll-snap-align: start;
-      background-color: white;
-      border-radius: 1.25rem;
-      transition: transform 0.3s ease;
-
-      &:hover {
-        transform: translateY(-3px);
-      }
-
-      .btn {
-        border-radius: 20px;
-        font-size: 0.85rem;
-        padding: 0.4rem 1rem;
-      }
-    }
+  .step-icon {
+    font-size: 2rem;
+    margin-top: 1rem;
   }
 }
 
-.bg-brand-green {
-  background-color: #9CDDAB;
-}
-
-.scroll-trips-section .trip-card {
-  .rounded-circle {
-    flex-shrink: 0;
-  }
-}
+// Utility Classes
+.bg-pakka-green { background-color: var(--pakka-green); }
+.bg-pakka-blue { background-color: var(--pakka-blue); }
+.bg-pakka-pink { background-color: var(--pakka-pink); }

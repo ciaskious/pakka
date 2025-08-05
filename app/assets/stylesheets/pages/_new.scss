@@ -2,6 +2,13 @@
 .new-trip-container {
   font-family: 'DM Sans', sans-serif;
 
+  .trip-form-header p{
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+  }
+
   .trip-form-card {
     border-radius: 12px;
     background-color: white;

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     member do
       post :duplicate
       get :share, to: "trips#public_show"
+      post :generate_ai_suggestions
+      post :add_multiple_suggestions
     end
 
     collection do
@@ -33,6 +35,11 @@ Rails.application.routes.draw do
 
   # Reusable Items
   resources :reusable_items
+  resources :checklist_items do
+    member do
+      patch :toggle
+    end
+  end
 
   # APIs
   post "/geocode", to: "locations#geocode"

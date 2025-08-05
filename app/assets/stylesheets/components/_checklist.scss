@@ -1,0 +1,18 @@
+// Strikethrough effect
+.form-check {
+  .form-check-input:checked + .form-check-label .checklist-text {
+    text-decoration: line-through;
+    color: #6c757d;
+  }
+
+  // Fallback for server-side rendering
+  .checklist-text.text-decoration-line-through {
+    text-decoration: line-through !important;
+    color: #6c757d !important;
+  }
+}
+
+// Ensure proper spacing
+.checklist-text {
+  transition: all 0.2s ease;
+}

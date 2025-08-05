@@ -110,4 +110,45 @@
   .card {
     border-radius: 16px;
   }
+
+  //Item Form Styling
+  .form-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    color: #3741FA;
+  }
+
+  .form-control,
+  .form-select {
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:focus {
+      border-color: #3741FA;
+      box-shadow: 0 0 0 0.25rem rgba(55, 65, 250, 0.2);
+    }
+  }
+
+  select.form-select.custom-pakka-select,
+  input.form-control {
+    background-color: white !important;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif !important;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    padding-right: 2rem;
+
+    &:focus {
+      border-color: #3741FA;
+      box-shadow: 0 0 0 0.25rem rgba(55, 65, 250, 0.2);
+    }
+
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%233741FA' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2rem;
+  }
 }
