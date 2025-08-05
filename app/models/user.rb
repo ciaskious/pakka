@@ -9,10 +9,9 @@ class User < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  validates :username, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: false
 
+  validates :first_name, presence: true
+  
   # Methods
   def name
     if first_name.present? && last_name.present?
