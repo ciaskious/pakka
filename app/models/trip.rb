@@ -8,17 +8,6 @@ class Trip < ApplicationRecord
 
   has_one_attached :cover_image
 
-  # all trips marked public
-  scope :public_trips, -> { where(public: true) }
-
-  # all private trips
-  scope :private_trips, -> { where(public: false) }
-
-  # optionally exclude own trips when showing community:
-  scope :community_trips, ->(user) {
-          where(public: true).where.not(user_id: user&.id)
-        }
-
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true
@@ -33,6 +22,21 @@ class Trip < ApplicationRecord
   scope :upcoming, -> { where("start_date >= ?", Date.current).order(start_date: :asc) }
   scope :past, -> { where("start_date < ?", Date.current).order(start_date: :desc) }
   scope :chronological, -> { order(start_date: :asc) }
+
+  # all trips marked public
+  scope :public_trips, -> { where(public: true) }
+
+  # all private trips
+  scope :private_trips, -> { where(public: false) }
+
+  # optionally exclude own trips when showing community:
+  scope :community_trips, ->(user) {
+          if user
+            where(public: true).where.not(user_id: user.id)
+          else
+            all
+          end
+        }
 
   def duration
     return 0 unless valid_dates?
