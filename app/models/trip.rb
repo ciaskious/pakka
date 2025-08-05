@@ -8,6 +8,17 @@ class Trip < ApplicationRecord
 
   has_one_attached :cover_image
 
+  # all trips marked public
+  scope :public_trips, -> { where(public: true) }
+
+  # all private trips
+  scope :private_trips, -> { where(public: false) }
+
+  # optionally exclude own trips when showing community:
+  scope :community_trips, ->(user) {
+          where(public: true).where.not(user_id: user&.id)
+        }
+
   validates :title, presence: true
   validates :destination, presence: true
   validates :country, presence: true
@@ -17,6 +28,7 @@ class Trip < ApplicationRecord
   validate :start_date_not_in_past, on: :create # Only validate on create
   validate :end_date_after_start_date
 
+  validates :public, inclusion: { in: [true, false] }
 
   scope :upcoming, -> { where("start_date >= ?", Date.current).order(start_date: :asc) }
   scope :past, -> { where("start_date < ?", Date.current).order(start_date: :desc) }
@@ -30,7 +42,7 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
-  ACCOMMODATION_OPTIONS = %w[hotel hostel apartment campsite homestay cabin resort].freeze
+  ACCOMMODATION_OPTIONS = %w[hotel hostel appartment campsite homestay cabin resort].freeze
 
   validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
 
