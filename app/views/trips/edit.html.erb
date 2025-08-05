@@ -17,7 +17,6 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="edit-form-card card shadow-sm border-0 p-4">
-
           <%= simple_form_for @trip do |f| %>
             <div class="row g-4">
               <div class="col-md-6">
@@ -80,8 +79,6 @@
                   } %>
               </div>
 
-              <!-- Disable dates if trip has already started or is in the past-->
-              <% disable_dates = @trip.start_date < Date.current %>
               <div class="col-md-6">
                 <%= f.input :start_date,
                   as: :date,
@@ -89,8 +86,7 @@
                   wrapper_html: { class: "mb-3" },
                   input_html: {
                     class: "form-control-lg",
-                    style: "font-family: 'DM Sans', sans-serif;",
-                    disabled: disable_dates
+                    style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
                     class: "form-label",
@@ -105,8 +101,7 @@
                   wrapper_html: { class: "mb-3" },
                   input_html: {
                     class: "form-control-lg",
-                    style: "font-family: 'DM Sans', sans-serif;",
-                    disabled: disable_dates
+                    style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
                     class: "form-label",
