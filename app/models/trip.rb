@@ -13,6 +13,8 @@ class Trip < ApplicationRecord
   validates :country, presence: true
   validates :start_date, presence: true, unless: :skip_date_validation
   validates :end_date, presence: true, unless: :skip_date_validation
+  validates :accommodation_type, presence: true
+
   validate :end_date_after_start_date
   validate :start_date_not_in_past
 
