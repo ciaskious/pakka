@@ -147,10 +147,10 @@ class TripsController < ApplicationController
       end
 
       message = if added_count > 0
-          "Successfully added #{added_count} item#{added_count > 1 ? "s" : ""} to your packing list!"
-        else
-          "All selected items were already in your packing list."
-        end
+        "Successfully added #{added_count} item#{added_count > 1 ? 's' : ''} to your packing list!"
+      else
+        "All selected items were already in your packing list."
+      end
 
       redirect_to @trip, notice: message
     else
@@ -172,7 +172,6 @@ class TripsController < ApplicationController
       .map { |line| line.gsub(/^[-*•]\s*/, "") } # Remove bullets
       .reject { |line| line.match?(/^(Clothing|Electronics|Personal Care|Documents|Toiletries|Accessories|Shoes|Health|Safety|Travel|Miscellaneous):?$/i) } # Remove category headers
       .select { |line| line.length > 2 } # Keep only real items
-
     suggestions.first(30) # Limit to 30 suggestions max
   end
 
@@ -222,7 +221,7 @@ class TripsController < ApplicationController
     current_user.items.reusable.each do |item|
       @trip.checklist_items.create!(
         item: item,
-        checked: false,
+        checked: false
       )
     end
   end
