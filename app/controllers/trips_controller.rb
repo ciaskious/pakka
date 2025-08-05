@@ -32,6 +32,8 @@ class TripsController < ApplicationController
   # GET /trips
   def index
     @trips = current_user.trips
+    @upcoming_trips = current_user.trips.where("start_date >= ?", Date.current).order(start_date: :asc)
+    @past_trips = current_user.trips.where("start_date < ?", Date.current).order(start_date: :desc)
   end
 
   # GET /trips/new

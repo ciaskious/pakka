@@ -107,8 +107,6 @@ users.each_with_index do |user, index|
     # Add 3 reusable checklist items
     user.items.reusable.reorder("RANDOM()").limit(3).each do |item|
       trip.checklist_items.create!(
-        name: item.name,
-        category: item.category,
         item_id: item.id,
         checked: [true, false].sample,
       )
@@ -120,8 +118,6 @@ users.each_with_index do |user, index|
       category = user.items.reusable.sample.category
       custom_item = user.items.create!(name: name, category: category, reusable: false)
       trip.checklist_items.create!(
-        name: custom_item.name,
-        category: custom_item.category,
         item_id: custom_item.id,
         checked: [true, false].sample,
       )
