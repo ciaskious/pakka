@@ -5,6 +5,8 @@ class TripsController < ApplicationController
 
   def index
     @trips = current_user.trips
+    @upcoming_trips = current_user.trips.where("start_date >= ?", Date.current).order(start_date: :asc)
+    @past_trips = current_user.trips.where("start_date < ?", Date.current).order(start_date: :desc)
   end
 
   def show
@@ -178,10 +180,8 @@ class TripsController < ApplicationController
     item_lower = item_name.downcase
 
     case item_lower
-    when /t-shirt|shirt|pants|jeans|dress|skirt|jacket|coat|sweater|hoodie|shorts|underwear|bra|socks|pajama|sleepwear/
+    when /t-shirt|shirt|pants|jeans|dress|skirt|jacket|coat|sweater|hoodie|shorts|underwear|bra|socks|pajama|sleepwear|shoe|boot|sandal|sneaker|heel|flip.flop/
       "clothing"
-    when /shoe|boot|sandal|sneaker|heel|flip.flop/
-      "clothing"  # footwear doesn't exist, use clothing
     when /phone|charger|camera|laptop|tablet|headphone|cable|adapter|battery|power.bank/
       "electronics"
     when /toothbrush|toothpaste|shampoo|soap|deodorant|perfume|makeup|skincare|razor|towel/
@@ -189,11 +189,9 @@ class TripsController < ApplicationController
     when /passport|visa|ticket|insurance|license|document|id|card/
       "documents"
     when /medicine|pill|vitamin|bandaid|sunscreen|insect.repellent/
-      "medication"  # health_and_safety doesn't exist, use medication
-    when /book|guide|map|journal|pen|notebook/
-      "miscellaneous"  # entertainment doesn't exist
-    when /bag|suitcase|backpack|purse|wallet|sunglasses|hat|umbrella|watch/
-      "miscellaneous"  # accessories doesn't exist
+      "medication" # health_and_safety doesn't exist, use medication
+    when /book|guide|map|journal|pen|notebook|bag|suitcase|backpack|purse|wallet|sunglasses|hat|umbrella|watch/
+      "miscellaneous" # entertainment doesn't exist
     when /snack|water|candy|fruit/
       "food"
     else

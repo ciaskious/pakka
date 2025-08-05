@@ -10,12 +10,24 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   validates :username, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: false
 
+  # Methods
   def name
-    username || email
+    if first_name.present? && last_name.present?
+      "#{first_name} #{last_name}"
+    else
+      username || email.split('@').first
+    end
   end
 
   def favorite_destination
     trips.group(:destination).order("count_id DESC").count("id").first&.first
+  end
+
+  # For ActiveAdmin or other admin interfaces
+  def display_name
+    name
   end
 end

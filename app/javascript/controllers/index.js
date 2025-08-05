@@ -4,3 +4,5 @@ import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
 import InlineEditController from "./inline_edit_controller"
 application.register("inline-edit", InlineEditController)
+import TripDatesController from "./trip_dates_controller"
+application.register("trip-dates", TripDatesController)

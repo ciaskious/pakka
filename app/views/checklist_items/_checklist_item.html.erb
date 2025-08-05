@@ -21,7 +21,7 @@
 <!-- Edit button to toggle inline edit form -->
   <button type="button"
           class="btn btn-sm btn-outline-primary ms-2"
-          style="font-family: 'DM Sans', sans-serif;"
+          style="font-family: 'DM Sans', sans-serif; border-radius: 10px"
           data-action="click->inline-edit#showForm"
           data-inline-edit-target="editButton"
           aria-label="Edit item">
@@ -29,7 +29,7 @@
   </button>
 
   <!-- Delete button -->
-  <%= button_to trip_checklist_item_path(checklist_item.trip, checklist_item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", data: {  action: "ajax:success->checklist-items#destroy", "inline-edit-target": "deleteButton", confirm: "Are you sure?" } do %>
+  <%= button_to trip_checklist_item_path(checklist_item.trip, checklist_item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", style: "border-radius: 10px", data: {  action: "ajax:success->checklist-items#destroy", "inline-edit-target": "deleteButton", confirm: "Are you sure?" } do %>
     <i class="fas fa-trash-alt"></i>
   <% end %>
 

@@ -13,7 +13,7 @@
   // Profile Header
     .profile-header {
       color: white;
-      padding: 4rem 0;
+      padding: 0;
       background-color: #3741FA;
       background-size: cover;
       background-position: center;
@@ -44,6 +44,11 @@
     }
   }
 
+  .checklist-card {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
 
 // Item Form
   // For both forms
@@ -59,5 +64,9 @@
       border-color: #3741FA;
       box-shadow: 0 0 0 0.25rem rgba(55, 65, 250, 0.2);
     }
+  }
+
+  .btn {
+    border-radius: 10px;
   }
 }

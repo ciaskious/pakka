@@ -1,7 +1,8 @@
 // my trips header
 
 .trips-header {
-  background-image: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url('pakka-banner-background.png');
+  //background-image: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url('pakka-banner-background.png');
+  background-color: #3741FA;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,7 +59,8 @@
 // community trips header
 
 .community-header{
-  background-image: linear-gradient(rgba(255, 236, 88, 0.7), rgba(255, 236, 88, 0.7)), url('pakka-banner-background.png');
+  //background-image: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url('pakka-banner-background.png');
+  background-color: #FFEC59;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -114,7 +116,8 @@
 // new trip header
 
 .trip-form-header {
-  background-image: linear-gradient(rgba(251, 125, 147, 0.7), rgba(251, 125, 147, 0.7)), url('pakka-banner-background.png');
+  //background-image: linear-gradient(rgba(55, 65, 250, 0.7), rgba(55, 65, 250, 0.7)), url('pakka-banner-background.png');
+  background-color: #FB7D92;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -150,7 +153,8 @@
 
 // profile header
 .profile-header {
-  background-image: linear-gradient(rgba(156, 221, 171, 0.7), rgba(156, 221, 171, 0.7)), url('pakka-banner-background.png');
+  //background-image: linear-gradient(rgba(156, 221, 171, 0.7), rgba(156, 221, 171, 0.7)), url('pakka-banner-background.png');
+  background-color: #9CDDAB;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -159,14 +163,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 5rem 0;
+  padding: 0;
   color: white;
 
   .profile-avatar {
     width: 120px;
     height: 120px;
     object-fit: cover;
-    border: 4px solid #9CDDAB;
+    border: 4px solid white;
   }
 
   .profile-avatar-fallback {
@@ -176,6 +180,6 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     color: #3741FA;
-    border: 4px solid #9CDDAB;
+    border: 2px solid #9CDDAB;
   }
 }
