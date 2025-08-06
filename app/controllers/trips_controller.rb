@@ -80,6 +80,8 @@ class TripsController < ApplicationController
       new_trip.user = current_user
       new_trip.title = "#{original.title} (Copy)"
       new_trip.accommodation_type = original.accommodation_type
+      new_trip.description = original.description
+
       new_trip.skip_date_validation = true
       new_trip.start_date = nil
       new_trip.end_date = nil
@@ -167,7 +169,7 @@ class TripsController < ApplicationController
   end
 
   def trip_params
-    params.require(:trip).permit(:title, :destination, :country, :accommodation_type,
+    params.require(:trip).permit(:title, :destination, :country, :description, :accommodation_type,
                                  :start_date, :end_date, :cover_image, :public)
   end
 
