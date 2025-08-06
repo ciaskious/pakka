@@ -49,7 +49,6 @@ class ChecklistItemsController < ApplicationController
     if item.save
       @checklist_item = @trip.checklist_items.new(
         item: item,
-        name: item.name,
         checked: false,
       )
 
