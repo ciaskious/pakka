@@ -161,6 +161,113 @@ body, p, small, .form-control {
   }
 }
 
+//Community Trips Section
+.community-trips {
+  background-color: var(--pakka-blue);
+  color: white;
+  position: relative;
+  padding: 4rem 0;
+
+  .scroll-trips-container {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    scrollbar-width: none; // Firefox
+    margin: 0 2rem; // Give space for buttons
+
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari
+    }
+  }
+
+  .trip-card-link {
+    flex: 0 0 280px;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  .trip-card {
+    background-color: white;
+    overflow: hidden;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    &-img-placeholder {
+      height: 180px;
+      background-color: var(--pakka-light);
+      color: var(--text-muted);
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pakka-blue);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+
+    &:hover {
+      transform: translateY(-50%) scale(1.1);
+      opacity: 1;
+      background-color: var(--pakka-green);
+      color: white;
+    }
+
+    &.scroll-left {
+      left: 0;
+      display: none; // Hidden by default
+    }
+    &.scroll-right {
+      right: 0;
+      display: none; // Hidden by default
+    }
+  }
+
+  @media (max-width: 768px) {
+    .scroll-button {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .scroll-trips-container {
+      margin: 0 1.5rem;
+    }
+  }
+}
+
+
 // Utility Classes
 .bg-pakka-green { background-color: var(--pakka-green); }
 .bg-pakka-blue { background-color: var(--pakka-blue); }
