@@ -7,6 +7,7 @@
         <p class="trip-destination"><%= @trip.destination %>, <%= @trip.country %></p>
         <p class="trip-dates"><%= @trip.start_date.try(:to_formatted_s, :long) || "Choose start date" %> - <%= @trip.end_date.try(:to_formatted_s, :long)   || "Choose end date" %></p>
         <p class="trip-dates"><%= @trip.accommodation_type %></p>
+        <p class="trip-dates"><%= @trip.description %></p>
       </div>
     </div>
   </section>
