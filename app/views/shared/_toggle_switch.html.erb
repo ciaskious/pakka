@@ -1,0 +1,22 @@
+<%# Locals: trip (Trip), on (String), off (String) %>
+<% return unless trip && user_signed_in? && current_user == trip.user %>
+
+<%= form_with model: trip, local: true do |f| %>
+  <div class="toggle-switch me-2">
+    <%= f.check_box :public,
+          {
+            id:        "trip_public_toggle",
+            onchange:  "this.form.submit()",
+            include_hidden: false
+          },
+          "1",    # value when checked
+          "0"     # value when unchecked
+    %>
+    <span class="toggle-slider"></span>
+  </div>
+  <%= f.label :public,
+        (trip.public? ? on : off),
+        for: "trip_public_toggle",
+        class: "align-middle ms-2"
+  %>
+<% end %>
