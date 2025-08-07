@@ -19,121 +19,132 @@
         <!-- Checklist Column -->
         <div class="col-lg-8">
           <div class="checklist-card card shadow-sm border-0 mb-4">
-            <div class="card-header bg-white">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
               <h2 class="h4 mb-0">🧳 Packing Checklist</h2>
-            </div>
-            <div class="card-body">
               <% if user_signed_in? && current_user == @trip.user %>
-                <%= form_with model: @trip, local: true do |f| %>
-                  <label class="toggle-switch">
-                    <%= f.check_box :public,
-                          { id: "trip_public_toggle", onchange: "this.form.submit()", include_hidden: false },
-                          "1", "0" %>
-                    <span class="toggle-slider"></span>
+                <div
+                  data-controller="public-toggle"
+                  data-public-toggle-url-value="<%= toggle_public_trip_path(@trip, format: :json) %>"
+                  class="d-inline-flex align-items-center"
+                >
+                  <label
+                    data-public-toggle-target="wrapper"
+                    class="toggle-switch <%= 'active' if @trip.public? %>"
+                    data-action="click->public-toggle#toggle"
+                  >
+                    <span class="toggle-knob"></span>
                   </label>
-                  <span class="toggle-label">
+
+                  <span
+                    data-public-toggle-target="label"
+                    class="toggle-label ms-2 align-middle"
+                  >
                     <%= @trip.public? ? "Public 🌐" : "Private 🔒" %>
                   </span>
-                <% end %>
-              <% end %>
-
-              <!-- Add Item Form -->
-              <div class="add-item-form mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h3 class="h5 mb-0">Add a checklist item</h3>
-                  <%= form_with url: generate_ai_suggestions_trip_path(@trip), method: :post, local: true, class: "d-inline" do |f| %>
-                    <%= f.submit "🤖 Generate AI Suggestions", class: "btn btn-outline-primary btn-sm" %>
-                  <% end %>
                 </div>
-                <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
-                  <div class="row g-3 align-items-end">
-                    <div class="col-md-6">
-                      <%= f.label :name, "Add custom item", class: "form-label fw-semibold" %>
-                      <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses", style: "border-radius: 10px;" %>
-                    </div>
-                    <div class="col-md-6">
-                      <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
-                      <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] }, { prompt: "Select" }, { class: "form-select custom-pakka-select", style: "border-radius: 10px;" } %>
-                    </div>
-                    <div class="col-12">
-                      <%= f.submit "Add Item", class: "btn btn-secondary-cta", style: "border-radius: 10px;" %>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
 
-              <!-- AI Suggestions (if available) -->
-              <% if @ai_suggestions.present? %>
-                <div class="ai-suggestions-card card mb-4 border-success">
-                  <div class="card-header bg-success text-white">
-                    <h4 class="h6 mb-0">🤖 AI Packing Suggestions (<%= @ai_suggestions.count %> items)</h4>
-                  </div>
-                  <div class="card-body">
-                    <p class="text-muted mb-3">💡 Select the items you want to add to your packing list:</p>
-                    <%= form_with url: add_multiple_suggestions_trip_path(@trip), method: :post, local: true, id: "ai-suggestions-form" do |f| %>
-                      <div class="ai-suggestions-list mb-3">
-                        <div class="row mb-2">
-                          <div class="col-12">
-                            <label class="form-check">
-                              <input type="checkbox" id="select-all" class="form-check-input">
-                              <span class="form-check-label fw-bold">Select All</span>
-                            </label>
-                          </div>
-                        </div>
-                        <% @ai_suggestions.each_with_index do |suggestion, index| %>
-                          <div class="suggestion-item py-2 border-bottom">
-                            <label class="form-check">
-                              <%= f.check_box "suggestions[#{index}]", { checked: false, class: "form-check-input suggestion-checkbox" }, suggestion, "" %>
-                              <span class="form-check-label"><%= suggestion %></span>
-                            </label>
-                          </div>
-                        <% end %>
-                      </div>
+              <% end %>
+            </div>
 
-                      <div class="d-flex gap-2">
-                        <%= f.submit "➕ Add Selected Items", class: "btn btn-success", id: "add-selected-btn", disabled: true %>
-                        <button type="button" class="btn btn-outline-secondary" id="clear-selection">Clear Selection</button>
-                      </div>
+              <div class="card-body">
+                <!-- Add Item Form -->
+                <div class="add-item-form mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="h5 mb-0">Add a checklist item</h3>
+                    <%= form_with url: generate_ai_suggestions_trip_path(@trip), method: :post, local: true, class: "d-inline" do |f| %>
+                      <%= f.submit "🤖 Generate AI Suggestions", class: "btn btn-outline-primary btn-sm" %>
                     <% end %>
                   </div>
+                  <%= form_with url: trip_checklist_items_path(@trip), local: true do |f| %>
+                    <div class="row g-3 align-items-end">
+                      <div class="col-md-6">
+                        <%= f.label :name, "Add custom item", class: "form-label fw-semibold" %>
+                        <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses", style: "border-radius: 10px;" %>
+                      </div>
+                      <div class="col-md-6">
+                        <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
+                        <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] }, { prompt: "Select" }, { class: "form-select custom-pakka-select", style: "border-radius: 10px;" } %>
+                      </div>
+                      <div class="col-12">
+                        <%= f.submit "Add Item", class: "btn btn-secondary-cta", style: "border-radius: 10px;" %>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
 
-                <script>
-                  document.addEventListener('DOMContentLoaded', function() {
-                    const selectAllCheckbox = document.getElementById('select-all');
-                    const suggestionCheckboxes = document.querySelectorAll('.suggestion-checkbox');
-                    const addSelectedBtn = document.getElementById('add-selected-btn');
-                    const clearSelectionBtn = document.getElementById('clear-selection');
+                <!-- AI Suggestions (if available) -->
+                <% if @ai_suggestions.present? %>
+                  <div class="ai-suggestions-card card mb-4 border-success">
+                    <div class="card-header bg-success text-white">
+                      <h4 class="h6 mb-0">🤖 AI Packing Suggestions (<%= @ai_suggestions.count %> items)</h4>
+                    </div>
+                    <div class="card-body">
+                      <p class="text-muted mb-3">💡 Select the items you want to add to your packing list:</p>
+                      <%= form_with url: add_multiple_suggestions_trip_path(@trip), method: :post, local: true, id: "ai-suggestions-form" do |f| %>
+                        <div class="ai-suggestions-list mb-3">
+                          <div class="row mb-2">
+                            <div class="col-12">
+                              <label class="form-check">
+                                <input type="checkbox" id="select-all" class="form-check-input">
+                                <span class="form-check-label fw-bold">Select All</span>
+                              </label>
+                            </div>
+                          </div>
+                          <% @ai_suggestions.each_with_index do |suggestion, index| %>
+                            <div class="suggestion-item py-2 border-bottom">
+                              <label class="form-check">
+                                <%= f.check_box "suggestions[#{index}]", { checked: false, class: "form-check-input suggestion-checkbox" }, suggestion, "" %>
+                                <span class="form-check-label"><%= suggestion %></span>
+                              </label>
+                            </div>
+                          <% end %>
+                        </div>
 
-                    function updateButtonState() {
-                      const checkedBoxes = document.querySelectorAll('.suggestion-checkbox:checked');
-                      addSelectedBtn.disabled = checkedBoxes.length === 0;
-                      addSelectedBtn.textContent = checkedBoxes.length > 0
-                        ? `➕ Add Selected Items (${checkedBoxes.length})`
-                        : '➕ Add Selected Items';
-                    }
+                        <div class="d-flex gap-2">
+                          <%= f.submit "➕ Add Selected Items", class: "btn btn-success", id: "add-selected-btn", disabled: true %>
+                          <button type="button" class="btn btn-outline-secondary" id="clear-selection">Clear Selection</button>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
 
-                    selectAllCheckbox.addEventListener('change', function() {
-                      suggestionCheckboxes.forEach(cb => cb.checked = this.checked);
-                      updateButtonState();
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const selectAllCheckbox = document.getElementById('select-all');
+                      const suggestionCheckboxes = document.querySelectorAll('.suggestion-checkbox');
+                      const addSelectedBtn = document.getElementById('add-selected-btn');
+                      const clearSelectionBtn = document.getElementById('clear-selection');
+
+                      function updateButtonState() {
+                        const checkedBoxes = document.querySelectorAll('.suggestion-checkbox:checked');
+                        addSelectedBtn.disabled = checkedBoxes.length === 0;
+                        addSelectedBtn.textContent = checkedBoxes.length > 0
+                          ? `➕ Add Selected Items (${checkedBoxes.length})`
+                          : '➕ Add Selected Items';
+                      }
+
+                      selectAllCheckbox.addEventListener('change', function() {
+                        suggestionCheckboxes.forEach(cb => cb.checked = this.checked);
+                        updateButtonState();
+                      });
+
+                      suggestionCheckboxes.forEach(cb => cb.addEventListener('change', () => {
+                        updateButtonState();
+                        const count = document.querySelectorAll('.suggestion-checkbox:checked').length;
+                        selectAllCheckbox.checked = count === suggestionCheckboxes.length;
+                        selectAllCheckbox.indeterminate = count > 0 && count < suggestionCheckboxes.length;
+                      }));
+
+                      clearSelectionBtn.addEventListener('click', function() {
+                        suggestionCheckboxes.forEach(cb => cb.checked = false);
+                        selectAllCheckbox.checked = false;
+                        selectAllCheckbox.indeterminate = false;
+                        updateButtonState();
+                      });
                     });
+                  </script>
+                <% end %>
 
-                    suggestionCheckboxes.forEach(cb => cb.addEventListener('change', () => {
-                      updateButtonState();
-                      const count = document.querySelectorAll('.suggestion-checkbox:checked').length;
-                      selectAllCheckbox.checked = count === suggestionCheckboxes.length;
-                      selectAllCheckbox.indeterminate = count > 0 && count < suggestionCheckboxes.length;
-                    }));
-
-                    clearSelectionBtn.addEventListener('click', function() {
-                      suggestionCheckboxes.forEach(cb => cb.checked = false);
-                      selectAllCheckbox.checked = false;
-                      selectAllCheckbox.indeterminate = false;
-                      updateButtonState();
-                    });
-                  });
-                </script>
-              <% end %>
 
               <!-- Checklist Items -->
               <% if @checklist_items.any? %>
@@ -163,6 +174,7 @@
             </div>
           </div>
         </div>
+
 
         <!-- Actions Column -->
         <div class="col-lg-4">

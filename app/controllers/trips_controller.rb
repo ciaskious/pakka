@@ -149,8 +149,10 @@ class TripsController < ApplicationController
   # toggle in trip show page
   def toggle_public
     @trip = current_user.trips.find(params[:id])
-    @trip.update!(public: !@trip.public)
-    redirect_back(fallback_location: trip_path(@trip))
+    @trip.update_column(:public, !@trip.public)
+    flash[:notice] = @trip.public? ? "Now public!" : "Now private!"
+
+    render json: { public: @trip.public? }
   end
 
   private
