@@ -138,7 +138,27 @@ body, p, small, .form-control {
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     border-top: 4px solid;
+    transition: transform 0.3s ease;
 
+    &:hover {
+      transform: translateY(-5px);
+
+      // Card hover triggers icon animations
+      .fa-map-marked-alt {
+        animation: pulse-map 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      .fa-wand-sparkles {
+        animation: cast-spell 0.7s ease;
+      }
+      .fa-binoculars {
+        animation: focus-in 0.6s ease;
+      }
+      .fa-paper-plane {
+        animation: takeoff 0.8s forwards;
+      }
+    }
+
+    // Border colors
     &:nth-child(1) { border-color: var(--pakka-blue); }
     &:nth-child(2) { border-color: var(--pakka-green); }
     &:nth-child(3) { border-color: var(--pakka-pink); }
@@ -158,6 +178,60 @@ body, p, small, .form-control {
   .step-icon {
     font-size: 2rem;
     margin-top: 1rem;
+
+    // Base icon styles
+    i {
+      transition: all 0.3s ease;
+      display: inline-block;
+      transform-origin: center;
+    }
+  }
+
+  // Keyframes (unchanged)
+  @keyframes pulse-map {
+    0% { transform: scale(1) rotate(0); }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
+  @keyframes cast-spell {
+    0% { transform: rotate(0) scale(1); }
+    15% { transform: rotate(-15deg) scale(1.1); }
+    30% { transform: rotate(25deg) scale(1.1); }
+    45% { transform: rotate(-20deg); }
+    60% { transform: rotate(10deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0) scale(1); }
+  }
+
+  @keyframes focus-in {
+    0% { transform: scale(1) translateY(0); }
+    50% { transform: scale(1.15) translateY(-3px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  @keyframes takeoff {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    50% { transform: translateY(-12px) rotate(15deg) scale(1.2); opacity: 0.9; }
+    100% { transform: translateY(-24px) rotate(30deg) scale(1.3); opacity: 0; }
+  }
+
+  @keyframes return {
+    from { transform: translateY(-24px) rotate(30deg) scale(1.3); opacity: 0; }
+    to { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
+  }
+
+  // Reset animations when not hovering
+  .how-it-works-card:not(:hover) {
+    .fa-paper-plane {
+      animation: return 0.5s ease-out;
+    }
+    // Add reset for other icons if needed
+    .fa-map-marked-alt,
+    .fa-wand-sparkles,
+    .fa-binoculars {
+      animation: none;
+    }
   }
 }
 

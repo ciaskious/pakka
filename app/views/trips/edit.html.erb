@@ -29,7 +29,7 @@
                     placeholder: "Summer Vacation 2023"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -43,7 +43,7 @@
                     placeholder: "Bali, Indonesia"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -58,7 +58,7 @@
                     placeholder: "Indonesia"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -74,7 +74,7 @@
                     style: "font-family: 'DM Sans', sans-serif;",
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -89,7 +89,7 @@
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -116,7 +116,7 @@
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -125,9 +125,13 @@
                 <%= f.input :cover_image,
                   as: :file,
                   wrapper_html: { class: "mb-3" },
-                  label: "Cover Image (Optional)",
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;"
+                  },
+                  label: "Cover Image",
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -143,7 +147,7 @@
                     placeholder: "Any special notes about your trip..."
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -151,7 +155,7 @@
 
             <div class="form-actions mt-4 d-flex justify-content-between">
               <%= link_to "Cancel", trip_path(@trip), class: "btn cancel-button px-4", style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
-              <%= f.submit "Update Trip", class: "btn btn-secondary-cta px-4", style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
+              <%= f.submit "Update Trip", class: "btn btn-home-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
               <%= link_to "Delete Trip", trip_path(@trip),
                   method: :delete,
                   data: { confirm: "Are you sure you want to delete this trip?" },

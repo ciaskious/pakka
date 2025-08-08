@@ -39,7 +39,7 @@
   <!-- 📊 ENHANCED STATS SECTION -->
   <section class="stats-section py-5">
       <div class="container-fluid p-0">
-        <h2 class="display-5 fw-bold mb-3 pakka-pink">Your Travel Story, Unpacked</h2>
+        <h2 class="display-6 fw-bold mb-3 pakka-pink">Your Travel Story, Unpacked</h2>
         <p class="lead text-muted">See your travel footprint and plan your next chapter 🧳</p>
       </div>
 
@@ -142,7 +142,7 @@
     <div class="container px-4 px-lg-5" style="max-width: 1400px;">
       <div class="container-fluid p-0">
         <div class="mb-5">
-          <h2 class="display-5 fw-bold mb-3 white" style="font-family: 'Poppins', sans-serif;">Your Always-Pack List</h2>
+          <h2 class="display-6 fw-bold mb-3 white" style="font-family: 'Poppins', sans-serif;">Your Always-Pack List</h2>
           <p class="lead white">Phone charger? Passport? These essentials auto-load into every trip checklist ✨</p>
         </div>
       </div>
@@ -156,11 +156,11 @@
             <%= form_with model: @item, url: items_path, local: true, class: "add-item-form" do |f| %>
               <div class="row g-3 align-items-end">
                 <div class="col-md-6">
-                  <%= f.label :name, "Item Name", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                  <%= f.label :name, "Add custom item", class: "form-label fw-semibold small text-uppercase text-muted" %>
                   <%= f.text_field :name, class: "form-control form-control-lg border-1 py-2 fs-6", style: "border-radius: 10px;", placeholder: "e.g. Passport, Charger, Swimsuit" %>
                 </div>
                 <div class="col-md-5">
-                  <%= f.label :category, "Category", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                  <%= f.label :category, "Select item category", class: "form-label fw-semibold small text-uppercase text-muted" %>
                   <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] },
                       { prompt: "Select a category" },
                       { class: "form-select form-select-lg border-1 py-2 fs-6", style: "border-radius: 10px;" } %>
@@ -241,7 +241,7 @@
   <section class="milestones-section py-5 bg-pakka-light">
     <div class="container px-4 px-lg-5" style="max-width: 1400px;">
       <div class="container-fluid p-0">
-        <h2 class="display-5 fw-bold mb-3 pakka-yellow">Level Up Your Explorations</h2>
+        <h2 class="display-6 fw-bold mb-3 pakka-yellow">Level Up Your Explorations</h2>
         <p class="lead text-muted">Unlock badges from Packing Newbie to World Wanderer 🗺️</p>
       </div>
 

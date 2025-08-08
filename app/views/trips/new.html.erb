@@ -22,10 +22,10 @@
                   input_html: {
                     class: "form-control-lg",
                     style: "font-family: 'DM Sans', sans-serif;",
-                    placeholder: "Summer Beach Vacation with Friends"
+                    placeholder: "e.g.: Summer Beach Vacation with Friends"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "fform-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -36,10 +36,10 @@
                   input_html: {
                     class: "form-control-lg",
                     style: "font-family: 'DM Sans', sans-serif;",
-                    placeholder: "Bali, Indonesia"
+                    placeholder: "e.g.: Bali"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -51,10 +51,10 @@
                   input_html: {
                     class: "form-control-lg",
                     style: "font-family: 'DM Sans', sans-serif;",
-                    placeholder: "Indonesia"
+                    placeholder: "e.g.: Indonesia"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -70,7 +70,7 @@
                     style: "font-family: 'DM Sans', sans-serif;",
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -85,7 +85,7 @@
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -100,7 +100,7 @@
                     style: "font-family: 'DM Sans', sans-serif;"
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -109,9 +109,13 @@
                 <%= form.input :cover_image,
                   as: :file,
                   wrapper_html: { class: "mb-3" },
-                  label: "Cover Image (Optional)",
+                  input_html: {
+                    class: "form-control-lg",
+                    style: "font-family: 'DM Sans', sans-serif;"
+                  },
+                  label: "Cover Image",
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
@@ -127,15 +131,15 @@
                     placeholder: "Any special notes about your trip..."
                   },
                   label_html: {
-                    class: "form-label",
+                    class: "form-label fw-semibold small text-uppercase text-muted",
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
             </div>
 
             <div class="form-actions mt-4 d-flex justify-content-between">
-              <%= link_to "Cancel", trips_path, class: "btn btn-outline-secondary px-4", style: "font-family: 'DM Sans', sans-serif;" %>
-              <%= form.submit "Create Trip", class: "btn btn-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+              <%= link_to "Cancel", trips_path, class: "btn cancel-button px-4", style: "font-family: 'DM Sans', sans-serif;" %>
+              <%= form.submit "Create Trip", class: "btn btn-home-primary-cta px-4", style: "font-family: 'DM Sans', sans-serif;" %>
             </div>
           <% end %>
         </div>
