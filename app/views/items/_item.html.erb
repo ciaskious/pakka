@@ -1,7 +1,7 @@
 
 <div class="d-flex align-items-center flex-grow-1">
-  <label class="form-check-label">
-    <span class="checklist-text">
+  <label class="form-check-label fs-6">
+    <span class="checklist-text fs-6">
       <%= item.name.humanize || "Unnamed Item" %> (<%= item.category.humanize %>)
     </span>
   </label>
@@ -21,7 +21,7 @@
   </button>
 
   <!-- Delete button -->
-  <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-danger ms-2", style: "border-radius: 10px", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
+  <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", style: "border-radius: 10px", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
     <i class="fas fa-trash-alt"></i>
   <% end %>
 </div>

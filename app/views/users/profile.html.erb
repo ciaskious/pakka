@@ -35,106 +35,278 @@
   </div>
 </section>
 
-<div class="profile-container px-5 px-md-6">
-  <!-- 📊 STATS CARDS SECTION -->
-  <section class="stats-section my-5 my-md-6 py-5">
-    <div class="mx-auto" style="max-width: 1200px;">
-      <h2 class="w-bold mb-5 display-6 pakka-green" style="font-family: Poppins, sans-serif;">Your Travel Stats</h2>
+<div class="profile-container px-4 px-lg-5" style="max-width: 1400px;">
+  <!-- 📊 ENHANCED STATS SECTION -->
+  <section class="stats-section py-5">
+      <div class="container-fluid p-0">
+        <h2 class="display-5 fw-bold mb-3 pakka-pink">Your Travel Story, Unpacked</h2>
+        <p class="lead text-muted">See your travel footprint and plan your next chapter 🧳</p>
+      </div>
 
-      <div class="row m-0 g-4">
+      <div class="row g-4">
+        <!-- Trip Counter Card -->
         <div class="col-md-4">
-          <div class="card shadow-sm rounded-4 p-4 p-lg-5 h-100">
-            <h5 class="fw-bold mb-3 display-7" style="font-family: Poppins, sans-serif;">🧭 Total Trips</h5>
-            <p class="display-6 fw-bold text-success mb-0" style="font-family: DM Sans, sans-serif;">
-              <%= @past_trips&.count || "No trips yet—adventure awaits!" %>
-            </p>
+          <div class="stat-card stat-card-counter rounded-5 p-5 h-100">
+            <div class="stat-icon mb-4">
+              <div class="icon-circle bg-pakka-blue-light">
+                <i class="fas fa-map-marked-alt text-pakka-blue"></i>
+              </div>
+            </div>
+            <h3 class="h4 fw-bold mb-3">Trips Completed</h3>
+            <div class="stat-number display-3 fw-bold text-pakka-blue">
+              <%= @past_trips&.count || 0 %>
+            </div>
+            <div class="progress mt-4" style="height: 8px;">
+              <div class="progress-bar bg-pakka-blue"
+                  style="width: <%= [(@past_trips&.count || 0) * 2, 100].min %>%"></div>
+            </div>
+            <small class="text-muted mt-2 d-block">
+              <%= @past_trips&.count ? "Keep exploring!" : "Your first adventure awaits!" %>
+            </small>
           </div>
         </div>
+
+        <!-- Destination Card -->
         <div class="col-md-4">
-          <div class="card shadow-sm rounded-4 p-4 p-lg-5 h-100">
-            <h5 class="fw-bold mb-3 display-7" style="font-family: Poppins, sans-serif;">📍 Favorite Destination</h5>
-            <p class="display-6 fw-bold text-primary mb-0" style="font-family: DM Sans, sans-serif;">
-              <%= current_user.favorite_destination || "Where to next? Save your top spot" %>
-            </p>
+          <div class="stat-card stat-card-destination rounded-5 p-5 h-100">
+            <div class="stat-icon mb-4">
+              <div class="icon-circle bg-pakka-green-light">
+                <i class="fas fa-heart text-pakka-green"></i>
+              </div>
+            </div>
+            <h3 class="h4 fw-bold mb-3">Favorite Place</h3>
+            <% if current_user.favorite_destination %>
+              <div class="display-5 fw-bold text-pakka-green mb-3">
+                <%= current_user.favorite_destination %>
+              </div>
+              <div class="mt-auto">
+                <small class="text-muted">You've visited this destination <%= @favorite_destination_count || 0 %> times</small>
+              </div>
+            <% else %>
+              <div class="mt-auto">
+                <div class="display-6 text-muted my-4">
+                  Where to next?
+                </div>
+                <%= link_to "Set favorite", new_trip_path, class: "btn btn-sm btn-home-primary-cta fs-6" %>
+              </div>
+            <% end %>
           </div>
         </div>
+
+        <!-- Timeline Card -->
         <div class="col-md-4">
-          <div class="card shadow-sm rounded-4 p-4 p-lg-5 h-100">
-            <h5 class="fw-bold mb-3 display-7" style="font-family: Poppins, sans-serif;">📅 Last Trip</h5>
-            <p class="display-6 fw-bold text-muted mb-0" style="font-family: DM Sans, sans-serif;">
-              <%= @past_trips&.first&.created_at&.strftime("%B %Y") || "Your first checklist starts here" %>
-            </p>
+          <div class="stat-card stat-card-timeline rounded-5 p-5 h-100">
+            <div class="stat-icon mb-4">
+              <div class="icon-circle bg-pakka-yellow-light">
+                <i class="fas fa-calendar-alt text-pakka-yellow"></i>
+              </div>
+            </div>
+            <h3 class="h4 fw-bold mb-3">Travel Timeline</h3>
+            <% if @past_trips&.any? %>
+              <div class="timeline-wrapper">
+                <div class="timeline-connector"></div>
+                <div class="timeline-item">
+                  <div class="timeline-dot bg-pakka-yellow"></div>
+                  <div class="timeline-content">
+                    <span class="timeline-label fw-900">Last Trip</span>
+                    <div><%= @past_trips.first.created_at.strftime("%b %Y") %></div>
+                  </div>
+                </div>
+                <% if @past_trips.size > 1 %>
+                  <div class="timeline-item">
+                    <div class="timeline-dot bg-pakka-blue"></div>
+                    <div class="timeline-content">
+                      <span class="timeline-label fw-900">First Trip</span>
+                      <div><%= @past_trips.last.created_at.strftime("%b %Y") %></div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+              <small class="text-muted mt-3 d-block">
+                <%= @past_trips.size %> trips over <%= ((@past_trips.first.created_at - @past_trips.last.created_at).to_i / 365.0).round(1) %> years
+              </small>
+            <% else %>
+              <div class="display-6 text-muted my-4">
+                No trips yet
+              </div>
+              <%= link_to "Plan your first trip", new_trip_path, class: "btn btn-sm btn-pakka-pink" %>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 🧳 Trip Content Section -->
-  <section class="trip-content py-6">
-    <div class="row justify-content-center">
-      <!-- Checklist Column -->
-      <div class="col-12 col-lg-11 col-xl-10">
-        <div class="checklist-card card shadow-sm rounded-4 border-0 mb-4">
-          <div class="card-header bg-white rounded-top-4">
-            <h2 class="h2 mb-0">🧳 Packing Essentials</h2>
-          </div>
-          <div class="card-body">
-            <!-- Add Item Form -->
-            <div class="add-item-form mb-4">
-              <h3 class="h5 mb-3">Add a checklist item</h3>
-              <%= form_with model: @item, url: items_path, local: true, class: "add-item-form" do |f| %>
-                <div class="row g-3 align-items-end">
-                  <div class="col-md-6">
-                    <%= f.label :name, "Create custom item", class: "form-label fw-semibold" %>
-                    <%= f.text_field :name, class: "form-control", placeholder: "e.g. Sunglasses", style: "border-radius: 10px;" %>
-                  </div>
-                  <div class="col-md-6">
-                    <%= f.label :category, "Select item category", class: "form-label d-block fw-semibold" %>
-                    <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] },
-                        { prompt: "Select" },
-                        { class: "form-select custom-pakka-select", style: "border-radius: 10px;" } %>
-                  </div>
-                  <div class="col-12">
-                    <%= f.submit "Add Item", class: "btn btn-secondary-cta" %>
-                  </div>
-                </div>
-              <% end %>
-            </div>
+  <!-- 🧳 Packing Essentials Section -->
+  <section class="packing-section py-5 bg-blue">
+    <div class="container px-4 px-lg-5" style="max-width: 1400px;">
+      <div class="container-fluid p-0">
+        <div class="mb-5">
+          <h2 class="display-5 fw-bold mb-3 white" style="font-family: 'Poppins', sans-serif;">Your Always-Pack List</h2>
+          <p class="lead white">Phone charger? Passport? These essentials auto-load into every trip checklist ✨</p>
+        </div>
+      </div>
 
-            <!-- Checklist Items -->
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+
+          <!-- Add Item Form -->
+          <div class="add-item-card bg-white rounded-4 p-4 mb-2 shadow-sm">
+            <h3 class="fw-bold mb-3 #FFEC59 important;">Add New Essential</h3>
+            <%= form_with model: @item, url: items_path, local: true, class: "add-item-form" do |f| %>
+              <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                  <%= f.label :name, "Item Name", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                  <%= f.text_field :name, class: "form-control form-control-lg border-1 py-2 fs-6", style: "border-radius: 10px;", placeholder: "e.g. Passport, Charger, Swimsuit" %>
+                </div>
+                <div class="col-md-5">
+                  <%= f.label :category, "Category", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                  <%= f.select :category, Item::CATEGORIES.map { |cat| [cat.humanize, cat] },
+                      { prompt: "Select a category" },
+                      { class: "form-select form-select-lg border-1 py-2 fs-6", style: "border-radius: 10px;" } %>
+                </div>
+                <div class="col-md-1">
+                  <%= f.submit "Add", class: "btn btn-pakka-green btn-lg w-100 py-2 fs-6", style: "border-radius: 10px;" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Checklist Items -->
+          <div class="essentials-container p-4">
             <% if @items.any? %>
               <% grouped_items = @items.group_by { |item| item.category } %>
 
-              <ul class="checklist-items list-group list-group-flush">
-                <% grouped_items.each do |category, items| %>
-                  <li class="list-group-item bg-light fw-semibold mt-4" style="font-family: 'DM Sans', sans-serif;">
-                    <h5 class="mb-2 pakka-blue"><%= category.humanize %></h5>
-                  </li>
+              <% grouped_items.each do |category, items| %>
+                <div class="category-group mb-4">
+                  <!-- Category header -->
+                  <div class="category-header d-flex align-items-center ps-3 py-3 bg-white mt-2 mb-1" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                    <i class="fas fa-folder me-2" style="color: #fb7d93 !important;"></i>
+                    <h5 class="mb-0" style="color: #fb7d93 !important;"><%= category.humanize %></h5>
+                  </div>
 
-                  <% items.each do |item| %>
-                    <li class="list-group-item d-flex align-items-center" id="item_<%= item.id %>">
-                      <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
-                        <!-- Display version -->
-                        <div data-inline-edit-target="display" class="d-flex align-items-center">
-                          <%= render "items/item", item: item %>
-                        </div>
+                  <ul class="list-group list-group-flush overflow-hidden">
+                    <% items.each do |item| %>
+                      <li class="list-group-item d-flex align-items-center px-3 py-1 mt-1" id="item_<%= item.id %>">
+                        <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= item.id %>">
+                          <!-- Display version -->
+                          <div data-inline-edit-target="display" class="d-flex align-items-center">
+                            <label class="form-check-label flex-grow-1">
+                              <span class="checklist-text">
+                                <%= item.name.humanize || "Unnamed Item" %> (<%= item.category.humanize %>)
+                              </span>
+                            </label>
 
-                        <!-- Inline-edit form -->
-                        <div data-inline-edit-target="form" class="d-none">
-                          <%= render "items/edit", item: item %>
+                            <div class="d-flex align-items-center action-buttons">
+                              <!-- Edit button -->
+                              <button type="button"
+                                      class="btn btn-sm btn-outline-primary ms-2"
+                                      style="font-family: 'DM Sans', sans-serif; border-radius: 10px;"
+                                      data-action="click->inline-edit#showForm"
+                                      data-inline-edit-target="editButton"
+                                      aria-label="Edit item">
+                                <i class="fas fa-pen"></i>
+                              </button>
+
+                              <!-- Delete button -->
+                              <%= button_to item_path(item), method: :delete, class: "btn btn-sm btn-outline-icon-danger ms-2", style: "border-radius: 10px", data: { target: "inline-edit.deleteButton", confirm: "Are you sure?" } do %>
+                                <i class="fas fa-trash-alt"></i>
+                              <% end %>
+                            </div>
+                          </div>
+
+                          <!-- Inline-edit form -->
+                          <div data-inline-edit-target="form" class="d-none">
+                            <%= render "items/edit", item: item %>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  <% end %>
-                <% end %>
-              </ul>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
             <% else %>
-              <p class="text-muted">No items added yet. Start building your packing list!</p>
+              <div class="empty-state text-center p-5 bg-pakka-light rounded-3">
+                <i class="fas fa-suitcase text-muted fa-2x mb-3"></i>
+                <p class="text-muted mb-0">Your essential packing list is empty</p>
+              </div>
             <% end %>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 🏆 TRAVEL MILESTONES SECTION -->
+  <section class="milestones-section py-5 bg-pakka-light">
+    <div class="container px-4 px-lg-5" style="max-width: 1400px;">
+      <div class="container-fluid p-0">
+        <h2 class="display-5 fw-bold mb-3 pakka-yellow">Level Up Your Explorations</h2>
+        <p class="lead text-muted">Unlock badges from Packing Newbie to World Wanderer 🗺️</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Milestones -->
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="milestone-card <%= @past_trips&.count.to_i >= 1 ? 'unlocked' : 'locked' %>">
+            <div class="milestone-icon">
+              <i class="fas fa-<%= @past_trips&.count.to_i >= 1 ? 'check-circle' : 'lock' %>"></i>
+            </div>
+            <h4>First Adventure</h4>
+            <p>Complete your first trip</p>
+            <div class="progress">
+              <div class="progress-bar" style="width: <%= @past_trips&.count.to_i >= 1 ? 100 : 0 %>%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="milestone-card <%= @past_trips&.count.to_i >= 5 ? 'unlocked' : 'locked' %>">
+            <div class="milestone-icon">
+              <i class="fas fa-<%= @past_trips&.count.to_i >= 5 ? 'globe-americas' : 'lock' %>"></i>
+            </div>
+            <h4>World Explorer</h4>
+            <p>Complete 5 trips</p>
+            <div class="progress">
+              <div class="progress-bar" style="width: <%= [(@past_trips&.count.to_i / 5.0 * 100), 100].min %>%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="milestone-card <%= @visited_countries&.count.to_i >= 3 ? 'unlocked' : 'locked' %>">
+            <div class="milestone-icon">
+              <i class="fas fa-<%= @visited_countries&.count.to_i >= 3 ? 'passport' : 'lock' %>"></i>
+            </div>
+            <h4>Multi-Country</h4>
+            <p>Visit 3 different countries</p>
+            <div class="progress">
+              <div class="progress-bar" style="width: <%= [(@visited_countries&.count.to_i / 3.0 * 100), 100].min %>%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="milestone-card <%= @longest_trip_duration.to_i >= 14 ? 'unlocked' : 'locked' %>">
+            <div class="milestone-icon">
+              <i class="fas fa-<%= @longest_trip_duration.to_i >= 14 ? 'umbrella-beach' : 'lock' %>"></i>
+            </div>
+            <h4>Long Vacation</h4>
+            <p>Take a 2+ week trip</p>
+            <div class="progress">
+              <div class="progress-bar" style="width: <%= [(@longest_trip_duration.to_i / 14.0 * 100), 100].min %>%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Extra Milestones for the Future
+      <div class="text-center mt-5">
+        <%= link_to "View all milestones", profile_path, class: "btn btn-pakka-blue" %>
+      </div>
+      -->
+
     </div>
   </section>
 </div>

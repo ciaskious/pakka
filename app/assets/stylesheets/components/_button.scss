@@ -7,13 +7,13 @@
   --white: #f7f2eb;
 }
 
-.btn-primary-cta {
+.btn-home-primary-cta {
   background-color: #9cddab;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  font-weight: 600;
+  font-weight: 800;
   transition: background 0.3s ease;
   text-decoration: none;
   text-align: center;
@@ -21,10 +21,11 @@
 
   &:hover {
     background-color: darken(#9cddab, 10%);
+    color: white;
   }
 }
 
-.btn-secondary-cta {
+.btn-home-secondary-cta {
   background-color: var(--blue);
   color: white;
   border: none;
