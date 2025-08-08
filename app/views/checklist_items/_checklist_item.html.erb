@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center flex-grow-1">
-  <% if user_signed_in? && current_user == @trip.user %>
+  <% if current_user == @trip.user %>
     <%= check_box_tag "item_#{checklist_item.id}",
                       1,
                       checklist_item.checked,
@@ -11,13 +11,13 @@
                       } %>
    <% end %>
   <label for="item_checkbox_<%= checklist_item.id %>" class="form-check-label">
-    <span class="checklist-text <%= 'text-decoration-line-through text-muted' if checklist_item.checked %>">
+    <span class="checklist-text <%= 'text-decoration-line-through text-muted' if checklist_item.checked && current_user == @trip.user %>">
       <%= checklist_item.item&.name&.humanize || "Unnamed Item" %> (<%= checklist_item.item&.category&.humanize %>)
     </span>
   </label>
 </div>
 
- <% if user_signed_in? && current_user == @trip.user %>
+ <% if current_user == @trip.user %>
   <!-- Action buttons -->
   <div class="d-flex align-items-center action-buttons">
   <!-- Edit button to toggle inline edit form -->

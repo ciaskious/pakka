@@ -146,6 +146,15 @@ class TripsController < ApplicationController
     redirect_to @trip, alert: "There was an error adding items. Please try again."
   end
 
+  # toggle in trip show page
+  def toggle_public
+    @trip = current_user.trips.find(params[:id])
+    @trip.update_column(:public, !@trip.public)
+    flash[:notice] = @trip.public? ? "Now public!" : "Now private!"
+
+    render json: { public: @trip.public? }
+  end
+
   private
 
   def set_trip
