@@ -1,3 +1,37 @@
+// 0. SASS VARIABLES
+$pakka-blue: #3741FA;
+$pakka-green: #9CDDAB;
+$pakka-pink: #FB7D93;
+$pakka-yellow: #FFEC59;
+$pakka-light: #f8f9fa;
+$text-dark: #333;
+$text-muted: #6c757d;
+
+// 1. PAKKA COLORS
+:root {
+  --pakka-blue: #3741FA;
+  --pakka-green: #9CDDAB;
+  --pakka-pink: #FB7D93;
+  --pakka-yellow: #FFEC59;
+  --pakka-light: #f8f9fa;
+  --text-dark: #333;
+  --text-muted: #6c757d;
+}
+
+// 2. UTILITY CLASSES
+.pakka-blue { color: var(--pakka-blue); }
+.pakka-green { color: var(--pakka-green); }
+.pakka-pink { color: var(--pakka-pink); }
+.pakka-yellow { color: var(--pakka-yellow); }
+.pakka-light { color: var(--pakka-light); }
+
+.bg-pakka-blue { background-color: var(--pakka-blue); }
+.bg-pakka-green { background-color: var(--pakka-green); }
+.bg-pakka-pink { background-color: var(--pakka-pink); }
+.bg-pakka-yellow { background-color: var(--pakka-yellow); }
+.bg-pakka-light { background-color: var(--pakka-light); }
+
+
 .trip-show-container {
   font-family: 'DM Sans', sans-serif;
 
@@ -64,10 +98,10 @@
   .checklist-items {
     .list-group-item {
       padding: 0.75rem 1.25rem;
-      border-color: rgba(0,0,0,0.05);
+      background-color: white;
 
       &:hover {
-        background-color: #f8f9fa;
+        background-color: rgba(55, 65, 250, 0.1)
       }
 
       label {
@@ -88,7 +122,7 @@
   }
 
   .add-item-form {
-    background-color: #f8f9fa;
+    background-color: rgba(55, 65, 250, 0.1) !important;
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
@@ -150,5 +184,107 @@
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 1.2rem;
+  }
+}
+
+//AI Styling
+.ai-suggestions-card {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--pakka-green);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  .card-header {
+    background-color: var(--pakka-green) !important;
+    padding: 1rem 1.5rem;
+    border-bottom: none;
+
+    h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    margin-left: 0.5;
+
+    .text-muted {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  }
+
+  .ai-suggestions-list {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    margin-left: 0;
+    width: 100%;
+
+  .suggestion-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    padding-left: 0.5rem; // Added left padding to the entire item
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .form-check-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    margin-left: 0.5rem;
+    padding-left: 3; // Reset default padding
+    }
+  }
+
+
+  .btn-success {
+    background-color: var(--pakka-green);
+    border-color: var(--pakka-green);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      background-color: darken(#9CDDAB, 8%);
+      border-color: darken(#9CDDAB, 8%);
+    }
+  }
+
+  .btn-outline-secondary {
+    border-color: #9cddab;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+}
+
+/* For the select all checkbox */
+#select-all {
+  .form-check {
+    .form-check-input {
+      -webkit-appearance: checkbox;
+      -moz-appearance: checkbox;
+      appearance: checkbox;
+    }
+
+    .form-check-label {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      width: 100%;
+      font-weight: 600;
+      color: var(--pakka-green);
+      margin-left: 0.5rem;
+      padding-left: 3; // Reset default padding
+    }
   }
 }

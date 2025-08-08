@@ -23,7 +23,7 @@ class TripsController < ApplicationController
 
     # Guests and non-owners may only view if the trip is public
     unless @trip.public? || (user_signed_in? && current_user == @trip.user)
-      return redirect_to trips_path, alert: "You don’t have permission to view that trip."
+      return redirect_to trips_path, alert: "You don't have permission to view that trip."
     end
 
     @checklist_items = @trip.checklist_items.includes(:item)

@@ -2,27 +2,67 @@
   background-color: #FCF9F2 !important;
   font-family: 'DM Sans', sans-serif;
   padding: 1rem 0;
+  position: sticky !important;
+  top: 0;
+  z-index: 1030; // Above other content
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08); // Subtle shadow when sticky
+  transition: all 0.3s ease;
 
-  .navbarlogo {
+  &.scrolled {
+    padding: 0.5rem 0;
+    .navbar-logo {
+      height: 48px;
+    }
+  }
+
+  .navbar-logo { // Fixed class name (was .navbarlogo)
     height: 56px;
     width: auto;
+    transition: transform 0.3s ease;
   }
 
   .navbar-brand {
     display: flex;
     align-items: center;
 
+    .navbar-logo, .pakka-title {
+      transform-origin: center bottom;
+      will-change: transform; // Optimizes animation performance
+    }
 
-    .pakka-title {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #9CDDAB;
-
-      &:hover {
-        color: darken(#9CDDAB, 10%);
+    &:hover {
+      .navbar-logo {
+        animation: pakka-bounce 0.8s ease;
+      }
+      .pakka-title {
+        animation: text-pulse 0.5s ease;
       }
     }
+  }
+
+  .pakka-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #9CDDAB;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: darken(#9CDDAB, 10%);
+    }
+  }
+
+  @keyframes pakka-bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-3px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-1px); }
+  }
+
+  @keyframes text-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
   }
 
   .nav-link {

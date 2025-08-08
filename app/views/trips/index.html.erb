@@ -10,14 +10,14 @@
 
   <!-- Trips Grid -->
   <div class="container py-5">
-    <!-- Upcoming Trips Section - Always shown -->
-    <h3 class="mb-4" style="font-family: 'Poppins', sans-serif;">Upcoming Trips</h3>
+    <!-- Upcoming Trips Section -->
+    <h3 class="display-6 mb-4 pakka-pink" style="font-family: 'Poppins', sans-serif;">Upcoming Trips</h3>
     <% if @upcoming_trips.any? %>
       <div class="row g-4 mb-5">
         <% @upcoming_trips.each do |trip| %>
           <div class="col-12 col-sm-6 col-lg-4">
             <%= link_to trip_path(trip), class: "text-decoration-none text-dark", style: "text-decoration: none;" do %>
-              <div class="trip-card card shadow-sm border-0 h-100" style="font-family: 'DM Sans', sans-serif;">
+              <div class="trip-card card shadow-sm border-0 h-100 upcoming-trip" style="font-family: 'DM Sans', sans-serif;">
                 <% if trip.cover_image.attached? %>
                   <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
                 <% else %>
@@ -37,11 +37,13 @@
                     <%= trip.start_date.try(:to_formatted_s, :short) || "Choose start date" %> - <%= trip.end_date.try(:to_formatted_s, :short) || "Choose end date" %>
                   </p>
                   <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge bg-light text-dark">
+                    <span class="badge bg-white text-dark">
                       <i class="fas fa-list-check me-1"></i>
                       <%= trip.checklist_items.count %> items
                     </span>
-                    <span class="text-muted small">View Details</span>
+                    <span class="btn btn-sm btn-outline-primary px-3" style="font-family: 'DM Sans', sans-serif; border-radius: 20px;">
+                      View Trip
+                    </span>
                   </div>
                 </div>
               </div>
@@ -56,7 +58,7 @@
         <% @trips.each do |trip| %>
           <div class="col-12 col-sm-6 col-lg-4">
             <%= link_to trip_path(trip), class: "text-decoration-none text-dark" do %>
-              <div class="trip-card card shadow-sm border-0 h-100 past-trip">
+              <div class="trip-card card shadow-sm border-0 h-100 upcoming-trip">
                 <% if trip.cover_image.attached? %>
                   <%= image_tag trip.cover_image, class: "card-img-top", style: "height: 180px; object-fit: cover;" %>
                 <% else %>
@@ -80,7 +82,9 @@
                       <i class="fas fa-list-check me-1"></i>
                       <%= trip.checklist_items.count %> items
                     </span>
-                    <span class="text-muted small">View Details</span>
+                    <span class="btn btn-sm btn-outline-primary px-3" style="font-family: 'DM Sans', sans-serif; border-radius: 20px;">
+                      View Trip
+                    </span>
                   </div>
                 </div>
               </div>
@@ -96,8 +100,8 @@
       </div>
     <% end %>
 
-    <!-- Past Trips Section - Always shown -->
-    <h3 class="mb-4" style="font-family: 'Poppins', sans-serif;">Past Trips</h3>
+    <!-- Past Trips Section -->
+    <h3 class="display-6 mb-4 pakka-green" style="font-family: 'Poppins', sans-serif;">Past Trips</h3>
     <% if @past_trips.any? %>
       <div class="row g-4">
         <% @past_trips.each do |trip| %>
@@ -127,7 +131,9 @@
                       <i class="fas fa-list-check me-1"></i>
                       <%= trip.checklist_items.count %> items
                     </span>
-                    <span class="text-muted small">View Details</span>
+                    <span class="btn btn-sm btn-outline-primary px-3" style="font-family: 'DM Sans', sans-serif; border-radius: 20px;">
+                      View Trip
+                    </span>
                   </div>
                 </div>
               </div>

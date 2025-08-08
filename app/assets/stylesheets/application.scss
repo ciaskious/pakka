@@ -32,12 +32,26 @@
 // Global font styles
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Poppins:wght@600&display=swap');
 
-//colors
+// 1. PAKKA COLORS
 :root {
-  --black: #3d3d3d;
-  --blue: #3741fa;
-  --green: #9cddab;
-  --pink: #fb7d93;
-  --yellow: #FFEC59;
-  --white: #f7f2eb;
+  --pakka-blue: #3741FA;
+  --pakka-green: #9CDDAB;
+  --pakka-pink: #FB7D93;
+  --pakka-yellow: #FFEC59;
+  --pakka-light: #f8f9fa;
+  --text-dark: #333;
+  --text-muted: #6c757d;
 }
+
+// 2. UTILITY CLASSES
+.pakka-blue { color: var(--pakka-blue); }
+.pakka-green { color: var(--pakka-green); }
+.pakka-pink { color: var(--pakka-pink); }
+.pakka-yellow { color: var(--pakka-yellow); }
+.pakka-light { color: var(--pakka-light); }
+
+.bg-pakka-blue { background-color: var(--pakka-blue); }
+.bg-pakka-green { background-color: var(--pakka-green); }
+.bg-pakka-pink { background-color: var(--pakka-pink); }
+.bg-pakka-yellow { background-color: var(--pakka-yellow); }
+.bg-pakka-light { background-color: var(--pakka-light); }
