@@ -46,7 +46,7 @@ class Trip < ApplicationRecord
 
   before_save :calculate_duration
 
-  ACCOMMODATION_OPTIONS = %w[hotel hostel appartment campsite homestay cabin resort].freeze
+  ACCOMMODATION_OPTIONS = %w[hotel hostel apartment campsite homestay cabin resort].freeze
 
   validates :accommodation_type, inclusion: { in: ACCOMMODATION_OPTIONS }
 

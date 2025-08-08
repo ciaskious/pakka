@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @items = current_user.items
     @past_trips = current_user.trips.order(created_at: :desc) # or however you define "past"
     @items = current_user.items.reusable
+    @favorite_destination, @favorite_destination_count = current_user.favorite_destination_info
   end
 
   def update_avatar
@@ -14,6 +15,16 @@ class UsersController < ApplicationController
     else
       redirect_to profile_path, alert: "Failed to update avatar."
     end
+  end
+
+  def favorite_destination
+    trips.favorite_destination
+  end
+
+  def favorite_destination_count
+    return 0 unless favorite_destination
+
+    trips.where(destination: favorite_destination).count
   end
 
   private

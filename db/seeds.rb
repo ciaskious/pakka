@@ -12,14 +12,15 @@ puts "👤 Creating users..."
 
 # === User data ===
 user_data = [
-  { email: "duparcrobin@gmail.com", first_name: "Robin", username: "duparcrobin", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/robin_y06loa.jpg" },
-  { email: "ciaskious@gmail.com", first_name: "Asia", username: "ciaskious", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/asia_ssajaw.png" },
+  { email: "duparcrobin@gmail.com", first_name: "Robin", last_name: "Du Parc", username: "duparcrobin", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/robin_y06loa.jpg" },
+  { email: "ciaskious@gmail.com", first_name: "Asia", last_name: "Kaloudi", username: "ciaskious", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/asia_ssajaw.png" },
   { email: "joanagaalves@gmail.com", first_name: "Joana", last_name: "Azevedo", username: "joanagaalves", password: "1946kitt", avatar_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753732269/joana_oijl6g.jpg" },
 ]
 
 users = user_data.map do |attrs|
   User.find_or_create_by!(email: attrs[:email]) do |user|
     user.first_name = attrs[:first_name]
+    user.last_name = attrs[:last_name]
     user.username = attrs[:username]
     user.password = attrs[:password]
   end.tap do |user|
@@ -52,7 +53,7 @@ shared_items = [
   { name: "Snacks", category: "food" },
   { name: "Reusable Water Bottle", category: "food" },
   { name: "Painkillers", category: "medication" },
-  { name: "Plasters", category: "medication" },
+  { name: "Pill", category: "medication" },
 ]
 
 users.each_with_index do |user, index|
@@ -65,33 +66,37 @@ users.each_with_index do |user, index|
   puts "🧳 #{user.email} now has #{user.items.reusable.count} reusable items"
 end
 
-accommodation_options = Trip::ACCOMMODATION_OPTIONS
-
 puts "🗺️ Creating trips..."
 
 trip_data = [
-  { title: "Summer Escape", destination: "Lisbon", country: "Portugal", location: "Lisbon", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/lisbon_bmoivj.jpg" },
-  { title: "Mountain Retreat", destination: "Zermatt", country: "Switzerland", location: "Alps", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/zermatt_zc5drx.jpg" },
-  { title: "City Break", destination: "Berlin", country: "Germany", location: "Berlin", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733343/berlin_lji0wm.avif" },
-  { title: "Island Hopping", destination: "Santorini", country: "Greece", location: "Aegean Sea", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/santorini_xslml6.avif" },
-  { title: "Desert Adventure", destination: "Marrakech", country: "Morocco", location: "Atlas Mountains", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/marrakech_iifnyv.jpg" },
-  { title: "Scandinavian Escape", destination: "Stockholm", country: "Sweden", location: "Stockholm", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/stockholm_ps2mrj.avif" },
-  { title: "Jungle Trek", destination: "Ubud", country: "Indonesia", location: "Bali", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/ubud_zuqriu.jpg" },
-  { title: "Cultural Tour", destination: "Kyoto", country: "Japan", location: "Kyoto", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733287/kyoto_pgjpyo.jpg" },
-  { title: "Road Trip", destination: "California", country: "USA", location: "Pacific Coast", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/california_vxedbe.webp" },
+  { title: "Lisbon Summer Escape", destination: "Lisbon", country: "Portugal", location: "Lisbon", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 7.days).strftime("%Y-%m-%d"), accommodation_type: "apartment", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/lisbon_bmoivj.jpg" },
+  { title: "Alpine Ski Adventure", destination: "Zermatt", country: "Switzerland", location: "Alps", start_date: (Date.today + 3.days).strftime("%Y-%m-%d"), end_date: (Date.today + 10.days).strftime("%Y-%m-%d"), accommodation_type: "cabin", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/zermatt_zc5drx.jpg" },
+  { title: "Berlin Weekend", destination: "Berlin", country: "Germany", location: "Berlin", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 4.days).strftime("%Y-%m-%d"), accommodation_type: "hotel", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733343/berlin_lji0wm.avif" },
+  { title: "Santorini Getaway", destination: "Santorini", country: "Greece", location: "Aegean Sea", start_date: (Date.today + 5.days).strftime("%Y-%m-%d"), end_date: (Date.today + 12.days).strftime("%Y-%m-%d"), accommodation_type: "resort", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/santorini_xslml6.avif" },
+  { title: "Marrakech Discovery", destination: "Marrakech", country: "Morocco", location: "Atlas Mountains", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 7.days).strftime("%Y-%m-%d"), accommodation_type: "homestay", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/marrakech_iifnyv.jpg" },
+  { title: "Stockholm Summer", destination: "Stockholm", country: "Sweden", location: "Stockholm", start_date: (Date.today + 2.days).strftime("%Y-%m-%d"), end_date: (Date.today + 9.days).strftime("%Y-%m-%d"), accommodation_type: "hotel", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/stockholm_ps2mrj.avif" },
+  { title: "Bali Jungle Retreat", destination: "Ubud", country: "Indonesia", location: "Bali", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 15.days).strftime("%Y-%m-%d"), accommodation_type: "homestay", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/ubud_zuqriu.jpg" },
+  { title: "Kyoto Cultural Journey", destination: "Kyoto", country: "Japan", location: "Kyoto", start_date: (Date.today + 4.days).strftime("%Y-%m-%d"), end_date: (Date.today + 14.days).strftime("%Y-%m-%d"), accommodation_type: "campsite", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733287/kyoto_pgjpyo.jpg" },
+  { title: "Pacific Coast Roadtrip", destination: "California", country: "USA", location: "Highway 1", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 13.days).strftime("%Y-%m-%d"), accommodation_type: "campsite", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1753733288/california_vxedbe.webp" },
+  { title: "Chamonix Ski Week", destination: "Chamonix", country: "France", location: "Mont Blanc", start_date: (Date.today + 3.days).strftime("%Y-%m-%d"), end_date: (Date.today + 10.days).strftime("%Y-%m-%d"), accommodation_type: "cabin", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689224/patrick-boucher-w2DBsig0eEY-unsplash_gv9ku7.jpg" },
+  { title: "Vietnam Backpacking", destination: "Hanoi", country: "Vietnam", location: "Northern Vietnam", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 20.days).strftime("%Y-%m-%d"), accommodation_type: "hostel", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689293/florian-wehde-lY87gHWdGNo-unsplash_jje6j3.jpg" },
+  { title: "Arctic Lights Expedition", destination: "Tromsø", country: "Norway", location: "Arctic Circle", start_date: (Date.today + 6.days).strftime("%Y-%m-%d"), end_date: (Date.today + 13.days).strftime("%Y-%m-%d"), accommodation_type: "hotel", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689345/bjorn-are-with-andreassen-vPg790ZGCCM-unsplash_y51fnf.jpg" },
+  { title: "Tuscan Wine Tour", destination: "Tuscany", country: "Italy", location: "Chianti Region", start_date: Date.tomorrow.strftime("%Y-%m-%d"), end_date: (Date.tomorrow + 7.days).strftime("%Y-%m-%d"), accommodation_type: "resort", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689398/johny-goerend-pnigODapPek-unsplash_zi1hxw.jpg" },
+  { title: "Serengeti Safari", destination: "Serengeti", country: "Tanzania", location: "National Park", start_date: (Date.today + 5.days).strftime("%Y-%m-%d"), end_date: (Date.today + 15.days).strftime("%Y-%m-%d"), accommodation_type: "cabin", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689455/hu-chen-0LwfbRtQ-ac-unsplash_em5wkk.jpg" },
+  { title: "Rio Carnival Fever", destination: "Rio de Janeiro", country: "Brazil", location: "Copacabana", start_date: (Date.today + 2.days).strftime("%Y-%m-%d"), end_date: (Date.today + 9.days).strftime("%Y-%m-%d"), accommodation_type: "hostel", public: true, cover_url: "https://res.cloudinary.com/djls9crmj/image/upload/v1754689487/raphael-nogueira-espuILpsRUw-unsplash_psszjl.jpg" }
 ]
 
 users.each_with_index do |user, index|
-  user_trip_data = trip_data.slice(index * 3, 3)
+  user_trip_data = trip_data.slice(index * 5, 5)
   user_trip_data.each_with_index do |trip_attrs, i|
     trip = user.trips.create!(
       title: trip_attrs[:title],
       destination: trip_attrs[:destination],
       country: trip_attrs[:country],
       location: trip_attrs[:location],
-      start_date: Date.today + (i * 10),
-      end_date: Date.today + (i * 10) + 5,
-      accommodation_type: accommodation_options.sample,
+      start_date: trip_attrs[:start_date],
+      end_date: trip_attrs[:end_date],
+      accommodation_type: trip_attrs[:accommodation_type],
     )
     begin
       file = URI.open(trip_attrs[:cover_url])
