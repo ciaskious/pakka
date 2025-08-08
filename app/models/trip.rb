@@ -34,7 +34,7 @@ class Trip < ApplicationRecord
           if user
             where(public: true).where.not(user_id: user.id)
           else
-            all
+            where(public: true)
           end
         }
 

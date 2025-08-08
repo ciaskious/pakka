@@ -17,6 +17,8 @@ class ItemsController < ApplicationController
 
   def create
     @item = current_user.items.new(item_params)
+    @item.reusable = true # Default to reusable
+
     if @item.save
       redirect_to profile_path, notice: "Reusable item created!"
     else
