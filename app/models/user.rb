@@ -43,4 +43,13 @@ class User < ApplicationRecord
   def longest_trip_duration
     trips.pluck(:start_date, :end_date).map { |s, e| (e - s).to_i }.max || 0
   end
+
+  def favorite_destination_info
+    trips
+      .group(:destination)
+      .order('count(destination) desc')
+      .limit(1)
+      .pluck(:destination, 'count(destination)')
+      .first || [nil, 0] # Returns [destination, count] or [nil, 0] if no trips
+  end
 end

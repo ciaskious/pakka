@@ -123,7 +123,21 @@
                 <% end %>
               </div>
               <small class="text-muted mt-3 d-block">
-                <%= @past_trips.size %> trips over <%= ((@past_trips.first.created_at - @past_trips.last.created_at).to_i / 365.0).round(1) %> years
+                <% if @past_trips.size > 1 %>
+                  <% days_between = (@past_trips.first.created_at.to_date - @past_trips.last.created_at.to_date).to_i %>
+                  <% years = days_between / 365 %>
+                  <% months = ((days_between % 365) / 30.44).round %> <!-- 30.44 = average days/month -->
+
+                  <%= @past_trips.size %> trips over
+                  <% if years > 0 %>
+                    <%= years %> <%= 'year'.pluralize(years) %>
+                    <% if months > 0 %>and <%= months %> <%= 'month'.pluralize(months) %><% end %>
+                  <% else %>
+                    <%= months %> <%= 'month'.pluralize(months) %>
+                  <% end %>
+                <% else %>
+                  <%= @past_trips.size %> trip (just started)
+                <% end %>
               </small>
             <% else %>
               <div class="display-6 text-muted my-4">
