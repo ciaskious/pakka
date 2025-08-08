@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     resources :checklist_items,
               path: "items",
               only: %i[create update destroy]
+
+    patch :toggle_public, on: :member
+
     member do
       post :duplicate
       post :generate_ai_suggestions
