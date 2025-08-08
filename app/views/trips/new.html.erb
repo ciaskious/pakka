@@ -119,6 +119,21 @@
                     style: "font-family: 'Poppins', sans-serif; font-weight: 500;"
                   } %>
               </div>
+               <div class="col-md-6">
+                    <div class="form-check m-0">
+                       <%= form.check_box :public, {}, false, true %>
+
+                      <label class="form-check-label" for="trip_privacy">
+                        Keep my trip private
+                      </label>
+
+                    <small class="text-muted" data-privacy-checkbox-target="status">
+                      <%= "Currently visible to everyone"%>
+                    </small>
+                   </div>
+
+                  </div>
+              </div>
             </div>
 
             <div class="form-actions mt-4 d-flex justify-content-between">
