@@ -31,4 +31,16 @@ class User < ApplicationRecord
   def display_name
     name
   end
+
+  def favorite_destination_count
+    trips.group(:destination).count.max_by { |_, v| v }&.last || 0
+  end
+
+  def visited_countries
+    trips.pluck(:country).compact.uniq
+  end
+
+  def longest_trip_duration
+    trips.pluck(:start_date, :end_date).map { |s, e| (e - s).to_i }.max || 0
+  end
 end

@@ -161,7 +161,7 @@ body, p, small, .form-control {
   }
 }
 
-//Community Trips Section
+// Community Trips Section
 .community-trips {
   background-color: var(--pakka-blue);
   color: white;
@@ -174,11 +174,27 @@ body, p, small, .form-control {
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 1rem 0;
-    scrollbar-width: none; // Firefox
-    margin: 0 2rem; // Give space for buttons
+    margin: 0 2rem; // space for scroll buttons
+
+    // Styled scrollbar
+    scrollbar-width: thin; // Firefox
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 
     &::-webkit-scrollbar {
-      display: none; // Chrome/Safari
+      height: 8px; // horizontal scrollbar
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.8);
     }
   }
 
@@ -248,6 +264,7 @@ body, p, small, .form-control {
       left: 0;
       display: none; // Hidden by default
     }
+
     &.scroll-right {
       right: 0;
       display: none; // Hidden by default
@@ -260,12 +277,9 @@ body, p, small, .form-control {
       height: 40px;
       font-size: 1rem;
     }
-
-    .scroll-trips-container {
-      margin: 0 1.5rem;
-    }
   }
 }
+
 
 
 // Utility Classes

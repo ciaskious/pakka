@@ -2,19 +2,19 @@
               url: item_path(item),
               method: :patch,
               data: { remote: true, turbo: "false", controller: "ajax-submit", action: "ajax:success->inline-edit#update ajax:error->inline-edit#error" },
-              class: "d-flex align-items-center" do |f| %>
+              class: "d-flex align-items-center py-2" do |f| %>
 
   <%= f.text_field :name,
-        class: "form-control form-control-sm me-2",
+        class: "form-control form-control-sm py-2 me-2 fs-6",
         style: "font-family: 'DM Sans', sans-serif; border-radius: 10px;" %>
 
   <%= f.select :category,
         Item::CATEGORIES.map { |c| [c.humanize, c] },
         {},
-        { class: "form-select form-select-sm me-2", style: "border-radius: 10px;" } %>
+        { class: "form-select form-select-sm py-2 me-2 fs-6", style: "border-radius: 10px;" } %>
 
-  <%= f.submit "Save", class: "save-button", style: "border-radius: 10px"%>
+  <%= f.submit "Save", class: "save-button py-2 me-2 fs-6", style: "border-radius: 10px"%>
 
-  <button type="button", class= "cancel-button", style="border-radius: 10px;", data-action="click->inline-edit#cancel">Cancel</button>
+  <button type="button", class= "cancel-button py-2 fs-6", style="border-radius: 10px;", data-action="click->inline-edit#cancel">Cancel</button>
 
 <% end %>
