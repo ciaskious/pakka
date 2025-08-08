@@ -7,13 +7,11 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "/ui-kit", to: "pages#ui_kit"
 
-  resources :items, except: [:show]
-
   # Trips & Checklists
   resources :trips do
     resources :checklist_items,
               path: "items",
-              only: %i[create update destroy]
+              only: %i[create edit update destroy]
 
     patch :toggle_public, on: :member
 
