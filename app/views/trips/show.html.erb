@@ -36,6 +36,7 @@
             <div class="card-body bg-white">
 
               <!-- Add Item Form -->
+            <% if user_signed_in? && current_user == @trip.user %>
               <div class="add-item-form mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h3 class="h5 mb-0">Add a checklist item</h3>
@@ -133,6 +134,7 @@
                   </script>
                 <% end %>
               <% end %>
+            <% end %>
 
               <!-- Checklist Items -->
               <% if @checklist_items.any? %>
