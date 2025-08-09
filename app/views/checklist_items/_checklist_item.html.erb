@@ -2,7 +2,7 @@
   <% if current_user == checklist_item.trip&.user %>
     <%= check_box_tag "item_#{checklist_item.id}",
                       1,
-                      checklist_item.checked,
+                      checklist_item.checked || trip_started,
                       class: "form-check-input me-3",
                       id: "item_checkbox_#{checklist_item.id}",
                       data: {

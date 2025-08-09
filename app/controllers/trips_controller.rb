@@ -27,6 +27,8 @@ class TripsController < ApplicationController
     end
 
     @checklist_items = @trip.checklist_items.includes(:item)
+    # Past means strictly before today; use Time.zone.today for TZ-safe compare
+    @trip_started = @trip.start_date.present? && @trip.start_date < Time.zone.today
   end
 
   # GET /trips

@@ -148,7 +148,7 @@
                       <li class="list-group-item d-flex align-items-center" id="item_<%= checklist_item.id %>">
                         <div class="form-check flex-grow-1" data-controller="inline-edit" data-inline-edit-item-id-value="<%= checklist_item.id %>">
                           <div data-inline-edit-target="display" class="d-flex align-items-center">
-                            <%= render "checklist_items/checklist_item", checklist_item: checklist_item %>
+                            <%= render "checklist_items/checklist_item", checklist_item: checklist_item, trip_started: @trip_started %>
                           </div>
                           <div data-inline-edit-target="form" class="d-none">
                             <%= render "checklist_items/edit", checklist_item: checklist_item %>
